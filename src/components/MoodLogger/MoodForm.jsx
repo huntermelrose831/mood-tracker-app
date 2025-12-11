@@ -5,12 +5,24 @@
 // - Activities selector
 // - Notes textarea
 // - Form validation
+import "./MoodForm.css";
 
-export default function MoodForm({ onSubmit }) {
+export default function MoodForm({ onSubmit, onClose }) {
   return (
-    <div>
-      <h2>Mood Logger - TO BE IMPLEMENTED</h2>
-      <p>This component will allow users to log their daily mood.</p>
-    </div>
+    <>
+      <div className="modal-overlay" onClick={onClose}></div>
+      <div className="modal-content">
+        <div className="modal-header">
+          <h2>Log Your Mood</h2>
+          <button className="close-btn" onClick={onClose}>
+            ✕
+          </button>
+        </div>
+        <div className="modal-body">
+          <p>Form content - TO BE IMPLEMENTED</p>
+          {/* TODO: Add form fields here */}
+        </div>
+      </div>
+    </>
   );
 }
