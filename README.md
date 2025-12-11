@@ -76,19 +76,39 @@ mood-tracker-app/
 │       └── sample-data.json      # Sample mood data
 ├── src/
 │   ├── components/
+│   │   ├── App/
+│   │   │   ├── App.jsx           # Main app component
+│   │   │   └── App.css           # App styles
+│   │   ├── header/
+│   │   │   ├── header.jsx        # Header with navigation
+│   │   │   └── header.css        # Header styles
+│   │   ├── footer/
+│   │   │   ├── footer.jsx        # Footer component
+│   │   │   └── footer.css        # Footer styles
 │   │   ├── MoodLogger/
-│   │   │   └── MoodForm.jsx      # Mood logging form (TODO)
+│   │   │   ├── MoodForm.jsx      # Mood logging form
+│   │   │   └── MoodForm.css      # Form styles
 │   │   ├── Dashboard/
-│   │   │   └── MoodDashboard.jsx # Statistics dashboard (TODO)
-│   │   └── common/
-│   │       └── Layout.jsx        # Layout wrapper (TODO)
+│   │   │   ├── MoodDashboard.jsx # Statistics dashboard
+│   │   │   └── MoodDashboard.css # Dashboard styles
+│   │   ├── addMood/              # Additional mood components
+│   │   ├── cards/                # Card components
+│   │   ├── editMood/             # Edit mood components
+│   │   ├── editProfile/          # Profile edit components
+│   │   └── profile/              # Profile components
 │   ├── services/
 │   │   └── dataService.js        # localStorage operations (TODO)
+│   ├── API/
+│   │   └── API.js                # API utilities
 │   ├── hooks/                    # Custom React hooks
 │   ├── utils/                    # Helper functions
-│   ├── App.jsx                   # Main app component
-│   ├── App.css                   # Main styles
+│   ├── assets/                   # Images and static files
+│   ├── index.css                 # Global styles
 │   └── main.jsx                  # App entry point
+├── ds/
+│   ├── dataset.csv               # Raw mood dataset
+│   ├── final_mood_dataset.json   # Processed dataset
+│   └── notebook.ipynb            # Data analysis notebook
 ├── package.json
 └── README.md
 ```

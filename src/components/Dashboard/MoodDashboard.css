@@ -1,16 +1,19 @@
-.dashboard {
+.dashboard,
+.mood-dashboard {
   background: white;
   padding: 2rem;
-  height: 800px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-height: 70vh;
 }
 
-.dashboard h2 {
+.dashboard h2,
+.mood-dashboard h2 {
   color: #333;
   margin-bottom: 1rem;
 }
 
-.dashboard p {
+.dashboard p,
+.mood-dashboard p {
   color: #666;
 }

@@ -3,6 +3,7 @@
 // - Display statistics (average mood, most common mood, total entries)
 // - Show list of mood entries
 // - Display charts/visualizations (from DS team)
+import "./MoodDashboard.css";
 
 export default function MoodDashboard({ entries, stats }) {
   return (

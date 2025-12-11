@@ -53,7 +53,7 @@ export default function MoodModal({ onSubmit, onClose }) {
     const newErrors = {};
     if (!formData.mood_category) {
       newErrors.mood = "Please select a mood";
-    }https://www.figma.com/board/wyKvXqjimoOaSsnRW3bFZt/User-Journey-Map?node-id=10-1688&t=i4Lfe42nwX3PNrCk-1
+    }
     if (!formData.date) {
       newErrors.date = "Please select a date";
     }
