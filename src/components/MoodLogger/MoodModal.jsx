@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./MoodForm.css";
+import "./MoodModal.css";
 
 const MOOD_OPTIONS = [
   { value: "excited", label: "😄", name: "Excited", rating: 5 },
@@ -21,7 +21,7 @@ const ACTIVITY_OPTIONS = [
   "relaxation",
 ];
 
-export default function MoodForm({ onSubmit, onClose }) {
+export default function MoodModal({ onSubmit, onClose }) {
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split("T")[0],
     mood_category: "",
@@ -53,7 +53,7 @@ export default function MoodForm({ onSubmit, onClose }) {
     const newErrors = {};
     if (!formData.mood_category) {
       newErrors.mood = "Please select a mood";
-    }
+    }https://www.figma.com/board/wyKvXqjimoOaSsnRW3bFZt/User-Journey-Map?node-id=10-1688&t=i4Lfe42nwX3PNrCk-1
     if (!formData.date) {
       newErrors.date = "Please select a date";
     }

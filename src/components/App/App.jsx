@@ -1,5 +1,5 @@
 import { useState } from "react";
-import MoodForm from "../MoodLogger/MoodForm";
+import MoodModal from "../MoodLogger/MoodModal.jsx";
 import MoodDashboard from "../Dashboard/MoodDashboard";
 import Header from "../header/header.jsx";
 import Footer from "../footer/footer.jsx";
@@ -42,7 +42,7 @@ function App() {
       <Footer />
 
       {isModalOpen && (
-        <MoodForm
+        <MoodModal
           onSubmit={handleMoodSubmit}
           onClose={() => setIsModalOpen(false)}
         />
