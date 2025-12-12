@@ -1,4 +1,4 @@
-.modal-overlay {
+.mood-modal__overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -8,7 +8,7 @@
   z-index: 999;
 }
 
-.modal-content {
+.mood-modal {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -35,7 +35,7 @@
   }
 }
 
-.modal-header {
+.mood-modal__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -43,12 +43,12 @@
   border-bottom: 2px solid #e0e0e0;
 }
 
-.modal-header h2 {
+.mood-modal__title {
   margin: 0;
   color: #333;
 }
 
-.close-btn {
+.mood-modal__close-button {
   background: none;
   border: none;
   font-size: 1.5rem;
@@ -59,28 +59,28 @@
   transition: all 0.2s;
 }
 
-.close-btn:hover {
+.mood-modal__close-button:hover {
   background: #f0f0f0;
   color: #333;
 }
 
-.modal-body {
+.mood-modal__body {
   padding: 1.5rem;
 }
 
-.form-group {
+.mood-form__group {
   margin-bottom: 1.5rem;
 }
 
-.form-group label {
+.mood-form__label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
   color: #555;
 }
 
-.form-group input[type="date"],
-.form-group textarea {
+.mood-form__input,
+.mood-form__textarea {
   width: 100%;
   padding: 0.75rem;
   border: 2px solid #e0e0e0;
@@ -90,19 +90,19 @@
   transition: border-color 0.3s;
 }
 
-.form-group input[type="date"]:focus,
-.form-group textarea:focus {
+.mood-form__input:focus,
+.mood-form__textarea:focus {
   outline: none;
   border-color: #646cff;
 }
 
-.mood-selector {
+.mood-form__mood-selector {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
   gap: 0.75rem;
 }
 
-.mood-option {
+.mood-form__mood-option {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,38 +115,38 @@
   transition: all 0.3s;
 }
 
-.mood-option:hover {
+.mood-form__mood-option:hover {
   border-color: #646cff;
   transform: translateY(-3px);
   box-shadow: 0 4px 12px rgba(100, 108, 255, 0.2);
 }
 
-.mood-option.selected {
+.mood-form__mood-option--selected {
   border-color: #646cff;
   background: #f0f0ff;
 }
 
-.mood-emoji {
+.mood-form__mood-emoji {
   font-size: 2.5rem;
 }
 
-.mood-name {
+.mood-form__mood-name {
   font-size: 0.85rem;
   font-weight: 600;
   color: #666;
 }
 
-.mood-option.selected .mood-name {
+.mood-form__mood-option--selected .mood-form__mood-name {
   color: #646cff;
 }
 
-.activity-selector {
+.mood-form__activity-selector {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
 }
 
-.activity-chip {
+.mood-form__activity-chip {
   padding: 0.5rem 1rem;
   border: 2px solid #e0e0e0;
   border-radius: 20px;
@@ -157,17 +157,17 @@
   text-transform: capitalize;
 }
 
-.activity-chip:hover {
+.mood-form__activity-chip:hover {
   border-color: #646cff;
 }
 
-.activity-chip.selected {
+.mood-form__activity-chip--selected {
   border-color: #646cff;
   background: #646cff;
   color: white;
 }
 
-.submit-btn {
+.mood-form__submit-button {
   width: 100%;
   padding: 1rem;
   background: #646cff;
@@ -180,13 +180,13 @@
   transition: all 0.3s;
 }
 
-.submit-btn:hover {
+.mood-form__submit-button:hover {
   background: #535bf2;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(100, 108, 255, 0.4);
 }
 
-.error {
+.mood-form__error {
   color: #ff4444;
   font-size: 0.875rem;
   margin-top: 0.25rem;

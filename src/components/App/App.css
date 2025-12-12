@@ -22,7 +22,7 @@ body {
   flex-direction: column;
 }
 
-.app-main {
+.app__main {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;

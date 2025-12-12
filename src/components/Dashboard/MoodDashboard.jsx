@@ -14,32 +14,34 @@ export default function MoodDashboard({ entries, stats }) {
 
   return (
     <div className="mood-dashboard">
-      <div className="dashboard-header">
-        <h2>*A mood for every day of the week*</h2>
+      <div className="mood-dashboard__header">
+        <h2 className="mood-dashboard__title">
+          *A mood for every day of the week*
+        </h2>
       </div>
 
-      <div className="mood-grid">
+      <div className="mood-dashboard__grid">
         {weekDays.map((day, index) => (
-          <div key={index} className="mood-card">
+          <div key={index} className="mood-dashboard__card">
             {index === 0 ? (
-              <div className="add-mood-card">
-                <p className="day-label">{day.day}</p>
-                <p className="date-label">{day.date}</p>
+              <div className="mood-dashboard__card-content mood-dashboard__card-content--add">
+                <p className="mood-dashboard__day-label">{day.day}</p>
+                <p className="mood-dashboard__date-label">{day.date}</p>
               </div>
             ) : (
-              <div className="empty-mood-card">
-                <p className="day-label">{day.day}</p>
-                <p className="date-label">{day.date}</p>
+              <div className="mood-dashboard__card-content mood-dashboard__card-content--empty">
+                <p className="mood-dashboard__day-label">{day.day}</p>
+                <p className="mood-dashboard__date-label">{day.date}</p>
               </div>
             )}
           </div>
         ))}
       </div>
 
-      <div className="pagination-dots">
-        <span className="dot active"></span>
-        <span className="dot"></span>
-        <span className="dot"></span>
+      <div className="mood-dashboard__pagination">
+        <span className="mood-dashboard__dot mood-dashboard__dot--active"></span>
+        <span className="mood-dashboard__dot"></span>
+        <span className="mood-dashboard__dot"></span>
       </div>
     </div>
   );

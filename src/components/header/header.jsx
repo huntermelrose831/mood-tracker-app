@@ -2,13 +2,16 @@ import "./header.css";
 
 export default function Header({ onLogMoodClick, onStatsClick, currentView }) {
   return (
-    <header className="app-header">
-      <h1>🎄Holiday Mood Tracker</h1>
-      <nav>
-        <button className="log-mood-btn" onClick={onLogMoodClick}>
+    <header className="header">
+      <h1 className="header__title">🎄Holiday Mood Tracker</h1>
+      <nav className="header__nav">
+        <button
+          className="header__button header__button--primary"
+          onClick={onLogMoodClick}
+        >
           + Log Mood
         </button>
-        <button className="log-mood-btn" onClick={onStatsClick}>
+        <button className="header__button" onClick={onStatsClick}>
           Stats
         </button>
       </nav>

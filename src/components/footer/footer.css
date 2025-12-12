@@ -1,4 +1,4 @@
-.app-footer {
+.footer {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   background: rgba(255, 255, 255, 0.95);
@@ -10,6 +10,6 @@
   font-size: 0.9rem;
 }
 
-.app-footer p {
+.footer__text {
   margin: 0;
 }

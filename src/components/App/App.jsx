@@ -23,17 +23,17 @@ function App() {
     <div className="app">
       <Header onLogMoodClick={() => setIsModalOpen(true)} />
 
-      <main className="app-main">
+      <main className="app__main">
         <MoodDashboard entries={[]} stats={null} />
       </main>
 
       <Footer />
 
       {isModalOpen && (
-        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal" onClick={() => setIsModalOpen(false)}>
+          <div className="modal__overlay" onClick={(e) => e.stopPropagation()}>
             <button
-              className="modal-close"
+              className="modal__close-button"
               onClick={() => setIsModalOpen(false)}
             >
               ×

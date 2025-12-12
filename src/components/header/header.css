@@ -1,4 +1,4 @@
-.app-header {
+.header {
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   background: rgba(255, 255, 255, 0.95);
@@ -13,19 +13,19 @@
   align-items: center;
 }
 
-.app-header h1 {
+.header__title {
   color: #333;
   margin: 0;
 }
 
-.app-header nav {
+.header__nav {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 1rem;
 }
 
-.app-header nav button {
+.header__button {
   padding: 0.75rem 2rem;
   border: 2px solid #646cff;
   background: white;
@@ -37,22 +37,22 @@
   transition: all 0.3s;
 }
 
-.app-header nav button:hover {
+.header__button:hover {
   background: #646cff;
   color: white;
   transform: translateY(-2px);
 }
 
-.app-header nav button.active {
+.header__button--active {
   background: #646cff;
   color: white;
 }
 
-.log-mood-btn {
-  background: #646cff !important;
-  color: white !important;
+.header__button--primary {
+  background: #646cff;
+  color: white;
 }
 
-.log-mood-btn:hover {
-  background: #535bf2 !important;
+.header__button--primary:hover {
+  background: #535bf2;
 }
