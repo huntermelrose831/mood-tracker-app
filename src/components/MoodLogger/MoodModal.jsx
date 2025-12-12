@@ -70,21 +70,21 @@ export default function MoodModal({ onSubmit, onClose }) {
 
   return (
     <>
-      <div className="mood-modal__overlay" onClick={onClose}></div>
-      <div className="mood-modal">
-        <div className="mood-modal__header">
-          <h2 className="mood-modal__title">Log Your Mood</h2>
-          <button className="mood-modal__close-button" onClick={onClose}>
+      <div className="mood__modal_overlay" onClick={onClose}></div>
+      <div className="mood__modal">
+        <div className="mood__modal_header">
+          <h2 className="mood__modal_title">Log Your Mood</h2>
+          <button className="mood__modal_close-button" onClick={onClose}>
             ✕
           </button>
         </div>
-        <div className="mood-modal__body">
-          <form onSubmit={handleSubmit} className="mood-form">
-            <div className="mood-form__group">
-              <label className="mood-form__label">Date</label>
+        <div className="mood__modal_body">
+          <form onSubmit={handleSubmit} className="mood__form">
+            <div className="mood__form_group">
+              <label className="mood__form_label">Date</label>
               <input
                 type="date"
-                className="mood-form__input"
+                className="mood__form_input"
                 value={formData.date}
                 onChange={(e) =>
                   setFormData({ ...formData, date: e.target.value })
@@ -92,44 +92,44 @@ export default function MoodModal({ onSubmit, onClose }) {
                 max={new Date().toISOString().split("T")[0]}
               />
               {errors.date && (
-                <span className="mood-form__error">{errors.date}</span>
+                <span className="mood__form_error">{errors.date}</span>
               )}
             </div>
 
-            <div className="mood-form__group">
-              <label className="mood-form__label">How are you feeling?</label>
-              <div className="mood-form__mood-selector">
+            <div className="mood__form_group">
+              <label className="mood__form_label">How are you feeling?</label>
+              <div className="mood__form_mood-selector">
                 {MOOD_OPTIONS.map((mood) => (
                   <button
                     key={mood.value}
                     type="button"
-                    className={`mood-form__mood-option ${
+                    className={`mood__form_mood-option ${
                       formData.mood_category === mood.value
-                        ? "mood-form__mood-option--selected"
+                        ? "mood__form_mood-option--selected"
                         : ""
                     }`}
                     onClick={() => handleMoodSelect(mood)}
                   >
-                    <span className="mood-form__mood-emoji">{mood.label}</span>
-                    <span className="mood-form__mood-name">{mood.name}</span>
+                    <span className="mood__form_mood-emoji">{mood.label}</span>
+                    <span className="mood__form_mood-name">{mood.name}</span>
                   </button>
                 ))}
               </div>
               {errors.mood && (
-                <span className="mood-form__error">{errors.mood}</span>
+                <span className="mood__form_error">{errors.mood}</span>
               )}
             </div>
 
-            <div className="mood-form__group">
-              <label className="mood-form__label">Activities (optional)</label>
-              <div className="mood-form__activity-selector">
+            <div className="mood__form_group">
+              <label className="mood__form_label">Activities (optional)</label>
+              <div className="mood__form_activity-selector">
                 {ACTIVITY_OPTIONS.map((activity) => (
                   <button
                     key={activity}
                     type="button"
-                    className={`mood-form__activity-chip ${
+                    className={`mood__form_activity-chip ${
                       formData.activities.includes(activity)
-                        ? "mood-form__activity-chip--selected"
+                        ? "mood__form_activity-chip--selected"
                         : ""
                     }`}
                     onClick={() => handleActivityToggle(activity)}
@@ -140,10 +140,10 @@ export default function MoodModal({ onSubmit, onClose }) {
               </div>
             </div>
 
-            <div className="mood-form__group">
-              <label className="mood-form__label">Notes (optional)</label>
+            <div className="mood__form_group">
+              <label className="mood__form_label">Notes (optional)</label>
               <textarea
-                className="mood-form__textarea"
+                className="mood__form_textarea"
                 value={formData.notes}
                 onChange={(e) =>
                   setFormData({ ...formData, notes: e.target.value })
@@ -153,7 +153,7 @@ export default function MoodModal({ onSubmit, onClose }) {
               />
             </div>
 
-            <button type="submit" className="mood-form__submit-button">
+            <button type="submit" className="mood__form_submit-button">
               Save Entry
             </button>
           </form>

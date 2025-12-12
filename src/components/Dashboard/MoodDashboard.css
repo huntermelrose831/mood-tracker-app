@@ -1,8 +1,5 @@
 .mood-dashboard {
-  background: white;
   padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-height: 70vh;
   display: flex;
   flex-direction: column;
@@ -30,16 +27,13 @@
 }
 
 .mood-dashboard__card {
-  aspect-ratio: 1;
-  background: #d3d3d3;
-  border-radius: 16px;
-  overflow: hidden;
+  aspect-ratio: 4/3;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .mood-dashboard__card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
 
@@ -49,15 +43,32 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  background: #d3d3d3;
+  border-radius: 20px;
+  border: 3px solid rgba(0, 0, 0, 0.15);
+  position: relative;
 }
 
-.mood-dashboard__card-content--add {
-  color: #333;
+.mood-dashboard__emoji-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
-.mood-dashboard__card-content--empty {
-  color: #666;
+.mood-dashboard__emoji-circle {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mood-dashboard__emoji {
+  font-size: 3rem;
 }
 
 .mood-dashboard__day-label {
@@ -95,6 +106,15 @@
   .mood-dashboard__grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+  }
+
+  .mood-dashboard__emoji-circle {
+    width: 60px;
+    height: 60px;
+  }
+
+  .mood-dashboard__emoji {
+    font-size: 2rem;
   }
 }
 

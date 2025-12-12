@@ -3,7 +3,7 @@ import "./header.css";
 export default function Header({ onLogMoodClick, onStatsClick, currentView }) {
   return (
     <header className="header">
-      <h1 className="header__title">🎄Holiday Mood Tracker</h1>
+      <h1 className="header__title">🎄Hollimood</h1>
       <nav className="header__nav">
         <button
           className="header__button header__button--primary"

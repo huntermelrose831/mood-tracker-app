@@ -1,31 +1,16 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(to bottom, #f5f5dc 0%, #90ee90 100%);
   min-height: 100vh;
+  margin: 0;
 }
 
 .app {
-  min-height: 100vh;
-  padding-bottom: 2rem;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 .app__main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
   flex: 1;
-  width: 100%;
+  padding: 2rem;
 }
