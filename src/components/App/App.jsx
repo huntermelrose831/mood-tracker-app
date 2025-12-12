@@ -22,12 +22,18 @@ function App() {
 
   return (
     <div className="app">
-      <Header onLogMoodClick={() => setIsModalOpen(true)} />
+    
+      <Header />
 
       <main className="app-main">
-        <Profile />
+
+        <Profile
+          onAvatarClick={() => setIsModalOpen(true)}
+          onLogMoodClick={() => setIsModalOpen(true)}
+          onStatsClick={() => setIsModalOpen(true)}
+        />
+
         <MoodDashboard entries={[]} stats={null} />
-        
       </main>
 
       <Footer />
