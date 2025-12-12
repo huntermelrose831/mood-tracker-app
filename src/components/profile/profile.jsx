@@ -1,4 +1,11 @@
-import React from "react";
-import auth from "@react-native-firebase/auth";
-import { View, Text, Button } from "react-native";
+import "./profile.css";
 
+export default function Profile() {
+  return (
+    <div className="profile__container">
+<div className="profile__avatar"></div>
+<button className="profile__edit-btn"></button>
+
+</div>
+  );
+}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "../header/header.jsx";
+import Profile from "../profile/profile.jsx";
 import Footer from "../footer/footer.jsx";
 import MoodForm from "../MoodLogger/MoodModal.jsx";
 import MoodDashboard from "../Dashboard/MoodDashboard.jsx";
@@ -24,7 +25,9 @@ function App() {
       <Header onLogMoodClick={() => setIsModalOpen(true)} />
 
       <main className="app-main">
+        <Profile />
         <MoodDashboard entries={[]} stats={null} />
+        
       </main>
 
       <Footer />
