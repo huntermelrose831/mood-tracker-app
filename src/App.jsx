@@ -1,9 +1,10 @@
 import { useState } from "react";
 import MoodForm from "./components/MoodLogger/MoodForm";
-import "./App.css";
+import "./components/App/App.css";
+import EditProfileModal from "./components/editProfile/editProfileModal";
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeModal, setActiveModal] = useState("");
 
   // TODO: Implement data loading and state management
   // - Load entries from localStorage
@@ -13,15 +14,18 @@ function App() {
   const handleMoodSubmit = (formData) => {
     // TODO: Save mood entry to localStorage
     console.log("Mood submitted:", formData);
-    setIsModalOpen(false);
+    setActiveModal("");
   };
 
   return (
     <div className="app">
       <header className="app-header">
         <h1>🎄Holiday Mood Tracker</h1>
-        <button className="log-mood-btn" onClick={() => setIsModalOpen(true)}>
+        <button className="log-mood-btn" onClick={() => setActiveModal("mood")}>
           + Log Mood
+        </button>
+        <button className="log-mood-btn" onClick={() => setActiveModal("edit")}>
+          Edit Profile
         </button>
       </header>
 
@@ -33,10 +37,17 @@ function App() {
         </div>
       </main>
 
-      {isModalOpen && (
+      {activeModal === "mood" && (
         <MoodForm
           onSubmit={handleMoodSubmit}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => setActiveModal("")}
+          isOpen={activeModal === "mood"}
+        />
+      )}
+      {activeModal === "edit" && (
+        <EditProfileModal
+          onClose={() => setActiveModal("")}
+          isOpen={activeModal === "edit"}
         />
       )}
     </div>
