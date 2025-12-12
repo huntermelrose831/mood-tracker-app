@@ -1,0 +1,58 @@
+.app-header {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-header h1 {
+  color: #333;
+  margin: 0;
+}
+
+.app-header nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.app-header nav button {
+  padding: 0.75rem 2rem;
+  border: 2px solid #646cff;
+  background: white;
+  color: #646cff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.app-header nav button:hover {
+  background: #646cff;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.app-header nav button.active {
+  background: #646cff;
+  color: white;
+}
+
+.log-mood-btn {
+  background: #646cff !important;
+  color: white !important;
+}
+
+.log-mood-btn:hover {
+  background: #535bf2 !important;
+}

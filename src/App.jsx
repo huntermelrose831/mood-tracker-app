@@ -1,7 +1,12 @@
 import { useState } from "react";
+<<<<<<< HEAD
 import MoodForm from "./components/MoodLogger/MoodForm";
 import "./components/App/App.css";
 import EditProfileModal from "./components/editProfile/editProfileModal";
+=======
+import MoodForm from "./components/MoodLogger/MoodModal";
+import "./App.css";
+>>>>>>> 849a5dabf9136bb04cc9354b97ea85a2fe92dbc9
 
 function App() {
   const [activeModal, setActiveModal] = useState("");

@@ -1,10 +1,13 @@
 import { useState } from "react";
-import MoodForm from "../MoodLogger/MoodForm";
+import MoodModal from "../MoodLogger/MoodModal.jsx";
 import MoodDashboard from "../Dashboard/MoodDashboard";
-import "/App.css";
+import Header from "../header/header.jsx";
+import Footer from "../footer/footer.jsx";
+import "./App.css";
 
 function App() {
-  const [view, setView] = useState("form"); // 'form' or 'dashboard'
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [view, setView] = useState("dashboard"); // 'dashboard' or 'stats'
 
   // TODO: Implement data loading and state management
   // - Load entries from localStorage
@@ -14,35 +17,36 @@ function App() {
   const handleMoodSubmit = (formData) => {
     // TODO: Save mood entry to localStorage
     console.log("Mood submitted:", formData);
+    setIsModalOpen(false);
   };
 
   return (
     <div className="app">
-      <header className="app-header">
-        <h1>🎄Holiday Mood Tracker</h1>
-        <nav>
-          <button
-            className={view === "form" ? "active" : ""}
-            onClick={() => setView("form")}
-          >
-            Log Mood
-          </button>
-          <button
-            className={view === "dashboard" ? "active" : ""}
-            onClick={() => setView("dashboard")}
-          >
-            Dashboard
-          </button>
-        </nav>
-      </header>
+      <Header
+        onLogMoodClick={() => setIsModalOpen(true)}
+        onStatsClick={() => setView(view === "stats" ? "dashboard" : "stats")}
+        currentView={view}
+      />
 
       <main className="app-main">
-        {view === "form" ? (
-          <MoodForm onSubmit={handleMoodSubmit} />
+        {view === "dashboard" ? (
+          <div className="dashboard">
+            <h2>Your Mood Dashboard</h2>
+            <p>Dashboard content coming soon...</p>
+          </div>
         ) : (
           <MoodDashboard entries={[]} stats={null} />
         )}
       </main>
+
+      <Footer />
+
+      {isModalOpen && (
+        <MoodModal
+          onSubmit={handleMoodSubmit}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

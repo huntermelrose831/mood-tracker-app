@@ -32,7 +32,7 @@ This is a collaborative project between Software Engineering, Data Science, and 
 
 ### Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js (v20 or higher)
 - npm or yarn
 
 ### Installation

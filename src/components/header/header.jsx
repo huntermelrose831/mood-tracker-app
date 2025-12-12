@@ -1,16 +1,17 @@
-import React from "react";
-import { View } from  "react-native";
-import {useState, useEffect} from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { Button, Text } from 'react-native-elements';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import "./header.css";
 
-export default function Header(){
-
-    return(
-        <div className="header">
-        <h1 className="header__app-name">Mood Tracker App</h1>
-        <div className="header__date"></div>
-        </div>
-    )
-} 
+export default function Header({ onLogMoodClick, onStatsClick, currentView }) {
+  return (
+    <header className="app-header">
+      <h1>🎄Holiday Mood Tracker</h1>
+      <nav>
+        <button className="log-mood-btn" onClick={onLogMoodClick}>
+          + Log Mood
+        </button>
+        <button className="log-mood-btn" onClick={onStatsClick}>
+          Stats
+        </button>
+      </nav>
+    </header>
+  );
+}
