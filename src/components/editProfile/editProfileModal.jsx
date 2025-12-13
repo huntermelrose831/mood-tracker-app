@@ -3,8 +3,8 @@ import MoodDropdown from "../../MoodDropdown/MoodDropdown";
 import "./editProfile.css";
 import { useState } from "react";
 
-function EditProfileModal({ onClose, onSubmit }) {
-  const [user, setUser] = useState({
+function EditProfileModal({ onClose }) {
+  const [user] = useState({
     name: "",
     avatar: "",
     bio: "",

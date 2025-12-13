@@ -2,11 +2,9 @@
   width: 100vw;
   margin-left: calc(-50vw + 50%);
   background: transparent;
-  padding: 1.5rem 2rem;
   margin-bottom: 0;
-  position: sticky;
+  position: relative;
   top: 0;
-  z-index: 100;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -15,6 +13,9 @@
 .header__title {
   color: #333;
   margin: 0;
+
+  width: 457px;
+  height: 97px;
   float: left;
 }
 .header__button--primary {
