@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import Header from "../header/header.jsx";
 import Profile from "../profile/profile.jsx";
 import Footer from "../footer/footer.jsx";
-import MoodModal from "../MoodLogger/MoodModal.jsx";
+import MoodModal from "../MoodModal/MoodModal.jsx";
 import MoodDashboard from "../Dashboard/MoodDashboard.jsx";
 import Stats from "../Stats/Stats.jsx";
 import { dataService } from "../../services/dataService.js";
 import "./App.css";
+
 
 function App() {
   // State management - keeping track of UI states and data
