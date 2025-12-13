@@ -33,7 +33,7 @@ const MOOD_COLORS_EXPANDED = {
   calm: "#8CD7FF",
 };
 
-export default function MoodDashboard({ entries, stats }) {
+export default function MoodDashboard({ entries }) {
   const [expandedCard, setExpandedCard] = useState(null);
   const [visibleCount, setVisibleCount] = useState(12);
 

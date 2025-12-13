@@ -14,14 +14,9 @@ function App() {
   const [entries, setEntries] = useState([]);
   const [stats, setStats] = useState(null);
 
-  // Load entries on mount
-  useEffect(() => {
-    loadData();
-  }, []);
-
   const loadData = async () => {
     // Force reload from user.json by clearing cache if needed
-    const seededEntries = await dataService.loadSampleData();
+    await dataService.loadSampleData();
 
     // Get fresh entries from localStorage
     const loadedEntries = dataService.getEntries();
@@ -32,6 +27,11 @@ function App() {
     setEntries(loadedEntries);
     setStats(statistics);
   };
+
+  // Load entries on mount
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const handleMoodSubmit = (formData) => {
     // Save mood entry to localStorage
