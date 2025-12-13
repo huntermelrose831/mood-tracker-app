@@ -6,7 +6,7 @@ const MOOD_OPTIONS = [
   { value: "happy", label: "😊", name: "Happy", rating: 4 },
   { value: "neutral", label: "😐", name: "Neutral", rating: 3 },
   { value: "sad", label: "😢", name: "Sad", rating: 2 },
-  { value: "stressed", label: "😰", name: "Stressed", rating: 1 },
+  { value: "angry", label: "😰", name: "Angry", rating: 1 },
 ];
 
 const ACTIVITY_OPTIONS = [
@@ -53,7 +53,7 @@ export default function MoodModal({ onSubmit, onClose }) {
     const newErrors = {};
     if (!formData.mood_category) {
       newErrors.mood = "Please select a mood";
-    }https://www.figma.com/board/wyKvXqjimoOaSsnRW3bFZt/User-Journey-Map?node-id=10-1688&t=i4Lfe42nwX3PNrCk-1
+    }
     if (!formData.date) {
       newErrors.date = "Please select a date";
     }
@@ -70,58 +70,67 @@ export default function MoodModal({ onSubmit, onClose }) {
 
   return (
     <>
-      <div className="modal-overlay" onClick={onClose}></div>
-      <div className="modal-content">
-        <div className="modal-header">
-          <h2>Log Your Mood</h2>
-          <button className="close-btn" onClick={onClose}>
+      <div className="mood__modal_overlay" onClick={onClose}></div>
+      <div className="mood__modal">
+        <div className="mood__modal_header">
+          <h2 className="mood__modal_title">Log Your Mood</h2>
+          <button className="mood__modal_close-button" onClick={onClose}>
             ✕
           </button>
         </div>
-        <div className="modal-body">
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Date</label>
+        <div className="mood__modal_body">
+          <form onSubmit={handleSubmit} className="mood__form">
+            <div className="mood__form_group">
+              <label className="mood__form_label">Date</label>
               <input
                 type="date"
+                className="mood__form_input"
                 value={formData.date}
                 onChange={(e) =>
                   setFormData({ ...formData, date: e.target.value })
                 }
                 max={new Date().toISOString().split("T")[0]}
               />
-              {errors.date && <span className="error">{errors.date}</span>}
+              {errors.date && (
+                <span className="mood__form_error">{errors.date}</span>
+              )}
             </div>
 
-            <div className="form-group">
-              <label>How are you feeling?</label>
-              <div className="mood-selector">
+            <div className="mood__form_group">
+              <label className="mood__form_label">How are you feeling?</label>
+              <div className="mood__form_mood-selector">
                 {MOOD_OPTIONS.map((mood) => (
                   <button
                     key={mood.value}
                     type="button"
-                    className={`mood-option ${
-                      formData.mood_category === mood.value ? "selected" : ""
+                    className={`mood__form_mood-option ${
+                      formData.mood_category === mood.value
+                        ? "mood__form_mood-option--selected"
+                        : ""
                     }`}
                     onClick={() => handleMoodSelect(mood)}
                   >
-                    <span className="mood-emoji">{mood.label}</span>
-                    <span className="mood-name">{mood.name}</span>
+                    <span className="mood__form_mood-emoji">{mood.label}</span>
+                    <span className="mood__form_mood-name">{mood.name}</span>
                   </button>
                 ))}
               </div>
-              {errors.mood && <span className="error">{errors.mood}</span>}
+              {errors.mood && (
+                <span className="mood__form_error">{errors.mood}</span>
+              )}
             </div>
 
-            <div className="form-group">
-              <label>Activities (optional)</label>
-              <div className="activity-selector">
+            <div className="mood__form_group">
+              <label className="mood__form_label">Activities (optional)</label>
+              <div className="mood__form_activity-selector">
                 {ACTIVITY_OPTIONS.map((activity) => (
                   <button
                     key={activity}
                     type="button"
-                    className={`activity-chip ${
-                      formData.activities.includes(activity) ? "selected" : ""
+                    className={`mood__form_activity-chip ${
+                      formData.activities.includes(activity)
+                        ? "mood__form_activity-chip--selected"
+                        : ""
                     }`}
                     onClick={() => handleActivityToggle(activity)}
                   >
@@ -131,9 +140,10 @@ export default function MoodModal({ onSubmit, onClose }) {
               </div>
             </div>
 
-            <div className="form-group">
-              <label>Notes (optional)</label>
+            <div className="mood__form_group">
+              <label className="mood__form_label">Notes (optional)</label>
               <textarea
+                className="mood__form_textarea"
                 value={formData.notes}
                 onChange={(e) =>
                   setFormData({ ...formData, notes: e.target.value })
@@ -143,7 +153,7 @@ export default function MoodModal({ onSubmit, onClose }) {
               />
             </div>
 
-            <button type="submit" className="submit-btn">
+            <button type="submit" className="mood__form_submit-button">
               Save Entry
             </button>
           </form>

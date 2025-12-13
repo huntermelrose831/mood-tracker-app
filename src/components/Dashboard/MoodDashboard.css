@@ -1,16 +1,177 @@
-.dashboard {
-  background: white;
+.mood-dashboard {
   padding: 2rem;
-  height: 800px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.dashboard h2 {
+.mood-dashboard__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.mood-dashboard__title {
   color: #333;
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
-.dashboard p {
+.mood-dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 900px;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.mood-dashboard__card {
+  aspect-ratio: 4/3;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.mood-dashboard__card:hover {
+  transform: translateY(-4px);
+  cursor: pointer;
+}
+
+.mood-dashboard__card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 226px;
+  width: 301px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0px -2px 0px 2px rgba(0, 0, 0, 0.5) inset;
+  vertical-align: top;
+  position: relative;
+}
+
+.mood-dashboard__emoji-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.mood-dashboard__emoji {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.mood-dashboard__day-label {
+  font-size: 1.2rem;
+  font-weight: 600;
   color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.mood-dashboard__date-label {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.mood-dashboard__card-details {
+  padding: 0 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  justify-content: center;
+}
+
+.mood-dashboard__card-weekday {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.mood-dashboard__card-date {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.mood-dashboard__card-moodnote {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #444;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.mood-dashboard__card-notes {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.mood-dashboard__load-more {
+  margin-top: 2rem;
+  padding: 0.75rem 2rem;
+  background: #7ab84a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.mood-dashboard__load-more:hover {
+  background: #6aa03a;
+}
+
+.mood-dashboard__pagination {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.mood-dashboard__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ccc;
+  transition: background 0.3s;
+}
+
+.mood-dashboard__dot--active {
+  background: #333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .mood-dashboard__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .mood-dashboard__emoji-circle {
+    width: 60px;
+    height: 60px;
+  }
+
+  .mood-dashboard__emoji {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 480px) {
+  .mood-dashboard__grid {
+    grid-template-columns: 1fr;
+  }
 }
