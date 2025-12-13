@@ -4,26 +4,31 @@ import MoodDashboard from "../Dashboard/MoodDashboard";
 import Header from "../header/header.jsx";
 import Footer from "../footer/footer.jsx";
 import "./App.css";
+import ModalForm from "../../ModalForm/ModalForm.jsx";
+import ModalContent from "../../ModalForm/ModalContent.jsx";
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [view, setView] = useState("dashboard"); // 'dashboard' or 'stats'
+  const [isOpen, setIsOpen] = useState(false);
+  const [view, setView] = useState("dashboard");
+  const [modal, setModal] = useState(""); // 'dashboard' or 'stats'
 
   // TODO: Implement data loading and state management
   // - Load entries from localStorage
   // - Load sample data on first run
   // - Calculate statistics
 
+
+
   const handleMoodSubmit = (formData) => {
     // TODO: Save mood entry to localStorage
     console.log("Mood submitted:", formData);
-    setIsModalOpen(false);
+    setIsOpen(false);
   };
 
   return (
     <div className="app">
       <Header
-        onLogMoodClick={() => setIsModalOpen(true)}
+        onLogMoodClick={() => setIsOpen(true)}
         onStatsClick={() => setView(view === "stats" ? "dashboard" : "stats")}
         currentView={view}
       />
@@ -41,10 +46,14 @@ function App() {
 
       <Footer />
 
-      {isModalOpen && (
+      <ModalForm isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <ModalContent modal={modal}/>
+      </ModalForm>
+
+      {isOpen && (
         <MoodModal
           onSubmit={handleMoodSubmit}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => setIsOpen(false)}
         />
       )}
     </div>

@@ -46,6 +46,7 @@ export default function MoodModal({ onSubmit, onClose }) {
       ? formData.activities.filter((a) => a !== activity)
       : [...formData.activities, activity];
 
+      
     setFormData({ ...formData, activities: newActivities });
   };
 
