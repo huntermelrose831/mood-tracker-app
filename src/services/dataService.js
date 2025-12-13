@@ -10,7 +10,6 @@ export const MOOD_ICONS = {
   neutral: "/src/assets/Okay.png",
   sad: "/src/assets/Sad.png",
   angry: "/src/assets/Angry.png",
-  calm: "/src/assets/Sad.png", // Using Sad.png for calm, update if you add a specific icon
 };
 
 // Mood color mapping
@@ -20,7 +19,6 @@ export const MOOD_COLORS = {
   neutral: "rgba(177, 71, 201, 1)",
   sad: "rgba(98, 98, 255, 1)",
   angry: "#D85C5C",
-  calm: "rgba(98, 98, 255, 1)",
 };
 
 // Format a Date as YYYY-MM-DD in local time
@@ -99,8 +97,6 @@ export const dataService = {
     }
   },
 
-  // ...existing code...
-
   // Load data from user.json - use actual datetime values
   loadSampleData: async () => {
     try {
@@ -130,14 +126,14 @@ export const dataService = {
 
           return {
             id: `${Date.now()}-${index}`,
-            date: formatDateLocal(datetime), // Use actual date from JSON
+            date: formatDateLocal(datetime),
             mood_category: moodMap.category,
             mood_rating: moodMap.rating,
             activities: item.activities ? [item.activities] : [],
             mood_note: item.mood_note || "",
             notes: item.activities || "",
-            weekday: item.weekday, // Use weekday from JSON (already correct)
-            timestamp: item.datetime, // Keep original datetime
+            weekday: getWeekdayName(datetime),
+            timestamp: item.datetime,
           };
         });
 
@@ -191,14 +187,5 @@ export const dataService = {
       most_common_mood: mostCommon,
       total_entries: data.length,
     };
-  },
-
-  // Get entries for a specific date range (useful for weekly view)
-  getEntriesForDateRange: (startDate, endDate) => {
-    const entries = dataService.getEntries();
-    return entries.filter((entry) => {
-      const entryDate = new Date(entry.date);
-      return entryDate >= new Date(startDate) && entryDate <= new Date(endDate);
-    });
   },
 };

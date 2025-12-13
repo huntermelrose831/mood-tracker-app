@@ -1,10 +1,10 @@
 .profile {
-  background: #fffbee; /* Top color from gradient */
+  background: transparent; /* Blend with gradient background */
   padding: 1.5rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border: none;
 }
 
 .profile__left {
