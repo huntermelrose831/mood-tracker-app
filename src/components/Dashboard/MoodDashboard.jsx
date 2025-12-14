@@ -167,13 +167,6 @@ export default function MoodDashboard({ entries }) {
                 flippedCards.has(index) ? (
                   // Flipped state - show details
                   <div className="mood-dashboard__card-details">
-                    <h3 className="mood-dashboard__card-weekday">
-                      {dayData.day}
-                    </h3>
-                    <h3 className="mood-dashboard__card-date">
-                      {dayData.date}
-                    </h3>
-
                     {dayData.mood_note && (
                       <p className="mood-dashboard__card-moodnote">
                         {dayData.mood_note}
@@ -185,13 +178,19 @@ export default function MoodDashboard({ entries }) {
                     </p>
                   </div>
                 ) : (
-                  // Normal state - show emoji
+                  // Normal state - show emoji with weekday and date
                   <div className="mood-dashboard__emoji-container">
+                    <h3 className="mood-dashboard__card-weekday">
+                      {dayData.day}
+                    </h3>
                     <img
                       src={dayData.emoji}
                       alt={dayData.mood}
                       className="mood-dashboard__emoji"
                     />
+                    <h3 className="mood-dashboard__card-date">
+                      {dayData.date}
+                    </h3>
                   </div>
                 )
               ) : (

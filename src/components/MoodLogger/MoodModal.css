@@ -119,9 +119,9 @@
   flex: 1;
   min-width: 100px;
   padding: 1rem 0.5rem;
-  border: 2px solid #e0e0e0;
+  border: none;
   border-radius: 8px;
-  background: white;
+  background: transparent;
   cursor: pointer;
   transition: all 0.3s;
   display: flex;
@@ -133,11 +133,6 @@
 .mood__form_mood-option:hover {
   border-color: #646cff;
   transform: translateY(-2px);
-}
-
-.mood__form_mood-option--selected {
-  border-color: #646cff;
-  background: #f0f0ff;
 }
 
 .mood__form_mood-emoji {
