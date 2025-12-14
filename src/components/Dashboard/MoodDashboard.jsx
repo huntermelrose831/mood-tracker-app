@@ -88,34 +88,9 @@ export default function MoodDashboard({ entries }) {
     };
   });
 
-<<<<<<< HEAD
   const handleCardFlip = (cardIndex) => {
     // Only allow flipping if the card has mood data
     if (!displayData[cardIndex].mood) return;
-=======
-  /**
-   * Handle Card Click
-   *
-   * Toggles card flip state - cards flip back after 60 seconds.
-   * Only allows flip if the card has mood data.
-   *
-   * @param {number} index - Index of the clicked card in weekDays array
-   */
-  const handleCardClick = (index) => {
-    if (weekDays[index].mood) {
-      setFlippedCards((prev) => {
-        const newSet = new Set(prev);
-        if (newSet.has(index)) {
-          // If already flipped, unflip it immediately and clear timer
-          newSet.delete(index);
-          if (timersRef.current.has(index)) {
-            clearTimeout(timersRef.current.get(index));
-            timersRef.current.delete(index);
-          }
-        } else {
-          // Otherwise, flip it and set 5-second auto-flip timer
-          newSet.add(index);
->>>>>>> 71b07d0 (feat: activites styles)
 
     setFlippedCards((previousFlipped) => {
       const newFlippedSet = new Set(previousFlipped);
@@ -170,17 +145,6 @@ export default function MoodDashboard({ entries }) {
   const loadMoreEntries = () => {
     setVisibleCount((prevCount) => prevCount + 6); // Load 6 more entries
   };
-
-  /**
-   * Cleanup effect - clear all timers when component unmounts
-   */
-  useEffect(() => {
-    const timers = timersRef.current;
-    return () => {
-      timers.forEach((timerId) => clearTimeout(timerId));
-      timers.clear();
-    };
-  }, []);
 
   return (
     <div className="mood-dashboard">
