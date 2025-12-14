@@ -2,6 +2,7 @@
   background: transparent; /* Blend with gradient background */
   padding: 0 26px;
   display: flex;
+  margin-top: 7px;
   justify-content: space-between;
   align-items: center;
   border: none;
@@ -26,7 +27,7 @@
   line-height: 44px;
   font-family: "Balsamiq Sans", -apple-system, "Segoe UI", Roboto, Arial,
     sans-serif;
-  color: #333;
+  color: #000000;
   margin: 0;
 }
 
@@ -72,4 +73,105 @@
 .profile__button--primary:hover {
   background: #3d6f39;
   border-color: #3d6f39;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .profile {
+    padding: 0 20px;
+  }
+
+  .profile__name {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  .profile__button {
+    width: 160px;
+    height: 48px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 16px;
+  }
+
+  .profile__left {
+    gap: 1rem;
+  }
+
+  .profile__avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile__name {
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  .profile__edit-button {
+    width: 36px;
+    height: 36px;
+    background-size: contain;
+  }
+
+  .profile__right {
+    gap: 16px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .profile__button {
+    width: 140px;
+    height: 44px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile {
+    padding: 16px 12px;
+  }
+
+  .profile__avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  .profile__name {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .profile__edit-button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .profile__right {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .profile__button {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 360px) {
+  .profile__left {
+    gap: 0.75rem;
+  }
+
+  .profile__name {
+    font-size: 18px;
+    line-height: 22px;
+  }
 }

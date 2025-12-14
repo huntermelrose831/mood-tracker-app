@@ -17,6 +17,7 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
+  animation: fadeIn 0.3s ease;
 }
 
 .stats__container {
@@ -28,6 +29,7 @@
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideInFromBottom 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .stats__header {
@@ -126,7 +128,18 @@
   margin-bottom: 0;
 }
 
-/* Responsive design */
+/* Responsive Design: 330px - 1440px */
+@media (max-width: 1024px) {
+  .stats__summary {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .stats__chart-container {
+    height: 350px;
+  }
+}
+
 @media (max-width: 768px) {
   .stats__container {
     width: 95%;
@@ -147,14 +160,112 @@
 
   .stats__summary {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .stats__chart-container {
     height: 300px;
     padding: 1rem;
+    margin-bottom: 2rem;
   }
 
   .stats__summary-value {
     font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats__container {
+    width: 98%;
+    max-height: 98vh;
+    border-radius: 12px;
+  }
+
+  .stats__header {
+    padding: 1rem;
+  }
+
+  .stats__title {
+    font-size: 1.25rem;
+  }
+
+  .stats__close {
+    width: 32px;
+    height: 32px;
+    font-size: 1.5rem;
+  }
+
+  .stats__content {
+    padding: 1rem;
+  }
+
+  .stats__summary-card {
+    padding: 1rem;
+  }
+
+  .stats__summary-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .stats__summary-value {
+    font-size: 1.75rem;
+  }
+
+  .stats__chart-container {
+    height: 250px;
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .stats__header {
+    padding: 0.75rem;
+  }
+
+  .stats__title {
+    font-size: 1.1rem;
+  }
+
+  .stats__content {
+    padding: 0.75rem;
+  }
+
+  .stats__summary-value {
+    font-size: 1.5rem;
+  }
+
+  .stats__chart-container {
+    height: 220px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .stats__container {
+    max-width: 1400px;
+  }
+
+  .stats__chart-container {
+    height: 450px;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }

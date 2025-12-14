@@ -59,8 +59,6 @@ function App() {
     };
 
     loadData();
-    // Disable exhaustive-deps: loadData is only needed on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /**
