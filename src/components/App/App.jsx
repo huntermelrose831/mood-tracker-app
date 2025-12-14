@@ -10,18 +10,15 @@ import "./App.css";
 import ModalForm from "../../ModalForm/ModalForm.jsx";
 import ModalContent from "../../ModalForm/ModalContent.jsx";
 import EditProfileModal from "../editProfile/editProfileModal.jsx";
+import AddMood from "../addMood/addMood.jsx";
 
 function App() {
-
-  const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState("dashboard");
-  const [modal, setModal] = useState(""); // 'dashboard' or 'stats'
-
+  const [activeModal, setActiveModal] = useState(null); // 'dashboard' or 'stats'
 
   // Data state management
   const [entries, setEntries] = useState([]); // Array of 200 mood entries from user.json
   const [stats, setStats] = useState(null); // Calculated statistics (avg mood, most common, total)
-
 
   useEffect(() => {
     const loadData = async () => {
@@ -45,8 +42,6 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  
-   
   const handleMoodSubmit = async (formData) => {
     // Persist new entry to localStorage with generated ID and timestamp
     const newEntry = dataService.saveEntry(formData);
@@ -63,42 +58,40 @@ function App() {
 
     // Hide the mood logging modal
     setIsOpen(false);
-
   };
 
+  const openModal = (type) => {
+    setActiveModal(type);
+  };
+  const closeModal = () => {
+    setActiveModal(null);
+  };
   const handleStatsClick = () => {
-    setModal("stats");
+    setActiveModal("stats");
   };
   const handleMoodClick = () => {
-    setModal("mood");
-  }
+    setActiveModal("mood");
+  };
   const handleEditMoodClick = () => {
-    setModal("editMood");
-  }
+    setActiveModal("editMood");
+  };
   const handleEditProfileClick = () => {
-    setModal("editProfile");
-  }
+    setActiveModal("editProfile");
+  };
   const handleAddClick = () => {
-    setModal("add");
-  }
+    setActiveModal("add");
+  };
+  
   return (
     <div className="app">
+      <Header />
 
-      <Header
-        onLogMoodClick={() => setModal("mood")}
-        onStatsClick={() => setView(view === "stats" ? "dashboard" : "stats")}
-        currentView={view}
-
-     
-      />
-      
       <Profile
-        handleMoodClick={() => setModal("mood")}
-        handleStatsClick={handleStatsClick}
-
+        onLogMoodClick={() => openModal("mood")}
+        onStatsClick={() => openModal("stats")}
+        handleEditProfileClick={() => openModal("editProfile")}
       />
 
-     
       <main className="app__main">
         <MoodDashboard entries={entries} stats={stats} />
       </main>
@@ -106,52 +99,30 @@ function App() {
       {/* Footer with copyright information */}
       <Footer />
 
-
-      <ModalForm isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        <ModalContent modal={modal}/>
+      <ModalForm isOpen={activeModal !== null} onClose={closeModal}>
+        {activeModal === "editMood" && (
+          <EditMoodModal onSubmit={handleMoodSubmit} closeModal={closeModal} />
+        )}
+        {activeModal === "mood" && (
+          <MoodModal onSubmit={handleMoodSubmit} closeModal={closeModal} />
+        )}
+        {activeModal === "editProfile" && (
+          <EditProfileModal closeModal={closeModal} />
+        )}
+        {activeModal === "add" && (
+          <AddMood onSubmit={handleMoodSubmit} closeModal={closeModal} />
+        )}
       </ModalForm>
 
-  
-
-      
-   
-
-      {modal === "mood" && (
-        <MoodModal
-          onSubmit={handleMoodSubmit}
+      {activeModal === "stats" && (
+        <Stats
+          entries={entries}
           onClose={() => setIsOpen(false)}
+          closeModal={closeModal}
         />
       )}
-
-      {modal === "stats" && (
-        <Stats entries={entries} onClose={() => setIsOpen(false)} />
-      )}
-
-      {modal === "editMood" && (
-        <EditMoodModal
-          onSubmit={handleMoodSubmit}
-          onClose={() => setIsOpen(false)}
-        />
-      )}
-
-      {modal === "editProfile" && (
-        <EditProfileModal
-          onClose={() => setIsOpen(false)}
-        />
-      )}
-
-      {modal === "add" && ( 
-        <AddMood
-          onSubmit={handleMoodSubmit}
-          onClose={() => setIsOpen(false)}
-        />
-      )}
-
-
     </div>
   );
 }
-
-
 
 export default App;

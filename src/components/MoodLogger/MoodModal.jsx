@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./MoodModal.css";
+import "../editProfile/editProfile.css";
 
 const MOOD_OPTIONS = [
   { value: "excited", label: "😄", name: "Excited", rating: 5 },

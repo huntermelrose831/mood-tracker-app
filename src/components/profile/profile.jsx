@@ -1,13 +1,9 @@
 import "./profile.css";
 import Avatar from "../../assets/Avatar.jpg";
-export default function Profile({ onLogMoodClick, onStatsClick }) {
+export default function Profile({ onLogMoodClick, onStatsClick, handleEditProfileClick }) {
   // You can later make these dynamic from user data
   const userName = "Eve Smith";
   const userAvatar = Avatar;
-  const handleEditProfile = () => {
-    console.log("Edit profile clicked");
-    // TODO: Open edit profile modal
-  };
 
   return (
     <div className="profile">
@@ -16,7 +12,7 @@ export default function Profile({ onLogMoodClick, onStatsClick }) {
         <h2 className="profile__name">{userName}</h2>
         <button
           className="profile__edit-button"
-          onClick={handleEditProfile}
+          onClick={handleEditProfileClick}
         ></button>
       </div>
 
