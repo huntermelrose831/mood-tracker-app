@@ -1,5 +1,4 @@
 .mood-dashboard {
-  padding: 2rem;
   min-height: 70vh;
   display: flex;
   flex-direction: column;
@@ -20,10 +19,9 @@
 .mood-dashboard__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  gap: 45px 40px;
   max-width: 900px;
   width: 100%;
-  margin-bottom: 2rem;
 }
 
 .mood-dashboard__card {
