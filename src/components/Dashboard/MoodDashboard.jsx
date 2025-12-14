@@ -1,19 +1,3 @@
-/**
- * Mood Dashboard Component
- *
- * Main content area displaying mood entries as interactive cards.
- *
- * Features:
- * - Displays 200 mood entries from user.json (user_id 30)
- * - Pagination: Shows 12 cards initially, "Show More" button loads +12
- * - Click-to-expand: Cards expand to show mood notes and activities
- * - Color transitions: Darker default color, lighter when expanded
- * - Sorted by date descending (newest first)
- *
- * Props:
- * @param {Array} entries - Array of mood entry objects from App.jsx
- */
-
 import { useState, useEffect, useRef } from "react";
 import "./MoodDashboard.css";
 import ExcitedIcon from "../../assets/Excited.png";
@@ -22,27 +6,27 @@ import OkayIcon from "../../assets/Okay.png";
 import SadIcon from "../../assets/Sad.png";
 import AngryIcon from "../../assets/Angry.png";
 
-// Mood category to icon mapping
+// Mapping mood types to their corresponding icons
 const MOOD_ICONS = {
   excited: ExcitedIcon,
   happy: HappyIcon,
   neutral: OkayIcon,
   sad: SadIcon,
   angry: AngryIcon,
-  calm: SadIcon, // Using sad icon as fallback
+  calm: SadIcon, // Note: using sad icon for calm too - might want to get a dedicated calm icon later
 };
 
-// Default mood card colors (darker shades)
+// Default colors for each mood state
 const MOOD_COLORS = {
   excited: "rgba(214, 172, 66, 1)",
   happy: "rgba(121, 181, 48, 1)",
   neutral: "rgba(177, 71, 201, 1)",
   sad: "rgba(98, 98, 255, 1)",
   angry: "#D85C5C",
-  calm: "rgba(98, 98, 255, 1)",
+  calm: "rgba(98, 98, 255, 1)", // Same as sad for now
 };
 
-// Expanded mood card colors (lighter shades for contrast)
+// Brighter colors when cards are flipped - makes it more engaging
 const MOOD_COLORS_EXPANDED = {
   excited: "#FFD97B",
   happy: "#CBFF8D",
@@ -53,177 +37,167 @@ const MOOD_COLORS_EXPANDED = {
 };
 
 export default function MoodDashboard({ entries }) {
-  // Track which cards are flipped (Set of indices)
   const [flippedCards, setFlippedCards] = useState(new Set());
-  // Track how many cards to display (starts at 6, increases by 6 on "Show More")
-  const [visibleCount, setVisibleCount] = useState(6);
-  // Track active timers for auto-flip (Map of index -> timeoutId)
+  const [visibleCount, setVisibleCount] = useState(6); // Show 6 cards initially
+
+  // Using ref to keep track of timers so they don't get lost on re-renders
   const timersRef = useRef(new Map());
 
-  /**
-   * Sort entries by date descending (newest first)
-   * Uses spread operator to avoid mutating original array
-   */
+  // Sort entries by date (newest first)
   const sortedEntries = [...entries].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   );
 
-  /**
-   * Limit to 3 cards per day
-   * Group entries by date and take max 3 entries per day
-   */
+  // Limit entries to max 3 per day to avoid flooding the grid
+  // This was getting messy with multiple entries per day
   const limitedEntries = [];
-  const dateCount = {};
+  const entriesPerDay = {}; // Keep track of how many entries we have per day
 
   for (const entry of sortedEntries) {
-    if (!dateCount[entry.date]) {
-      dateCount[entry.date] = 0;
+    const currentDate = entry.date;
+
+    if (!entriesPerDay[currentDate]) {
+      entriesPerDay[currentDate] = 0;
     }
 
-    if (dateCount[entry.date] < 3) {
+    if (entriesPerDay[currentDate] < 3) {
       limitedEntries.push(entry);
-      dateCount[entry.date]++;
+      entriesPerDay[currentDate]++;
     }
   }
 
-  // Slice array to only show the number of visible entries
   const visibleEntries = limitedEntries.slice(0, visibleCount);
 
-  /**
-   * Transform entries into card data format
-   *
-   * Process:
-   * 1. Parse date string as local time to avoid timezone shifts
-   * 2. Format as short date (MM/DD)
-   * 3. Extract mood category, notes, and activities
-   * 4. Map to icon and color based on mood
-   */
-  const weekDays = visibleEntries.map((entry) => {
-    // Parse date components manually to avoid timezone conversion
-    // Example: "2024-12-04" → Date(2024, 11, 4) in local time
+  // Transform entries into the format we need for display
+  const displayData = visibleEntries.map((entry) => {
+    // Parse the date string to get a proper Date object
     const [year, month, day] = entry.date.split("-");
-    const date = new Date(year, month - 1, day); // month - 1 because JS months are 0-indexed
-    const shortDate = `${date.getMonth() + 1}/${date.getDate()}`; // Format as "12/4"
+    const dateObj = new Date(year, month - 1, day); // month is 0-indexed in JS
+    const shortDateFormat = `${dateObj.getMonth() + 1}/${dateObj.getDate()}`;
 
     return {
-      day: entry.weekday, // "Monday", "Tuesday", etc.
-      date: shortDate, // "12/4"
-      fullDate: entry.date, // "2024-12-04" (for reference)
-      mood: entry.mood_category, // "excited", "happy", etc.
-      emoji: MOOD_ICONS[entry.mood_category], // PNG image path
-      color: MOOD_COLORS[entry.mood_category], // Default darker color
-      mood_note: entry.mood_note || "", // User's written note
-      notes: entry.notes || "No notes for this day", // Activities or fallback message
-      activities: entry.activities || [], // Array of activity strings
+      day: entry.weekday,
+      date: shortDateFormat,
+      fullDate: entry.date,
+      mood: entry.mood_category,
+      emoji: MOOD_ICONS[entry.mood_category],
+      color: MOOD_COLORS[entry.mood_category],
+      mood_note: entry.mood_note || "",
+      notes: entry.notes || "No notes for this day",
+      activities: entry.activities || [],
     };
   });
 
-  /**
-   * Handle Card Click
-   *
-   * Toggles card flip state - cards flip back after 60 seconds.
-   * Only allows flip if the card has mood data.
-   *
-   * @param {number} index - Index of the clicked card in weekDays array
-   */
-  const handleCardClick = (index) => {
-    if (weekDays[index].mood) {
-      setFlippedCards((prev) => {
-        const newSet = new Set(prev);
-        if (newSet.has(index)) {
-          // If already flipped, unflip it immediately and clear timer
-          newSet.delete(index);
-          if (timersRef.current.has(index)) {
-            clearTimeout(timersRef.current.get(index));
-            timersRef.current.delete(index);
-          }
-        } else {
-          // Otherwise, flip it and set 5-second auto-flip timer
-          newSet.add(index);
+  const handleCardFlip = (cardIndex) => {
+    // Only allow flipping if the card has mood data
+    if (!displayData[cardIndex].mood) return;
 
-          // Clear any existing timer for this card
-          if (timersRef.current.has(index)) {
-            clearTimeout(timersRef.current.get(index));
-          }
+    setFlippedCards((previousFlipped) => {
+      const newFlippedSet = new Set(previousFlipped);
 
-          // Set new timer to flip back after 5 seconds
-          const timerId = setTimeout(() => {
-            setFlippedCards((current) => {
-              const updated = new Set(current);
-              updated.delete(index);
-              return updated;
-            });
-            timersRef.current.delete(index);
-          }, 60000);
+      if (newFlippedSet.has(cardIndex)) {
+        // Card is already flipped, so flip it back
+        newFlippedSet.delete(cardIndex);
 
-          timersRef.current.set(index, timerId);
+        // Clear any existing timer for this card
+        if (timersRef.current.has(cardIndex)) {
+          clearTimeout(timersRef.current.get(cardIndex));
+          timersRef.current.delete(cardIndex);
         }
-        return newSet;
-      });
-    }
+      } else {
+        // Card is not flipped, so flip it
+        newFlippedSet.add(cardIndex);
+
+        // Clear any existing timer first (just in case)
+        if (timersRef.current.has(cardIndex)) {
+          clearTimeout(timersRef.current.get(cardIndex));
+        }
+
+        // Set timer to auto-flip back after 60 seconds
+        // 60 seconds should be enough time to read the details
+        const autoFlipTimer = setTimeout(() => {
+          setFlippedCards((currentFlipped) => {
+            const updated = new Set(currentFlipped);
+            updated.delete(cardIndex);
+            return updated;
+          });
+          timersRef.current.delete(cardIndex);
+        }, 60000);
+
+        timersRef.current.set(cardIndex, autoFlipTimer);
+      }
+
+      return newFlippedSet;
+    });
   };
 
-  /**
-   * Cleanup effect - clear all timers when component unmounts
-   */
+  // Cleanup timers when component unmounts
   useEffect(() => {
-    const timers = timersRef.current;
+    const activeTimers = timersRef.current;
+
     return () => {
-      timers.forEach((timerId) => clearTimeout(timerId));
-      timers.clear();
+      // Clear all active timers
+      activeTimers.forEach((timer) => clearTimeout(timer));
+      activeTimers.clear();
     };
   }, []);
 
+  const loadMoreEntries = () => {
+    setVisibleCount((prevCount) => prevCount + 6); // Load 6 more entries
+  };
+
   return (
     <div className="mood-dashboard">
-      {/* Grid layout for mood cards (responsive) */}
       <div className="mood-dashboard__grid">
-        {weekDays.map((day, index) => (
+        {displayData.map((dayData, index) => (
           <div
-            key={index}
+            key={index} // Could use fullDate as key but index works for now
             className="mood-dashboard__card"
-            onClick={() => handleCardClick(index)}
+            onClick={() => handleCardFlip(index)}
           >
             <div
               className="mood-dashboard__card-content"
               style={{
-                // Dynamic background color: lighter when flipped, darker when not flipped
                 backgroundColor: flippedCards.has(index)
-                  ? MOOD_COLORS_EXPANDED[day.mood]
-                  : day.color,
+                  ? MOOD_COLORS_EXPANDED[dayData.mood]
+                  : dayData.color,
               }}
             >
-              {day.mood ? (
-                // Card has mood data - show either flipped or unflipped view
+              {dayData.mood ? (
                 flippedCards.has(index) ? (
-                  // FLIPPED VIEW: Shows full details with text
+                  // Flipped state - show details
                   <div className="mood-dashboard__card-details">
-                    <h3 className="mood-dashboard__card-weekday">{day.day}</h3>
-                    <h3 className="mood-dashboard__card-date">{day.date}</h3>
-                    {/* Show mood note if available */}
-                    {day.mood_note && (
+                    {dayData.mood_note && (
                       <p className="mood-dashboard__card-moodnote">
-                        {day.mood_note}
+                        {dayData.mood_note}
                       </p>
                     )}
-                    {/* Show activities or default message */}
-                    <p className="mood-dashboard__card-notes">{day.notes}</p>
+
+                    <p className="mood-dashboard__card-notes">
+                      {dayData.notes}
+                    </p>
                   </div>
                 ) : (
-                  // UNFLIPPED VIEW: Shows only mood emoji icon
+                  // Normal state - show emoji with weekday and date
                   <div className="mood-dashboard__emoji-container">
+                    <h3 className="mood-dashboard__card-weekday">
+                      {dayData.day}
+                    </h3>
                     <img
-                      src={day.emoji}
-                      alt={day.mood}
+                      src={dayData.emoji}
+                      alt={dayData.mood}
                       className="mood-dashboard__emoji"
                     />
+                    <h3 className="mood-dashboard__card-date">
+                      {dayData.date}
+                    </h3>
                   </div>
                 )
               ) : (
-                // NO MOOD DATA: Shows empty card with day/date labels
+                // No mood data - show empty state
                 <>
-                  <p className="mood-dashboard__day-label">{day.day}</p>
-                  <p className="mood-dashboard__date-label">{day.date}</p>
+                  <p className="mood-dashboard__day-label">{dayData.day}</p>
+                  <p className="mood-dashboard__date-label">{dayData.date}</p>
                 </>
               )}
             </div>
@@ -231,12 +205,12 @@ export default function MoodDashboard({ entries }) {
         ))}
       </div>
 
-      {/* Show "Show More" button if there are more entries to display */}
+      {/* Show load more button if there are more entries to display */}
       {visibleCount < limitedEntries.length && (
         <div className="mood-dashboard__button-container">
           <button
             className="mood-dashboard__load-more"
-            onClick={() => setVisibleCount((prev) => prev + 6)} // Load 6 more cards
+            onClick={loadMoreEntries}
           >
             Show More
           </button>
