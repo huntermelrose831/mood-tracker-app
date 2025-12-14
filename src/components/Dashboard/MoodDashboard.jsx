@@ -121,7 +121,7 @@ export default function MoodDashboard({ entries }) {
   /**
    * Handle Card Click
    *
-   * Toggles card flip state - cards flip back after 5 seconds.
+   * Toggles card flip state - cards flip back after 60 seconds.
    * Only allows flip if the card has mood data.
    *
    * @param {number} index - Index of the clicked card in weekDays array
@@ -167,9 +167,10 @@ export default function MoodDashboard({ entries }) {
    * Cleanup effect - clear all timers when component unmounts
    */
   useEffect(() => {
+    const timers = timersRef.current;
     return () => {
-      timersRef.current.forEach((timerId) => clearTimeout(timerId));
-      timersRef.current.clear();
+      timers.forEach((timerId) => clearTimeout(timerId));
+      timers.clear();
     };
   }, []);
 

@@ -1,8 +1,8 @@
 .header {
   width: 100vw;
-
   background: transparent;
   margin: 0;
+  padding-left: 16px;
   position: relative;
   top: 0;
   display: flex;
@@ -12,18 +12,10 @@
 
 .header__title {
   width: 457px;
+  position: relative;
   height: 97px;
   object-fit: contain;
-  margin: 16px 16px 16px 0;
-  float: left;
-}
-.header__button--primary {
-  background: #646cff;
-  color: white;
-}
-
-.header__button--primary:hover {
-  background: #535bf2;
+  margin: 16px 0;
 }
 
 /* Responsive Design */

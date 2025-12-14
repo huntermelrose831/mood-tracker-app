@@ -36,9 +36,11 @@
 }
 
 .mood__modal_title {
-  font-size: 1.5rem;
-  color: #333;
+  color: #000000;
   margin: 0;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 44px;
 }
 
 .mood__modal_close-button {
@@ -46,7 +48,7 @@
   border: none;
   font-size: 2rem;
   cursor: pointer;
-  color: #666;
+  color: #000000;
   width: 40px;
   height: 40px;
   display: flex;
@@ -158,36 +160,49 @@
 
 .mood__form_activity-chip {
   padding: 0.5rem 1rem;
-  border: 2px solid #e0e0e0;
+  border: none;
   border-radius: 20px;
-  background: white;
+  background: linear-gradient(180deg, #fbf4de 0%, #e4dbbf 100%),
+    linear-gradient(
+      180deg,
+      rgba(210, 197, 156, 0.3) 73.64%,
+      rgba(255, 255, 255, 0.3) 88.18%
+    );
+
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #000000;
   cursor: pointer;
   transition: all 0.3s;
   font-size: 0.9rem;
 }
 
 .mood__form_activity-chip:hover {
-  border-color: #646cff;
+  border: none;
 }
 
 .mood__form_activity-chip--selected {
-  border-color: #646cff;
-  background: #646cff;
-  color: white;
+  color: #000000;
 }
 
 /* Submit Button */
 .mood__form_submit-button {
-  width: 100%;
-  padding: 1rem;
-  background: #646cff;
-  color: white;
+  width: 200px;
+  height: 55px;
   border: none;
   border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 20px;
+  line-height: 44px;
+  align-self: center;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0px -2px 0px 2px rgba(0, 0, 0, 0.5) inset;
+  font-family: "Balsamiq Sans", -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
+  background: linear-gradient(180deg, #50c878 0%, #317949 100%);
 }
 
 .mood__form_submit-button:hover {

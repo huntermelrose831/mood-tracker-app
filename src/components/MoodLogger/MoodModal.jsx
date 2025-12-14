@@ -12,35 +12,40 @@ const MOOD_OPTIONS = [
     icon: ExcitedIcon,
     name: "Excited",
     rating: 5,
-    gradient: "linear-gradient(180deg, #FFD97B 0%, #FFA500 100%)",
+    gradient: "linear-gradient(180deg, #FFFBEE 0%, #FFD97B 100%)",
+    activityColor: "linear-gradient(180deg, #FFD97B 0%, #D6AC42 100%)",
   },
   {
     value: "happy",
     icon: HappyIcon,
     name: "Happy",
     rating: 4,
-    gradient: "linear-gradient(180deg, #CBFF8D 0%, #7AB84A 100%)",
+    gradient: "linear-gradient(180deg, #FFFBEE 0%, #CBFF8D 100%)",
+    activityColor: "linear-gradient(180deg, #CBFF8D 0%, #79B530 100%)",
   },
   {
     value: "neutral",
     icon: OkayIcon,
     name: "Neutral",
     rating: 3,
-    gradient: "linear-gradient(180deg, #EA8CFF 0%, #B047C9 100%)",
+    gradient: "linear-gradient(180deg, #FFFBEE 0%, #EA8CFF 100%)",
+    activityColor: "linear-gradient(180deg, #EA8CFF 0%, #B147C9 100%)",
   },
   {
     value: "sad",
     icon: SadIcon,
     name: "Sad",
     rating: 2,
-    gradient: "linear-gradient(180deg, #8CD7FF 0%, #4A90E2 100%)",
+    gradient: "linear-gradient(180deg, #FFFBEE 0%, #8CD7FF 100%)",
+    activityColor: "linear-gradient(180deg, #8CD7FF 0%, #6262FF 100%)",
   },
   {
     value: "angry",
     icon: AngryIcon,
     name: "Angry",
     rating: 1,
-    gradient: "linear-gradient(180deg, #FF8C8C 0%, #D85C5C 100%)",
+    gradient: "linear-gradient(180deg, #FFFBEE 0%, #FF8C8C 100%)",
+    activityColor: "linear-gradient(180deg, #FF8C8C 0%, #DF4848 100%)",
   },
 ];
 
@@ -159,6 +164,12 @@ export default function MoodModal({ onSubmit, onClose }) {
                         : ""
                     }`}
                     onClick={() => handleActivityToggle(activity)}
+                    style={{
+                      background:
+                        formData.activities.includes(activity) && selectedMood
+                          ? selectedMood.activityColor
+                          : "linear-gradient(180deg, #fbf4de 0%, #e4dbbf 100%)",
+                    }}
                   >
                     {activity}
                   </button>
