@@ -209,7 +209,7 @@ export const dataService = {
         );
 
         // Limit to 200 most recent entries for performance
-        const recentEntries = sortedData.slice(0, 200);
+        const recentEntries = sortedData.slice(0, 416);
 
         // Transform user.json format to our app's internal format
         const entries = recentEntries.map((item, index) => {

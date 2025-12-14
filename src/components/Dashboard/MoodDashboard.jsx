@@ -66,8 +66,26 @@ export default function MoodDashboard({ entries }) {
     (a, b) => new Date(b.date) - new Date(a.date)
   );
 
+  /**
+   * Limit to 3 cards per day
+   * Group entries by date and take max 3 entries per day
+   */
+  const limitedEntries = [];
+  const dateCount = {};
+
+  for (const entry of sortedEntries) {
+    if (!dateCount[entry.date]) {
+      dateCount[entry.date] = 0;
+    }
+
+    if (dateCount[entry.date] < 3) {
+      limitedEntries.push(entry);
+      dateCount[entry.date]++;
+    }
+  }
+
   // Slice array to only show the number of visible entries
-  const visibleEntries = sortedEntries.slice(0, visibleCount);
+  const visibleEntries = limitedEntries.slice(0, visibleCount);
 
   /**
    * Transform entries into card data format
@@ -171,10 +189,10 @@ export default function MoodDashboard({ entries }) {
         ))}
       </div>
 
-      {/* Show \"Show More\" button if there are more entries to display */}
-      {visibleCount < entries.length && (
+      {/* Show "Show More" button if there are more entries to display */}
+      {visibleCount < limitedEntries.length && (
         <button
-          className="mood-dashboard__load-more\"
+          className="mood-dashboard__load-more"
           onClick={() => setVisibleCount((prev) => prev + 12)} // Load 12 more cards
         >
           Show More
