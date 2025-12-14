@@ -38,7 +38,7 @@ function App() {
   // Handle new mood entry submission
   const handleMoodSubmit = async (formData) => {
     try {
-      const newEntry = dataService.saveEntry(formData);
+      dataService.saveEntry(formData);
 
       // Reload data to get updated stats - not the most efficient but works
       await dataService.loadSampleData();
