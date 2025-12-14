@@ -12,3 +12,26 @@
 .footer__text {
   margin: 0;
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    padding: 1.25rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 1rem 0.75rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .footer {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

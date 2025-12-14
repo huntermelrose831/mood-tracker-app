@@ -1,24 +1,59 @@
 import { useState } from "react";
 import "./MoodModal.css";
+import ExcitedIcon from "../../assets/Excited.png";
+import HappyIcon from "../../assets/Happy.png";
+import OkayIcon from "../../assets/Okay.png";
+import SadIcon from "../../assets/Sad.png";
+import AngryIcon from "../../assets/Angry.png";
 
 const MOOD_OPTIONS = [
-  { value: "excited", label: "😄", name: "Excited", rating: 5 },
-  { value: "happy", label: "😊", name: "Happy", rating: 4 },
-  { value: "neutral", label: "😐", name: "Neutral", rating: 3 },
-  { value: "sad", label: "😢", name: "Sad", rating: 2 },
-  { value: "angry", label: "😰", name: "Angry", rating: 1 },
+  {
+    value: "excited",
+    icon: ExcitedIcon,
+    name: "Excited",
+    rating: 5,
+    gradient: "linear-gradient(180deg, #FFD97B 0%, #FFA500 100%)",
+  },
+  {
+    value: "happy",
+    icon: HappyIcon,
+    name: "Happy",
+    rating: 4,
+    gradient: "linear-gradient(180deg, #CBFF8D 0%, #7AB84A 100%)",
+  },
+  {
+    value: "neutral",
+    icon: OkayIcon,
+    name: "Neutral",
+    rating: 3,
+    gradient: "linear-gradient(180deg, #EA8CFF 0%, #B047C9 100%)",
+  },
+  {
+    value: "sad",
+    icon: SadIcon,
+    name: "Sad",
+    rating: 2,
+    gradient: "linear-gradient(180deg, #8CD7FF 0%, #4A90E2 100%)",
+  },
+  {
+    value: "angry",
+    icon: AngryIcon,
+    name: "Angry",
+    rating: 1,
+    gradient: "linear-gradient(180deg, #FF8C8C 0%, #D85C5C 100%)",
+  },
 ];
 
 const ACTIVITY_OPTIONS = [
-  "exercise",
-  "work",
-  "friends",
-  "family",
-  "hobbies",
-  "reading",
-  "entertainment",
-  "outdoors",
-  "relaxation",
+  "Exercise",
+  "Entertainment",
+  "Outdoors",
+  "Relaxation",
+  "Family",
+  "Hobbies",
+  "Reading",
+  "Friends",
+  "Work",
 ];
 
 export default function MoodModal({ onSubmit, onClose }) {
@@ -30,6 +65,7 @@ export default function MoodModal({ onSubmit, onClose }) {
     notes: "",
   });
 
+  const [selectedMood, setSelectedMood] = useState(null);
   const [errors, setErrors] = useState({});
 
   const handleMoodSelect = (mood) => {
@@ -38,6 +74,7 @@ export default function MoodModal({ onSubmit, onClose }) {
       mood_category: mood.value,
       mood_rating: mood.rating,
     });
+    setSelectedMood(mood);
     setErrors({ ...errors, mood: "" });
   };
 
@@ -71,33 +108,20 @@ export default function MoodModal({ onSubmit, onClose }) {
   return (
     <>
       <div className="mood__modal_overlay" onClick={onClose}></div>
-      <div className="mood__modal">
-        <div className="mood__modal_header">
-          <h2 className="mood__modal_title">Log Your Mood</h2>
-          <button className="mood__modal_close-button" onClick={onClose}>
-            ✕
-          </button>
-        </div>
+      <div
+        className="mood__modal"
+        style={{
+          background: selectedMood ? selectedMood.gradient : "#FFFBEE",
+        }}
+      >
+        <button className="mood__modal_close-button" onClick={onClose}>
+          ✕
+        </button>
+
         <div className="mood__modal_body">
           <form onSubmit={handleSubmit} className="mood__form">
             <div className="mood__form_group">
-              <label className="mood__form_label">Date</label>
-              <input
-                type="date"
-                className="mood__form_input"
-                value={formData.date}
-                onChange={(e) =>
-                  setFormData({ ...formData, date: e.target.value })
-                }
-                max={new Date().toISOString().split("T")[0]}
-              />
-              {errors.date && (
-                <span className="mood__form_error">{errors.date}</span>
-              )}
-            </div>
-
-            <div className="mood__form_group">
-              <label className="mood__form_label">How are you feeling?</label>
+              <h2 className="mood__form_title">How are you feeling today?</h2>
               <div className="mood__form_mood-selector">
                 {MOOD_OPTIONS.map((mood) => (
                   <button
@@ -110,8 +134,11 @@ export default function MoodModal({ onSubmit, onClose }) {
                     }`}
                     onClick={() => handleMoodSelect(mood)}
                   >
-                    <span className="mood__form_mood-emoji">{mood.label}</span>
-                    <span className="mood__form_mood-name">{mood.name}</span>
+                    <img
+                      src={mood.icon}
+                      alt={mood.name}
+                      className="mood__form_mood-emoji"
+                    />
                   </button>
                 ))}
               </div>
@@ -121,7 +148,6 @@ export default function MoodModal({ onSubmit, onClose }) {
             </div>
 
             <div className="mood__form_group">
-              <label className="mood__form_label">Activities (optional)</label>
               <div className="mood__form_activity-selector">
                 {ACTIVITY_OPTIONS.map((activity) => (
                   <button
@@ -141,20 +167,19 @@ export default function MoodModal({ onSubmit, onClose }) {
             </div>
 
             <div className="mood__form_group">
-              <label className="mood__form_label">Notes (optional)</label>
               <textarea
                 className="mood__form_textarea"
                 value={formData.notes}
                 onChange={(e) =>
                   setFormData({ ...formData, notes: e.target.value })
                 }
-                placeholder="How was your day?"
-                rows="3"
+                placeholder="Notes..."
+                rows="4"
               />
             </div>
 
             <button type="submit" className="mood__form_submit-button">
-              Save Entry
+              Add Mood
             </button>
           </form>
         </div>

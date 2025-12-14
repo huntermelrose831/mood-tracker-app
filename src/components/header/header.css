@@ -1,8 +1,8 @@
 .header {
   width: 100vw;
-  margin-left: calc(-50vw + 50%);
+
   background: transparent;
-  margin-bottom: 0;
+  margin: 0;
   position: relative;
   top: 0;
   display: flex;
@@ -11,11 +11,10 @@
 }
 
 .header__title {
-  color: #333;
-  margin: 16px;
-
   width: 457px;
   height: 97px;
+  object-fit: contain;
+  margin: 16px 16px 16px 0;
   float: left;
 }
 .header__button--primary {
@@ -25,4 +24,28 @@
 
 .header__button--primary:hover {
   background: #535bf2;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header__title {
+    font-size: 48px;
+    line-height: 44px;
+    margin: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__title {
+    font-size: 36px;
+    line-height: 32px;
+    margin: 8px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .header {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
 }

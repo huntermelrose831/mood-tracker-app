@@ -25,7 +25,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  animation: slideUp 0.3s ease;
+  animation: slideInFromBottom 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1001;
 }
 
@@ -212,13 +212,145 @@
   }
 }
 
-@keyframes slideUp {
+@keyframes slideInFromBottom {
   from {
-    transform: translateY(50px);
+    transform: translate(-50%, 100vh);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: translate(-50%, -50%);
     opacity: 1;
+  }
+}
+
+/* Responsive Design: 330px - 1440px */
+@media (max-width: 768px) {
+  .mood__modal {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .mood__modal_header {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .mood__modal_title {
+    font-size: 1.25rem;
+  }
+
+  .mood__modal_body {
+    padding: 1.5rem;
+  }
+
+  .mood__form_mood-option {
+    min-width: 80px;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .mood__form_mood-emoji {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mood__modal {
+    width: 98%;
+    max-height: 98vh;
+  }
+
+  .mood__modal_header {
+    padding: 1rem;
+  }
+
+  .mood__modal_title {
+    font-size: 1.1rem;
+  }
+
+  .mood__modal_close-button {
+    width: 32px;
+    height: 32px;
+    font-size: 1.5rem;
+  }
+
+  .mood__modal_body {
+    padding: 1rem;
+  }
+
+  .mood__form {
+    gap: 1.25rem;
+  }
+
+  .mood__form_label {
+    font-size: 0.9rem;
+  }
+
+  .mood__form_input,
+  .mood__form_textarea {
+    padding: 0.625rem;
+    font-size: 0.9rem;
+  }
+
+  .mood__form_mood-selector {
+    gap: 0.4rem;
+  }
+
+  .mood__form_mood-option {
+    min-width: 70px;
+    padding: 0.6rem 0.4rem;
+  }
+
+  .mood__form_mood-emoji {
+    width: 36px;
+    height: 36px;
+  }
+
+  .mood__form_mood-name {
+    font-size: 0.75rem;
+  }
+
+  .mood__form_activity-chip {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .mood__form_submit-button {
+    padding: 0.875rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .mood__modal_body {
+    padding: 0.875rem;
+  }
+
+  .mood__form_mood-selector {
+    gap: 0.3rem;
+  }
+
+  .mood__form_mood-option {
+    min-width: 60px;
+    padding: 0.5rem 0.3rem;
+  }
+
+  .mood__form_mood-emoji {
+    width: 32px;
+    height: 32px;
+  }
+
+  .mood__form_activity-selector {
+    gap: 0.4rem;
+  }
+
+  .mood__form_activity-chip {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .mood__modal {
+    max-width: 700px;
   }
 }
