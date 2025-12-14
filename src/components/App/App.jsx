@@ -55,7 +55,7 @@ function App() {
     <div className="app">
       <Header />
 
-            <Profile
+      <Profile
         onLogMoodClick={() => openModal("mood")}
         onStatsClick={() => openModal("stats")}
         onEditProfileClick={() => openModal("editProfile")}
