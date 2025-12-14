@@ -6,6 +6,7 @@ import OkayIcon from "../../assets/Okay.png";
 import SadIcon from "../../assets/Sad.png";
 import AngryIcon from "../../assets/Angry.png";
 
+// Mood configuration - could probably move this to a separate config file later
 const MOOD_OPTIONS = [
   {
     value: "excited",
@@ -49,7 +50,8 @@ const MOOD_OPTIONS = [
   },
 ];
 
-const ACTIVITY_OPTIONS = [
+// Available activity options - keeping it simple for now
+const AVAILABLE_ACTIVITIES = [
   "Exercise",
   "Entertainment",
   "Outdoors",
@@ -62,133 +64,189 @@ const ACTIVITY_OPTIONS = [
 ];
 
 export default function MoodModal({ onSubmit, onClose }) {
+  // Initialize form with today's date by default
   const [formData, setFormData] = useState({
-    date: new Date().toISOString().split("T")[0],
+    date: new Date().toISOString().split("T")[0], // Gets YYYY-MM-DD format
     mood_category: "",
     mood_rating: 0,
     activities: [],
     notes: "",
   });
 
-  const [selectedMood, setSelectedMood] = useState(null);
-  const [errors, setErrors] = useState({});
+  const [currentSelectedMood, setCurrentSelectedMood] = useState(null);
+  const [validationErrors, setValidationErrors] = useState({});
 
-  const handleMoodSelect = (mood) => {
-    setFormData({
-      ...formData,
-      mood_category: mood.value,
-      mood_rating: mood.rating,
-    });
-    setSelectedMood(mood);
-    setErrors({ ...errors, mood: "" });
+  // Handle mood selection and update form data accordingly
+  const selectMood = (moodOption) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      mood_category: moodOption.value,
+      mood_rating: moodOption.rating,
+    }));
+
+    setCurrentSelectedMood(moodOption);
+
+    // Clear any existing mood validation errors
+    if (validationErrors.mood) {
+      setValidationErrors((prevErrors) => ({
+        ...prevErrors,
+        mood: "",
+      }));
+    }
   };
 
-  const handleActivityToggle = (activity) => {
-    const newActivities = formData.activities.includes(activity)
-      ? formData.activities.filter((a) => a !== activity)
-      : [...formData.activities, activity];
+  // Toggle activity selection - add if not selected, remove if already selected
+  const toggleActivity = (activityName) => {
+    const currentActivities = formData.activities;
+    let updatedActivities;
 
-    setFormData({ ...formData, activities: newActivities });
+    if (currentActivities.includes(activityName)) {
+      // Remove activity if it's already selected
+      updatedActivities = currentActivities.filter(
+        (activity) => activity !== activityName
+      );
+    } else {
+      // Add activity if it's not selected
+      updatedActivities = [...currentActivities, activityName];
+    }
+
+    setFormData((prevData) => ({
+      ...prevData,
+      activities: updatedActivities,
+    }));
   };
 
-  const validate = () => {
-    const newErrors = {};
+  // Basic form validation - just checking required fields for now
+  const validateForm = () => {
+    const errors = {};
+
     if (!formData.mood_category) {
-      newErrors.mood = "Please select a mood";
+      errors.mood = "Please select a mood";
     }
+
     if (!formData.date) {
-      newErrors.date = "Please select a date";
+      errors.date = "Please select a date";
     }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0; // Returns true if no errors
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validate()) {
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    if (validateForm()) {
       onSubmit(formData);
     }
+    // If validation fails, error messages will be displayed
   };
+
+  const handleNotesChange = (event) => {
+    const newNotes = event.target.value;
+    setFormData((prevData) => ({
+      ...prevData,
+      notes: newNotes,
+    }));
+  };
+
+  // Default background when no mood is selected
+  const modalBackground = currentSelectedMood
+    ? currentSelectedMood.gradient
+    : "#FFFBEE";
 
   return (
     <div className="mood__modal_overlay" onClick={onClose}>
       <div
         className="mood__modal"
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          background: selectedMood ? selectedMood.gradient : "#FFFBEE",
-        }}
+        onClick={(e) => e.stopPropagation()} // Prevent modal from closing when clicking inside
+        style={{ background: modalBackground }}
       >
+        {/* Close button in top right */}
         <button className="mood__modal_close-button" onClick={onClose}>
           ✕
         </button>
 
         <div className="mood__modal_body">
-          <form onSubmit={handleSubmit} className="mood__form">
+          <form onSubmit={handleFormSubmit} className="mood__form">
+            {/* Mood selection section */}
             <div className="mood__form_group">
               <h2 className="mood__form_title">How are you feeling today?</h2>
+
               <div className="mood__form_mood-selector">
-                {MOOD_OPTIONS.map((mood) => (
+                {MOOD_OPTIONS.map((moodOption) => (
                   <button
-                    key={mood.value}
+                    key={moodOption.value}
                     type="button"
                     className={`mood__form_mood-option ${
-                      formData.mood_category === mood.value
+                      formData.mood_category === moodOption.value
                         ? "mood__form_mood-option--selected"
                         : ""
                     }`}
-                    onClick={() => handleMoodSelect(mood)}
+                    onClick={() => selectMood(moodOption)}
                   >
                     <img
-                      src={mood.icon}
-                      alt={mood.name}
+                      src={moodOption.icon}
+                      alt={moodOption.name}
                       className="mood__form_mood-emoji"
                     />
                   </button>
                 ))}
               </div>
-              {errors.mood && (
-                <span className="mood__form_error">{errors.mood}</span>
+
+              {validationErrors.mood && (
+                <span className="mood__form_error">
+                  {validationErrors.mood}
+                </span>
               )}
             </div>
 
+            {/* Activity selection section */}
             <div className="mood__form_group">
               <div className="mood__form_activity-selector">
-                {ACTIVITY_OPTIONS.map((activity) => (
-                  <button
-                    key={activity}
-                    type="button"
-                    className={`mood__form_activity-chip ${
-                      formData.activities.includes(activity)
-                        ? "mood__form_activity-chip--selected"
-                        : ""
-                    }`}
-                    onClick={() => handleActivityToggle(activity)}
-                    style={{
-                      background:
-                        formData.activities.includes(activity) && selectedMood
-                          ? selectedMood.activityColor
-                          : "linear-gradient(180deg, #fbf4de 0%, #e4dbbf 100%)",
-                    }}
-                  >
-                    {activity}
-                  </button>
-                ))}
+                {AVAILABLE_ACTIVITIES.map((activity) => {
+                  const isActivitySelected =
+                    formData.activities.includes(activity);
+
+                  // Determine button background color
+                  let buttonBackground;
+                  if (isActivitySelected && currentSelectedMood) {
+                    buttonBackground = currentSelectedMood.activityColor;
+                  } else {
+                    buttonBackground =
+                      "linear-gradient(180deg, #fbf4de 0%, #e4dbbf 100%)";
+                  }
+
+                  return (
+                    <button
+                      key={activity}
+                      type="button"
+                      className={`mood__form_activity-chip ${
+                        isActivitySelected
+                          ? "mood__form_activity-chip--selected"
+                          : ""
+                      }`}
+                      onClick={() => toggleActivity(activity)}
+                      style={{ background: buttonBackground }}
+                    >
+                      {activity}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
+            {/* Notes section */}
             <div className="mood__form_group">
               <textarea
                 className="mood__form_textarea"
                 value={formData.notes}
-                onChange={(e) =>
-                  setFormData({ ...formData, notes: e.target.value })
-                }
+                onChange={handleNotesChange}
                 placeholder="Notes..."
                 rows="4"
               />
             </div>
 
+            {/* Submit button */}
             <button type="submit" className="mood__form_submit-button">
               Add Mood
             </button>
