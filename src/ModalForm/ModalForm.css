@@ -1,0 +1,90 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0000004d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+}
+
+.modal_opened {
+  visibility: visible;
+}
+
+.modal__close {
+  background-image: url(../../images/Union.svg);
+  position: absolute;
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  border: 2px;
+  width: 14px;
+  height: 14px;
+  top: 20px;
+  right: 28px;
+  padding: 0;
+}
+
+.modal__form {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  justify-content: space-between;
+}
+
+.modal__input {
+  border: 0;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.modal__input-box {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.modal__input-border {
+  width: 100%;
+  border: 1px black solid;
+  margin-bottom: 24px;
+}
+
+.modal__title {
+  font-family: CabinetGrotesk;
+  margin: 0;
+  margin-bottom: 24px;
+  line-height: 20px;
+  font-size: 16px;
+  width: 295px;
+  height: 20px;
+}
+
+.modal__btn {
+  width: 124px;
+  height: 36px;
+  border-radius: 5px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-around;
+  display: flex;
+  padding: 0;
+  font-family: CabinetGrotesk-med;
+  line-height: 20px;
+  font-size: 16px;
+  background-color: #0000004d;
+  color: white;
+  margin-top: 32px;
+}
+
+.modal__btn:hover {
+  background-color: black;
+}

@@ -1,0 +1,6 @@
+const ModalTypes ={
+    ADD_MOOD: 'ADD_MOOD',
+    EDIT_MOOD: "EDIT_MOOD",
+    EDIT_PROFILE: "EDIT_PROFILE",
+    VIEW_STATS: "VIEW_STATS"
+}

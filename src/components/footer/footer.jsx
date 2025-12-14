@@ -2,8 +2,10 @@ import "./footer.css";
 
 export default function Footer() {
   return (
-    <footer className="app-footer">
-      <p>© 2025 Holiday Mood Tracker | Built with ❤️ by SE, DS & UX/UI Teams</p>
+    <footer className="footer">
+      <p className="footer__text">
+        © 2025 Holiday Mood Tracker | Built with ❤️ by The Elf-gineers (Team 2)
+      </p>
     </footer>
   );
 }
