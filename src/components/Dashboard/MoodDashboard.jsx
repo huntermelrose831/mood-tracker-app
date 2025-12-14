@@ -55,8 +55,8 @@ const MOOD_COLORS_EXPANDED = {
 export default function MoodDashboard({ entries }) {
   // Track which cards are flipped (Set of indices)
   const [flippedCards, setFlippedCards] = useState(new Set());
-  // Track how many cards to display (starts at 12, increases by 12 on "Show More")
-  const [visibleCount, setVisibleCount] = useState(12);
+  // Track how many cards to display (starts at 6, increases by 6 on "Show More")
+  const [visibleCount, setVisibleCount] = useState(6);
   // Track active timers for auto-flip (Map of index -> timeoutId)
   const timersRef = useRef(new Map());
 
@@ -235,7 +235,7 @@ export default function MoodDashboard({ entries }) {
         <div className="mood-dashboard__button-container">
           <button
             className="mood-dashboard__load-more"
-            onClick={() => setVisibleCount((prev) => prev + 12)} // Load 12 more cards
+            onClick={() => setVisibleCount((prev) => prev + 6)} // Load 6 more cards
           >
             Show More
           </button>

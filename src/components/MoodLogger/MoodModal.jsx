@@ -106,10 +106,10 @@ export default function MoodModal({ onSubmit, onClose }) {
   };
 
   return (
-    <>
-      <div className="mood__modal_overlay" onClick={onClose}></div>
+    <div className="mood__modal_overlay" onClick={onClose}>
       <div
         className="mood__modal"
+        onClick={(e) => e.stopPropagation()}
         style={{
           background: selectedMood ? selectedMood.gradient : "#FFFBEE",
         }}
@@ -184,6 +184,6 @@ export default function MoodModal({ onSubmit, onClose }) {
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
