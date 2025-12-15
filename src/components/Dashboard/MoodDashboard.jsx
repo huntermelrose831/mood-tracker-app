@@ -36,17 +36,19 @@ const MOOD_COLORS_EXPANDED = {
   calm: "#8CD7FF",
 };
 
-export default function MoodDashboard({ entries }) {
+export default function MoodDashboard({ entries, onDelete }) {
   const [flippedCards, setFlippedCards] = useState(new Set());
   const [visibleCount, setVisibleCount] = useState(6); // Show 6 cards initially
 
   // Using ref to keep track of timers so they don't get lost on re-renders
   const timersRef = useRef(new Map());
 
-  // Sort entries by date (newest first)
-  const sortedEntries = [...entries].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
+  // Sort entries by timestamp (newest first), fallback to date if no timestamp
+  const sortedEntries = [...entries].sort((a, b) => {
+    const timeA = a.timestamp ? new Date(a.timestamp) : new Date(a.date);
+    const timeB = b.timestamp ? new Date(b.timestamp) : new Date(b.date);
+    return timeB - timeA;
+  });
 
   // Limit entries to max 3 per day to avoid flooding the grid
   // This was getting messy with multiple entries per day
@@ -76,6 +78,7 @@ export default function MoodDashboard({ entries }) {
     const shortDateFormat = `${dateObj.getMonth() + 1}/${dateObj.getDate()}`;
 
     return {
+      id: entry.id,
       day: entry.weekday,
       date: shortDateFormat,
       fullDate: entry.date,
@@ -87,6 +90,13 @@ export default function MoodDashboard({ entries }) {
       activities: entry.activities || [],
     };
   });
+
+  const handleDeleteClick = (event, entryId) => {
+    event.stopPropagation(); // Prevent card flip when clicking delete
+    if (window.confirm("Are you sure you want to delete this mood entry?")) {
+      onDelete(entryId);
+    }
+  };
 
   const handleCardFlip = (cardIndex) => {
     // Only allow flipping if the card has mood data
@@ -163,6 +173,15 @@ export default function MoodDashboard({ entries }) {
                   : dayData.color,
               }}
             >
+              {dayData.mood && (
+                <button
+                  className="mood-dashboard__delete-button"
+                  onClick={(e) => handleDeleteClick(e, dayData.id)}
+                  aria-label="Delete entry"
+                >
+                  ✕
+                </button>
+              )}
               {dayData.mood ? (
                 flippedCards.has(index) ? (
                   // Flipped state - show details

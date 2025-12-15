@@ -36,7 +36,7 @@
   position: sticky;
   top: 0;
   background: white;
-  padding: 2rem;
+  padding: 32px;
   border-bottom: 2px solid #f0f0f0;
   display: flex;
   justify-content: space-between;
@@ -48,13 +48,13 @@
 .stats__title {
   margin: 0;
   color: #333;
-  font-size: 2rem;
+  font-size: 32px;
 }
 
 .stats__close {
   background: transparent;
   border: none;
-  font-size: 2rem;
+  font-size: 32px;
   cursor: pointer;
   color: #666;
   width: 40px;
@@ -72,19 +72,19 @@
 }
 
 .stats__content {
-  padding: 2rem;
+  padding: 32px;
 }
 
 .stats__summary {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 3rem;
+  gap: 24px;
+  margin-bottom: 48px;
 }
 
 .stats__summary-card {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 1.5rem;
+  padding: 24px;
   border-radius: 12px;
   color: white;
   text-align: center;
@@ -100,15 +100,15 @@
 }
 
 .stats__summary-card h3 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1rem;
+  margin: 0 0 8px 0;
+  font-size: 16px;
   font-weight: 500;
   opacity: 0.9;
 }
 
 .stats__summary-value {
   margin: 0;
-  font-size: 2.5rem;
+  font-size: 40px;
   font-weight: 700;
   text-transform: capitalize;
 }
@@ -117,10 +117,10 @@
   position: relative;
   height: 400px;
   width: 100%;
-  margin-bottom: 3rem;
+  margin-bottom: 48px;
   background: #f9f9f9;
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 24px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
@@ -132,7 +132,7 @@
 @media (max-width: 1024px) {
   .stats__summary {
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
+    gap: 20px;
   }
 
   .stats__chart-container {
@@ -147,30 +147,30 @@
   }
 
   .stats__header {
-    padding: 1.5rem;
+    padding: 24px;
   }
 
   .stats__title {
-    font-size: 1.5rem;
+    font-size: 24px;
   }
 
   .stats__content {
-    padding: 1.5rem;
+    padding: 24px;
   }
 
   .stats__summary {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 16px;
   }
 
   .stats__chart-container {
     height: 300px;
-    padding: 1rem;
-    margin-bottom: 2rem;
+    padding: 16px;
+    margin-bottom: 32px;
   }
 
   .stats__summary-value {
-    font-size: 2rem;
+    font-size: 32px;
   }
 }
 
@@ -182,21 +182,21 @@
   }
 
   .stats__header {
-    padding: 1rem;
+    padding: 16px;
   }
 
   .stats__title {
-    font-size: 1.25rem;
+    font-size: 20px;
   }
 
   .stats__close {
     width: 32px;
     height: 32px;
-    font-size: 1.5rem;
+    font-size: 24px;
   }
 
   .stats__content {
-    padding: 1rem;
+    padding: 16px;
   }
 
   .stats__summary-card {

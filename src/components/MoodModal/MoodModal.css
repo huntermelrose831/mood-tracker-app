@@ -31,7 +31,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
+  padding: 24px 32px;
   border-bottom: 1px solid #e0e0e0;
 }
 
@@ -44,9 +44,12 @@
 }
 
 .mood__modal_close-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   background: none;
   border: none;
-  font-size: 2rem;
+  font-size: 32px;
   cursor: pointer;
   color: #000000;
   width: 40px;
@@ -56,6 +59,7 @@
   justify-content: center;
   border-radius: 50%;
   transition: all 0.3s;
+  z-index: 10;
 }
 
 .mood__modal_close-button:hover {
@@ -64,35 +68,35 @@
 }
 
 .mood__modal_body {
-  padding: 2rem;
+  padding: 32px;
 }
 
 /* Form Styles */
 .mood__form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 24px;
 }
 
 .mood__form_group {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 8px;
 }
 
 .mood__form_label {
   font-weight: 600;
   color: #555;
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .mood__form_input,
 .mood__form_textarea {
   width: 100%;
-  padding: 0.75rem;
+  padding: 12px;
   border: 2px solid #e0e0e0;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 16px;
   transition: border-color 0.3s;
   font-family: inherit;
 }
@@ -111,14 +115,14 @@
 /* Mood Selector */
 .mood__form_mood-selector {
   display: flex;
-  gap: 0.5rem;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .mood__form_mood-option {
   flex: 1;
   min-width: 100px;
-  padding: 1rem 0.5rem;
+  padding: 16px 8px;
   border: none;
   border-radius: 8px;
   background: transparent;
@@ -127,7 +131,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: 4px;
 }
 
 .mood__form_mood-option:hover {
@@ -142,19 +146,19 @@
 }
 
 .mood__form_mood-name {
-  font-size: 0.875rem;
+  font-size: 14px;
   color: #666;
 }
 
 /* Activity Selector */
 .mood__form_activity-selector {
   display: flex;
-  gap: 0.5rem;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .mood__form_activity-chip {
-  padding: 0.5rem 1rem;
+  padding: 8px 16px;
   border: none;
   border-radius: 20px;
   background: linear-gradient(180deg, #fbf4de 0%, #e4dbbf 100%),
@@ -171,7 +175,7 @@
   color: #000000;
   cursor: pointer;
   transition: all 0.3s;
-  font-size: 0.9rem;
+  font-size: 14.4px;
 }
 
 .mood__form_activity-chip:hover {
@@ -207,7 +211,7 @@
 /* Error Message */
 .mood__form_error {
   color: #ff4444;
-  font-size: 0.875rem;
+  font-size: 14px;
 }
 
 /* Animations */
@@ -239,20 +243,20 @@
   }
 
   .mood__modal_header {
-    padding: 1.25rem 1.5rem;
+    padding: 20px 24px;
   }
 
   .mood__modal_title {
-    font-size: 1.25rem;
+    font-size: 20px;
   }
 
   .mood__modal_body {
-    padding: 1.5rem;
+    padding: 24px;
   }
 
   .mood__form_mood-option {
     min-width: 80px;
-    padding: 0.75rem 0.5rem;
+    padding: 12px 8px;
   }
 
   .mood__form_mood-emoji {
@@ -268,44 +272,44 @@
   }
 
   .mood__modal_header {
-    padding: 1rem;
+    padding: 16px;
   }
 
   .mood__modal_title {
-    font-size: 1.1rem;
+    font-size: 17.6px;
   }
 
   .mood__modal_close-button {
     width: 32px;
     height: 32px;
-    font-size: 1.5rem;
+    font-size: 24px;
   }
 
   .mood__modal_body {
-    padding: 1rem;
+    padding: 16px;
   }
 
   .mood__form {
-    gap: 1.25rem;
+    gap: 20px;
   }
 
   .mood__form_label {
-    font-size: 0.9rem;
+    font-size: 14.4px;
   }
 
   .mood__form_input,
   .mood__form_textarea {
-    padding: 0.625rem;
-    font-size: 0.9rem;
+    padding: 10px;
+    font-size: 14.4px;
   }
 
   .mood__form_mood-selector {
-    gap: 0.4rem;
+    gap: 6.4px;
   }
 
   .mood__form_mood-option {
     min-width: 70px;
-    padding: 0.6rem 0.4rem;
+    padding: 9.6px 6.4px;
   }
 
   .mood__form_mood-emoji {
@@ -314,32 +318,32 @@
   }
 
   .mood__form_mood-name {
-    font-size: 0.75rem;
+    font-size: 12px;
   }
 
   .mood__form_activity-chip {
-    padding: 0.4rem 0.75rem;
-    font-size: 0.85rem;
+    padding: 6.4px 12px;
+    font-size: 13.6px;
   }
 
   .mood__form_submit-button {
-    padding: 0.875rem;
-    font-size: 1rem;
+    padding: 14px;
+    font-size: 16px;
   }
 }
 
 @media (max-width: 360px) {
   .mood__modal_body {
-    padding: 0.875rem;
+    padding: 14px;
   }
 
   .mood__form_mood-selector {
-    gap: 0.3rem;
+    gap: 4.8px;
   }
 
   .mood__form_mood-option {
     min-width: 60px;
-    padding: 0.5rem 0.3rem;
+    padding: 8px 4.8px;
   }
 
   .mood__form_mood-emoji {
@@ -348,12 +352,12 @@
   }
 
   .mood__form_activity-selector {
-    gap: 0.4rem;
+    gap: 6.4px;
   }
 
   .mood__form_activity-chip {
-    padding: 0.35rem 0.65rem;
-    font-size: 0.8rem;
+    padding: 5.6px 10.4px;
+    font-size: 12.8px;
   }
 }
 

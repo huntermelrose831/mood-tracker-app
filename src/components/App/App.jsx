@@ -48,6 +48,19 @@ function App() {
     }
   };
 
+  const handleDeleteEntry = (entryId) => {
+    try {
+      dataService.deleteEntry(entryId);
+      const updatedEntries = dataService.getEntries();
+      const updatedStats = dataService.getStatistics(updatedEntries);
+
+      setEntries(updatedEntries);
+      setStats(updatedStats);
+    } catch (error) {
+      console.error("Error deleting mood entry:", error);
+    }
+  };
+
   const openModal = (type) => setActiveModal(type);
   const closeModal = () => setActiveModal(null);
   return (
@@ -61,7 +74,11 @@ function App() {
       />
 
       <main className="app__main">
-        <MoodDashboard entries={entries} stats={stats} />
+        <MoodDashboard
+          entries={entries}
+          stats={stats}
+          onDelete={handleDeleteEntry}
+        />
       </main>
 
       <Footer />

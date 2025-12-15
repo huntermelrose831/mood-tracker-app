@@ -11,7 +11,7 @@
 .profile__left {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 24px;
 }
 
 .profile__avatar {
@@ -101,7 +101,7 @@
   }
 
   .profile__left {
-    gap: 1rem;
+    gap: 16px;
   }
 
   .profile__avatar {
@@ -167,7 +167,7 @@
 
 @media (max-width: 360px) {
   .profile__left {
-    gap: 0.75rem;
+    gap: 12px;
   }
 
   .profile__name {
