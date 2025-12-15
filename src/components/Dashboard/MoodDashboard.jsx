@@ -146,6 +146,16 @@ export default function MoodDashboard({ entries }) {
     setVisibleCount((prevCount) => prevCount + 6); // Load 6 more entries
   };
 
+  /**
+   * Cleanup effect - clear all timers when component unmounts
+   */
+  useEffect(() => {
+    return () => {
+      timersRef.current.forEach((timerId) => clearTimeout(timerId));
+      timersRef.current.clear();
+    };
+  }, []);
+
   return (
     <div className="mood-dashboard">
       <div className="mood-dashboard__grid">

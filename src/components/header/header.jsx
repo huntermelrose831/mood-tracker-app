@@ -18,11 +18,7 @@ export default function Header() {
   return (
     <header className="header">
       <img src={Title} className="header__title" />
-      <p className="header__date-time">
-        {currentTime.toLocaleString()}
-      </p>
+      <p className="header__date-time">{currentTime.toLocaleString()}</p>
     </header>
   );
 }
-
-
