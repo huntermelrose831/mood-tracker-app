@@ -51,8 +51,6 @@
 .edit__profile_avatar-container {
   position: relative;
 
-  border-radius: 50%;
-
   cursor: pointer;
 }
 
@@ -61,6 +59,7 @@
   height: 223px;
   margin-left: 16px;
   object-fit: cover;
+  border-radius: 50%;
 }
 
 .edit__profile_file-input {
@@ -83,8 +82,9 @@
 }
 .edit__profile_avatar-label {
   width: 223px;
-  border-radius: 0 0 50% 50%;
+  border-radius: 0 0 75% 75%;
   margin-left: 16px;
+  bottom: 80px;
 }
 .edit__profile_avatar-container:hover .edit__profile_avatar-overlay {
   opacity: 1;
@@ -102,7 +102,7 @@
   border: none;
   border-radius: 12px;
   background-color: #d3d3d3;
-  color: #666;
+  color: #000000;
   outline: none;
   font-family: inherit;
 }
@@ -140,4 +140,19 @@
 
 .edit__profile_save-button:active {
   transform: translateY(0);
+}
+.edit__profile_close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 27px;
+  cursor: pointer;
+  color: rgba(24, 74, 69, 1);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

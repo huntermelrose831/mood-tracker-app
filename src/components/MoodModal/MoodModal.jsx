@@ -158,7 +158,11 @@ export default function MoodModal({ onSubmit, onClose }) {
         onClick={(e) => e.stopPropagation()} // Prevent modal from closing when clicking inside
         style={{ background: modalBackground }}
       >
-        <button className="mood__modal_close-button" onClick={onClose}>
+        <button
+          className="mood__modal_close-button"
+          onClick={onClose}
+          aria-label="Close mood modal"
+        >
           ✕
         </button>
         <div className="mood__modal_body">

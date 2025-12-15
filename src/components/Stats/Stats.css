@@ -52,23 +52,23 @@
 }
 
 .stats__close {
-  background: transparent;
+  background: rgba(24, 74, 69, 1);
   border: none;
-  font-size: 32px;
+  font-size: 24px;
   cursor: pointer;
-  color: #000000;
+  color: #ffffff;
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  transition: all 0.3s ease;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .stats__close:hover {
-  background: #f0f0f0;
-  color: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(24, 74, 69, 0.25);
 }
 
 .stats__content {

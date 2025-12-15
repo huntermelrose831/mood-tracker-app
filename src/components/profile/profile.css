@@ -39,8 +39,7 @@
 }
 
 .profile__edit-button:hover {
-  background: #4e8a49;
-  color: white;
+  opacity: 0.3;
 }
 
 .profile__right {

@@ -39,7 +39,13 @@ export default function EditProfileModal({ onClose, onSave }) {
       <div className="edit__profile_overlay" onClick={onClose}></div>
       <div className="edit__profile_modal">
         <h2 className="edit__profile_title">Edit Profile</h2>
-
+        <button
+          className="edit__profile_close"
+          onClick={onClose}
+          aria-label="Close edit profile modal"
+        >
+          ✕
+        </button>
         <div className="edit__profile_content">
           <div className="edit__profile_avatar-section">
             <div className="edit__profile_avatar-container">
