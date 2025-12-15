@@ -1,21 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { dataService } from "../../services/dataService.js";
 import "./editProfile.css";
 export default function EditProfileModal({ onClose, onSave }) {
-  const [profileName, setProfileName] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState("");
-  const [avatarFile, setAvatarFile] = useState(null);
-
-  useEffect(() => {
-    const profile = dataService.getProfile();
-    setProfileName(profile.name);
-    setAvatarPreview(profile.avatar);
-  }, []);
+  const initialProfile = dataService.getProfile();
+  const [profileName, setProfileName] = useState(initialProfile.name || "");
+  const [avatarPreview, setAvatarPreview] = useState(
+    initialProfile.avatar || ""
+  );
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
-      setAvatarFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
         setAvatarPreview(reader.result);
