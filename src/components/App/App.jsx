@@ -12,6 +12,10 @@ import "./App.css";
 function App() {
   const [activeModal, setActiveModal] = useState(null);
   const [entries, setEntries] = useState([]);
+  const [profile, setProfile] = useState({
+    name: "Profile Name",
+    avatar: "/mood-tracker-app/assets/Avatar.png",
+  });
   const [stats, setStats] = useState(null);
   useEffect(() => {
     const loadInitialData = async () => {
@@ -19,9 +23,11 @@ function App() {
         await dataService.loadSampleData();
         const allEntries = dataService.getEntries();
         const currentStats = dataService.getStatistics(allEntries);
+        const savedProfile = dataService.getProfile();
 
         setEntries(allEntries);
         setStats(currentStats);
+        setProfile(savedProfile);
       } catch (error) {
         console.error("Failed to load data:", error);
         // For now just log it, could show user notification later
@@ -63,11 +69,21 @@ function App() {
 
   const openModal = (type) => setActiveModal(type);
   const closeModal = () => setActiveModal(null);
+  const handleSaveProfile = (updatedProfile) => {
+    try {
+      dataService.saveProfile(updatedProfile);
+      setProfile(updatedProfile);
+      setActiveModal(null);
+    } catch (error) {
+      console.error("Error saving profile:", error);
+    }
+  };
   return (
     <div className="app">
       <Header />
 
       <Profile
+        profile={profile}
         onLogMoodClick={() => openModal("mood")}
         onStatsClick={() => openModal("stats")}
         onEditProfileClick={() => openModal("editProfile")}
@@ -89,7 +105,7 @@ function App() {
       )}
 
       {activeModal === "editProfile" && (
-        <EditProfileModal onClose={closeModal} />
+        <EditProfileModal onClose={closeModal} onSave={handleSaveProfile} />
       )}
 
       {activeModal === "stats" && (

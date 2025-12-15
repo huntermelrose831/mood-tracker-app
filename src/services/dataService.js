@@ -1,7 +1,6 @@
-// localStorage key for mood entries
 const MOOD_DATA_STORAGE_KEY = "mood_tracker_entries";
+const PROFILE_DATA_STORAGE_KEY = "mood_tracker_profile";
 
-// Icon paths for each mood type - using absolute paths for now
 export const MOOD_ICONS = {
   excited: "/src/assets/Excited.png",
   happy: "/src/assets/Happy.png",
@@ -10,7 +9,6 @@ export const MOOD_ICONS = {
   angry: "/src/assets/Angry.png",
 };
 
-// Color scheme for each mood - keeping consistent with the UI
 export const MOOD_COLORS = {
   excited: "rgba(214, 172, 66, 1)",
   happy: "rgba(121, 181, 48, 1)",
@@ -19,7 +17,7 @@ export const MOOD_COLORS = {
   angry: "#D85C5C",
 };
 
-// Helper function to format dates without timezone issues
+// function to format
 // I was getting bitten by timezone conversion before, so doing this manually
 const formatDateForStorage = (dateObject) => {
   const year = dateObject.getFullYear();
@@ -28,7 +26,6 @@ const formatDateForStorage = (dateObject) => {
   return `${year}-${month}-${day}`;
 };
 
-// Convert date to weekday name
 const getWeekdayFromDate = (dateObject) => {
   const weekdayNames = [
     "Sunday",
@@ -42,13 +39,12 @@ const getWeekdayFromDate = (dateObject) => {
   return weekdayNames[dateObject.getDay()];
 };
 
-// The raw JSON data has inconsistent mood naming, so we need to normalize it
-// This function maps various mood descriptions to our standard 5 categories
+// The raw JSON data has inconsistent mood naming
+// This function maps moods
 const normalizeMoodData = (subMoodText, primaryMood) => {
   const submoodLower = (subMoodText || "").toLowerCase().trim();
   const primaryMoodLower = (primaryMood || "").toLowerCase();
 
-  // Check sub-mood first since it's more specific
   if (submoodLower.includes("excited"))
     return { category: "excited", rating: 5 };
   if (submoodLower.includes("blessed") || submoodLower.includes("happy")) {
@@ -63,12 +59,10 @@ const normalizeMoodData = (subMoodText, primaryMood) => {
     return { category: "neutral", rating: 3 };
   }
 
-  // Fall back to primary mood if sub-mood doesn't match
   if (primaryMoodLower === "good") return { category: "happy", rating: 4 };
   if (primaryMoodLower === "normal") return { category: "neutral", rating: 3 };
   if (primaryMoodLower === "bad") return { category: "angry", rating: 2 };
 
-  // Default to neutral if we can't categorize
   return { category: "neutral", rating: 3 };
 };
 
@@ -80,11 +74,10 @@ export const dataService = {
       return storedData ? JSON.parse(storedData) : [];
     } catch (parseError) {
       console.error("Failed to parse stored mood entries:", parseError);
-      return []; // Return empty array if data is corrupted
+      return [];
     }
   },
 
-  // Add a new mood entry to storage
   saveEntry: (entryData) => {
     try {
       const currentEntries = dataService.getEntries();
@@ -93,7 +86,6 @@ export const dataService = {
       const [year, month, day] = entryData.date.split("-");
       const entryDate = new Date(year, month - 1, day);
 
-      // Create new entry with generated ID, timestamp, and weekday
       const newMoodEntry = {
         ...entryData,
         id: Date.now().toString(), // Simple ID generation
@@ -113,8 +105,35 @@ export const dataService = {
       return null;
     }
   },
-
-  // Delete a mood entry by ID
+  getProfile: () => {
+    try {
+      const storedProfile = localStorage.getItem(PROFILE_DATA_STORAGE_KEY);
+      return storedProfile
+        ? JSON.parse(storedProfile)
+        : {
+            name: "Profile Name",
+            avatar: "/mood-tracker-app/assets/Avatar.png",
+          };
+    } catch (error) {
+      console.error("Failed to parse profile data:", error);
+      return {
+        name: "Profile Name",
+        avatar: "/mood-tracker-app/assets/Avatar.png",
+      };
+    }
+  },
+  saveProfile: (profileData) => {
+    try {
+      localStorage.setItem(
+        PROFILE_DATA_STORAGE_KEY,
+        JSON.stringify(profileData)
+      );
+      return profileData;
+    } catch (error) {
+      console.error("Failed to save profile:", error);
+      return null;
+    }
+  },
   deleteEntry: (entryId) => {
     try {
       const currentEntries = dataService.getEntries();
@@ -134,7 +153,6 @@ export const dataService = {
     }
   },
 
-  // Load demo data from the JSON file (only loads if no data exists)
   loadSampleData: async () => {
     try {
       const existingEntries = dataService.getEntries();
@@ -156,14 +174,12 @@ export const dataService = {
           (entry) => entry.user_id === 30
         );
 
-        // Sort by date (newest first) and limit to recent entries
         const sortedByDate = targetUserEntries.sort(
           (entryA, entryB) =>
             new Date(entryB.datetime) - new Date(entryA.datetime)
         );
         const limitedEntries = sortedByDate.slice(0, 416); // Cap at 416 entries
 
-        // Transform raw data into our format
         const processedEntries = limitedEntries.map((rawEntry, index) => {
           const moodInfo = normalizeMoodData(rawEntry.sub_mood, rawEntry.mood);
           const entryDate = new Date(rawEntry.datetime);
@@ -181,7 +197,6 @@ export const dataService = {
           };
         });
 
-        // Save processed entries to storage
         if (processedEntries.length > 0) {
           localStorage.setItem(
             MOOD_DATA_STORAGE_KEY,
@@ -200,7 +215,6 @@ export const dataService = {
     }
   },
 
-  // Calculate summary statistics from entries
   getStatistics: (entriesData = null) => {
     const entries = entriesData || dataService.getEntries();
 
@@ -213,20 +227,17 @@ export const dataService = {
       };
     }
 
-    // Calculate average mood rating
     const totalMoodRating = entries.reduce((sum, entry) => {
       return sum + entry.mood_rating;
     }, 0);
     const averageMood = totalMoodRating / entries.length;
 
-    // Count occurrences of each mood category
     const moodFrequencyMap = {};
     entries.forEach((entry) => {
       const moodType = entry.mood_category;
       moodFrequencyMap[moodType] = (moodFrequencyMap[moodType] || 0) + 1;
     });
 
-    // Find the most frequent mood
     const mostFrequentMood = Object.entries(moodFrequencyMap).reduce(
       (currentMax, [mood, count]) => {
         return count > currentMax[1] ? [mood, count] : currentMax;

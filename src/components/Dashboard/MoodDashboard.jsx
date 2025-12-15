@@ -192,7 +192,7 @@ export default function MoodDashboard({ entries, onDelete }) {
                     {dayData.activities &&
                       dayData.activities.length > 0 &&
                       dayData.notes !== dayData.activities[0] && (
-                        <p className="mood__dashboard_card-moodnote">
+                        <p className=" mood__dashboard_card-activities">
                           {dayData.activities.join(", ")}
                         </p>
                       )}
