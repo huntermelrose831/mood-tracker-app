@@ -192,9 +192,20 @@ export default function MoodDashboard({ entries, onDelete }) {
                       </p>
                     )}
 
-                    <p className="mood-dashboard__card-notes">
-                      {dayData.notes}
-                    </p>
+                    {dayData.notes &&
+                      dayData.notes !== "No notes for this day" && (
+                        <p className="mood-dashboard__card-moodnote">
+                          {dayData.notes}
+                        </p>
+                      )}
+
+                    {dayData.activities &&
+                      dayData.activities.length > 0 &&
+                      dayData.notes !== dayData.activities[0] && (
+                        <p className="mood-dashboard__card-moodnote">
+                          {dayData.activities.join(", ")}
+                        </p>
+                      )}
                   </div>
                 ) : (
                   // Normal state - show emoji with weekday and date
