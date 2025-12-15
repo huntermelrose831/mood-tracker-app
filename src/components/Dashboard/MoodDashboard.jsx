@@ -38,9 +38,15 @@ const MOOD_COLORS_EXPANDED = {
 
 export default function MoodDashboard({ entries }) {
   const [flippedCards, setFlippedCards] = useState(new Set());
+<<<<<<< HEAD
   const [visibleCount, setVisibleCount] = useState(6); // Show 6 cards initially
 
   // Using ref to keep track of timers so they don't get lost on re-renders
+=======
+  // Track how many cards to display (starts at 6, increases by 6 on "Show More")
+  const [visibleCount, setVisibleCount] = useState(6);
+  // Track active timers for auto-flip (Map of index -> timeoutId)
+>>>>>>> bdba27e (fix:moodmodal issues)
   const timersRef = useRef(new Map());
 
   // Sort entries by date (newest first)
