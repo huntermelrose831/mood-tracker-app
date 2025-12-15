@@ -18,7 +18,18 @@ export default function Header() {
   return (
     <header className="header">
       <img src={Title} className="header__title" />
-      <p className="header__date-time">{currentTime.toLocaleString()}</p>
+      <div className="header__container">
+        <p className="header__date-time">
+          {currentTime
+            .toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "2-digit",
+              hour12: true,
+            })
+            .toLowerCase()}
+        </p>
+        <p className="header__date-time">{currentTime.getFullYear()}</p>
+      </div>
     </header>
   );
 }

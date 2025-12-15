@@ -89,11 +89,16 @@ export const dataService = {
     try {
       const currentEntries = dataService.getEntries();
 
-      // Create new entry with generated ID and timestamp
+      // Parse the date to get weekday
+      const [year, month, day] = entryData.date.split("-");
+      const entryDate = new Date(year, month - 1, day);
+
+      // Create new entry with generated ID, timestamp, and weekday
       const newMoodEntry = {
         ...entryData,
         id: Date.now().toString(), // Simple ID generation
         timestamp: new Date().toISOString(),
+        weekday: getWeekdayFromDate(entryDate),
       };
 
       currentEntries.push(newMoodEntry);
@@ -106,6 +111,26 @@ export const dataService = {
     } catch (storageError) {
       console.error("Failed to save mood entry:", storageError);
       return null;
+    }
+  },
+
+  // Delete a mood entry by ID
+  deleteEntry: (entryId) => {
+    try {
+      const currentEntries = dataService.getEntries();
+      const filteredEntries = currentEntries.filter(
+        (entry) => entry.id !== entryId
+      );
+
+      localStorage.setItem(
+        MOOD_DATA_STORAGE_KEY,
+        JSON.stringify(filteredEntries)
+      );
+
+      return true;
+    } catch (storageError) {
+      console.error("Failed to delete mood entry:", storageError);
+      return false;
     }
   },
 

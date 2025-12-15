@@ -43,10 +43,12 @@ export default function MoodDashboard({ entries }) {
   // Using ref to keep track of timers so they don't get lost on re-renders
   const timersRef = useRef(new Map());
 
-  // Sort entries by date (newest first)
-  const sortedEntries = [...entries].sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
+  // Sort entries by timestamp (newest first), fallback to date if no timestamp
+  const sortedEntries = [...entries].sort((a, b) => {
+    const timeA = a.timestamp ? new Date(a.timestamp) : new Date(a.date);
+    const timeB = b.timestamp ? new Date(b.timestamp) : new Date(b.date);
+    return timeB - timeA;
+  });
 
   // Limit entries to max 3 per day to avoid flooding the grid
   // This was getting messy with multiple entries per day
