@@ -1,12 +1,12 @@
-# 🌈 Holiday Mood Tracker
+#  Holiday Mood Tracker
 
 A React-based web application for tracking daily mood and wellbeing during the holiday season. Users can log their daily emotions, activities, and notes, then view insights through a comprehensive dashboard.
 
-## 🔗 Live Demo
+##  Live Demo
 
 The project is deployed to GitHub Pages: https://huntermelrose831.github.io/mood-tracker-app/
 
-## 📋 Project Overview
+##  Project Overview
 
 This is a collaborative project between Software Engineering, Data Science, and UX/UI teams:
 
@@ -14,7 +14,7 @@ This is a collaborative project between Software Engineering, Data Science, and 
 - **Data Science**: Provide visualizations and statistical analysis of mood data
 - **UX/UI**: Design intuitive interfaces for rapid data input and clear dashboard displays
 
-## ✨ Features
+##  Features
 
 ### Core Features
 
@@ -32,7 +32,7 @@ This is a collaborative project between Software Engineering, Data Science, and 
 - User authentication
 - Advanced analytics and predictive models
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -127,7 +127,7 @@ mood-tracker-app/
 └── README.md
 ```
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Frontend**: React 19.2
 - **Build Tool**: Vite 7.2
@@ -138,11 +138,11 @@ mood-tracker-app/
 - **Charts**: Chart.js
 - **CI / Deployment**: GitHub Actions (deploys to GitHub Pages)
 
-## 🎨 Design / Figma
+##  Design / Figma
 
 - https://www.figma.com/design/2r57PNBR6YFdSWgFModC4t/Holly-Mood_Elf-gineers--Team-2-?node-id=352-2308&t=NZANPb1cUji1wVjS-0
 
-## 📊 Data Format
+##  Data Format
 
 Mood entries follow this structure:
 
@@ -157,7 +157,7 @@ Mood entries follow this structure:
 }
 ```
 
-## 👥 Team Workflow
+## 👥Team Workflow
 
 ### For Software Engineers
 
