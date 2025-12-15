@@ -20,7 +20,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 45px 40px;
-  max-width: 900px;
+  max-width: 1000px;
   width: 100%;
 }
 
@@ -167,7 +167,7 @@
 @media (max-width: 1024px) {
   .mood-dashboard__grid {
     gap: 30px 25px;
-    max-width: 750px;
+    max-width: 850px;
   }
 
   .mood-dashboard__card-content {
