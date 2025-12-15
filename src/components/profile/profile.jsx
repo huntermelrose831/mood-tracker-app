@@ -48,7 +48,7 @@ export default function Profile({
           {logMoodClicked && (
             <img src={Snowflake} alt="" className="profile__button-icon" />
           )}
-          + Log Mood
+          Add Mood
           {logMoodClicked && (
             <img src={Snowflake} alt="" className="profile__button-icon" />
           )}
