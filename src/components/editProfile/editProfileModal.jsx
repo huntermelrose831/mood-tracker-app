@@ -1,29 +1,34 @@
 import React from "react";
-import MoodDropdown from "../../MoodDropdown/MoodDropdown";
-import "../MoodLogger/MoodModal.css"
+import "../../ModalForm/ModalForm.css";
+import Avatar from "../../assets/Avatar.jpg";
+
+import "./editProfile.css";
+
 import { useState } from "react";
 
 function EditProfileModal({ onClose }) {
-  const [user] = useState({
-    name: "",
-    avatar: "",
+  const userAvatar = Avatar;
+  const userName = "Eve Smith";
+  const [currentUser] = useState({
+    name: userName,
+    profilePicture: userAvatar,
     bio: "",
   });
 
   return (
     <div className="modal__overlay">
-      <div className="modal__content">
+      <div className="modal">
         <button className="modalCloseButton" onClick={onClose}>
           X
         </button>
-        <h2 className="editProfile__header">Edit Profile</h2>
+        <h2 className="modal__title">Edit Profile</h2>
         <div className="editProfile__user">
-          <div className="editProfile__avatar">{user.avatar}</div>
-          <textarea className="editProfile__info" placeholder="Name">
-            {user.name}
+          <img className="modal__avatar" src={userAvatar} alt="User Avatar" />
+          <textarea className="modal__textarea" placeholder="Name">
+            {currentUser.name}
           </textarea>
         </div>
-        <button className="edit-mood-btn">Save</button>
+        <button className="modal__btn">Save</button>
       </div>
     </div>
   );

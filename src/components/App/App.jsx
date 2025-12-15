@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "../header/header.jsx";
 import Profile from "../profile/profile.jsx";
 import Footer from "../footer/footer.jsx";
-import MoodModal from "../MoodLogger/MoodModal.jsx";
+import MoodModal from "../MoodModal/MoodModal.jsx";
 import MoodDashboard from "../Dashboard/MoodDashboard.jsx";
 import Stats from "../Stats/Stats.jsx";
 import { dataService } from "../../services/dataService.js";
@@ -13,6 +13,7 @@ import EditProfileModal from "../editProfile/editProfileModal.jsx";
 import AddMood from "../addMood/addMood.jsx";
 
 function App() {
+
   // Modal state management
   const [isModalOpen, setIsModalOpen] = useState(false); // Controls mood logging modal visibility
   const [isStatsOpen, setIsStatsOpen] = useState(false); // Controls statistics modal visibility
@@ -34,6 +35,9 @@ function App() {
    *
    * Note: Only runs once on mount. Subsequent data comes from localStorage.
    */
+
+  const [activeModal, setActiveModal] = useState(null);
+
   useEffect(() => {
     const loadInitialData = async () => {
       try {
@@ -45,12 +49,12 @@ function App() {
         setStats(currentStats);
       } catch (error) {
         console.error("Failed to load data:", error);
-        // For now just log it, could show user notification later
       }
     };
 
     loadInitialData();
   }, []);
+
 
   /**
    * Handle mood logging form submission
@@ -64,6 +68,8 @@ function App() {
    * 4. Update state to refresh dashboard display
    * 5. Close the mood logging modal
    */
+
+
   const handleMoodSubmit = async (formData) => {
     try {
       dataService.saveEntry(formData);
@@ -73,41 +79,38 @@ function App() {
     const loadedEntries = dataService.getEntries();
     const statistics = dataService.getStatistics(loadedEntries);
 
+
     // Update state to re-render dashboard with new entry
     setEntries(loadedEntries);
     setStats(statistics);
 
     // Hide the mood logging modal
     setIsModalOpen(false);
+
+      setEntries(updatedEntries);
+      setStats(updatedStats);
+      setActiveModal(null);
+    } catch (error) {
+      console.error("Error saving mood entry:", error);
+    }
   };
 
-  /**
-   * Handle Stats button click
-   * Opens the statistics modal overlay
-   */
+  const openModal = (type) => setActiveModal(type);
+  const closeModal = () => setActiveModal(null);
   const handleStatsClick = () => {
     setIsStatsOpen(true);
   };
 
-  /**
-   * Component Hierarchy:
-   *
-   * App (root)
-   * ├── Header (HollyMood logo, fixed at top)
-   * ├── Profile (avatar, name, action buttons)
-   * ├── MoodDashboard (main content: 200 mood cards with pagination)
-   * ├── Footer (copyright info)
-   * └── Modals (conditionally rendered)
-   *     ├── MoodModal (mood logging form)
-   *     └── Stats (Chart.js visualizations)
-   */
   return (
     <div className="app">
       <Header />
 
       <Profile
+openModal={openModal}
         onLogMoodClick={() => setIsModalOpen(true)}
         onStatsClick={handleStatsClick}
+        onEditProfileClick={() => openModal("editProfile")}
+
       />
 
       <main className="app__main">
@@ -115,6 +118,7 @@ function App() {
       </main>
 
       <Footer />
+
 
       {/* Conditionally rendered modal for logging new moods */}
       {isModalOpen && (
@@ -127,6 +131,19 @@ function App() {
       {/* Conditionally rendered modal for viewing statistics */}
       {isStatsOpen && (
         <Stats entries={entries} onClose={() => setIsStatsOpen(false)} />
+
+      )}
+      {activeModal === "mood" && (
+        <MoodModal onSubmit={handleMoodSubmit} onClose={closeModal} />
+      )}
+
+      {activeModal === "editProfile" && (
+        <EditProfileModal onClose={closeModal} />
+      )}
+
+      {activeModal === "stats" && (
+        <Stats entries={entries} onClose={closeModal} />
+
       )}
     </div>
   );

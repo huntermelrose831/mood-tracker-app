@@ -1,4 +1,5 @@
 .modal {
+  display: flex;
   background: white;
   border-radius: 12px;
   max-width: 600px;
@@ -9,6 +10,8 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   animation: slideInFromBottom 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1001;
+  flex-direction: column;
+  padding: 0.5rem;
 }
 
 .modal__overlay {
@@ -30,20 +33,18 @@
 }
 
 .modal__close {
-  background-image: url(../../images/Union.svg);
-  position: absolute;
-  background-color: transparent;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #000000;
   width: 40px;
   height: 40px;
-  background-repeat: no-repeat;
-  background-size: contain;
-  cursor: pointer;
-  border: 2px;
-  width: 14px;
-  height: 14px;
-  top: 20px;
-  right: 28px;
-  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s;
 }
 
 .modal__form {
@@ -59,49 +60,6 @@
 }
 
 .modal__input-box {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-}
-
-.modal__input-border {
-  width: 100%;
-  border: 1px black solid;
-  margin-bottom: 24px;
-}
-
-.modal__title {
-  font-family: CabinetGrotesk;
-  margin: 0;
-  margin-bottom: 24px;
-  line-height: 20px;
-  font-size: 16px;
-  width: 295px;
-  height: 20px;
-}
-
-.modal__btn {
-  width: 124px;
-  height: 36px;
-  border-radius: 5px;
-  cursor: pointer;
-  align-items: center;
-  justify-content: space-around;
-  display: flex;
-  padding: 0;
-  font-family: CabinetGrotesk-med;
-  line-height: 20px;
-  font-size: 16px;
-  background-color: #0000004d;
-  color: white;
-  margin-top: 32px;
-}
-
-.modal__btn:hover {
-  background-color: black;
-}
-
-.modal__textarea {
   width: 100%;
   padding: 0.75rem;
   border: 2px solid #e0e0e0;
@@ -109,6 +67,52 @@
   font-size: 1rem;
   transition: border-color 0.3s;
   font-family: inherit;
+}
+
+.modal__input-box:focus {
+  outline: none;
+  border-color: #646cff;
+}
+
+.modal__title {
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  unicode-bidi: isolate;
+}
+
+.modal__btn {
+  width: 200px;
+  height: 55px;
+  border: none;
+  border-radius: 8px;
+  font-size: 20px;
+  line-height: 44px;
+  align-self: center;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px -2px 0px 2px rgba(0, 0, 0, 0.5) inset;
+  font-family: "Balsamiq Sans", -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
+  background: linear-gradient(180deg, #50c878 0%, #317949 100%);
+}
+
+.modal__btn:hover {
+  background-color: black;
+}
+
+.modal__textarea {
+  resize: vertical;
+  height: 35px;
+  margin-top: 40px;
+  margin-left: 15px;
+  border-radius: 5px;
+  width: 200px;
 }
 
 .modal__textarea:focus {
@@ -120,4 +124,75 @@
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+
+.mood__options {
+  flex: 1;
+  min-width: 100px;
+  padding: 1rem 0.5rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+.mood__options:hover {
+  border-color: #646cff;
+  transform: translateY(-2px);
+}
+
+.mood__emoji {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.mood__name {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.mood__activities {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #fbf4de 0%, #e4dbbf 100%),
+    linear-gradient(
+      180deg,
+      rgba(210, 197, 156, 0.3) 73.64%,
+      rgba(255, 255, 255, 0.3) 88.18%
+    );
+
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #000000;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.mood__activities:hover {
+  border: none;
+}
+
+.mood__error-message {
+  color: #ff4444;
+  font-size: 0.875rem;
+}
+
+.modal__avatar {
+  width: 122px;
+  height: 122px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.editProfile__user {
+  padding: 10px;
 }

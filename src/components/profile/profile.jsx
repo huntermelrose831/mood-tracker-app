@@ -1,36 +1,30 @@
 import "./profile.css";
 import Avatar from "../../assets/Avatar.jpg";
 
+
   // You can later make these dynamic from user data
 
 
-export default function Profile({ onLogMoodClick, onStatsClick, handleEditProfileClick }) {
+export default function Profile({ openModal }) {
   // Hardcoded for now - will eventually pull this from user context or props
     const userName = "Eve Smith";
   const userAvatar = Avatar;
   const currentUser = {
     name: userName,
-    profilePicture: userAvatar,
+    profilePicture: userAvatar,}
     // Could add more user info here later like mood streak, join date, etc.
-  };
 
-  const openEditProfileModal = () => {
-    console.log("Edit profile button was clicked");
-    // TODO: Implement edit profile functionality
-    // Maybe show a modal with name/avatar editing options?
-  };
 
   const handleLogMoodButtonClick = () => {
-    if (onLogMoodClick) {
-      onLogMoodClick();
-    }
+    openModal("mood");
   };
 
   const handleStatsButtonClick = () => {
-    if (onStatsClick) {
-      onStatsClick();
-    }
+    openModal("stats");
   };
+  const handleEditProfileClick = () => {
+    openModal("editProfile");
+  }
 
   return (
     <div className="profile">
@@ -43,17 +37,12 @@ export default function Profile({ onLogMoodClick, onStatsClick, handleEditProfil
         />
         <h2 className="profile__name">{currentUser.name}</h2>
 
-        {/* Edit button - probably needs an icon or text */}
         <button
           className="profile__edit-button"
           onClick={handleEditProfileClick}
         ></button>
-        <button
-          onClick={openEditProfileModal}
-          aria-label="Edit profile"
-        >
           {/* Note: This button seems empty - might want to add an edit icon here */}
-        </button>
+
 
       </div>
 
@@ -70,3 +59,4 @@ export default function Profile({ onLogMoodClick, onStatsClick, handleEditProfil
     </div>
   );
 }
+

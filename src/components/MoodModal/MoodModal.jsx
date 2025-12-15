@@ -12,11 +12,11 @@ import AngryIcon from "../../assets/Angry.png";
 
 // Mood configuration - could probably move this to a separate config file later
 const MOOD_OPTIONS = [
-  { value: "excited", label: "😄", name: "Excited", rating: 5 },
-  { value: "happy", label: "😊", name: "Happy", rating: 4 },
-  { value: "neutral", label: "😐", name: "Neutral", rating: 3 },
-  { value: "sad", label: "../assets/Sad.jpg", name: "Sad", rating: 2 },
-  { value: "angry", label: "😰", name: "Angry", rating: 1 },
+  // { value: "excited", label: "😄", name: "Excited", rating: 5 },
+  // { value: "happy", label: "😊", name: "Happy", rating: 4 },
+  // { value: "neutral", label: "😐", name: "Neutral", rating: 3 },
+  // { value: "sad", label: "../assets/Sad.jpg", name: "Sad", rating: 2 },
+  // { value: "angry", label: "😰", name: "Angry", rating: 1 },
 
   {
     value: "excited",
