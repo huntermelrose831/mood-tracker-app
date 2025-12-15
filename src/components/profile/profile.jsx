@@ -7,7 +7,7 @@ export default function Profile({
   onEditProfileClick,
 }) {
   const currentUser = {
-    name: "Eve Smith",
+    name: "Claire Romas",
     profilePicture: Avatar,
   };
 

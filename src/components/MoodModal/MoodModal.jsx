@@ -6,7 +6,7 @@ import OkayIcon from "../../assets/Okay.png";
 import SadIcon from "../../assets/Sad.png";
 import AngryIcon from "../../assets/Angry.png";
 
-// Mood configuration - could probably move this to a separate config file later
+// Mood config - could probably move this later
 const MOOD_OPTIONS = [
   {
     value: "excited",
@@ -50,7 +50,7 @@ const MOOD_OPTIONS = [
   },
 ];
 
-// Available activity options - keeping it simple for now
+// Available activities - keeping it simple $$
 const AVAILABLE_ACTIVITIES = [
   "Exercise",
   "Entertainment",
@@ -64,9 +64,8 @@ const AVAILABLE_ACTIVITIES = [
 ];
 
 export default function MoodModal({ onSubmit, onClose }) {
-  // Initialize form with today's date by default
   const [formData, setFormData] = useState({
-    date: new Date().toISOString().split("T")[0], // Gets YYYY-MM-DD format
+    date: new Date().toISOString().split("T")[0],
     mood_category: "",
     mood_rating: 0,
     activities: [],
@@ -76,7 +75,6 @@ export default function MoodModal({ onSubmit, onClose }) {
   const [currentSelectedMood, setCurrentSelectedMood] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
 
-  // Handle mood selection and update form data accordingly
   const selectMood = (moodOption) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -86,7 +84,6 @@ export default function MoodModal({ onSubmit, onClose }) {
 
     setCurrentSelectedMood(moodOption);
 
-    // Clear any existing mood validation errors
     if (validationErrors.mood) {
       setValidationErrors((prevErrors) => ({
         ...prevErrors,
@@ -95,18 +92,16 @@ export default function MoodModal({ onSubmit, onClose }) {
     }
   };
 
-  // Toggle activity selection - add if not selected, remove if already selected
+ 
   const toggleActivity = (activityName) => {
     const currentActivities = formData.activities;
     let updatedActivities;
 
     if (currentActivities.includes(activityName)) {
-      // Remove activity if it's already selected
       updatedActivities = currentActivities.filter(
         (activity) => activity !== activityName
       );
     } else {
-      // Add activity if it's not selected
       updatedActivities = [...currentActivities, activityName];
     }
 
@@ -161,7 +156,6 @@ export default function MoodModal({ onSubmit, onClose }) {
         onClick={(e) => e.stopPropagation()} // Prevent modal from closing when clicking inside
         style={{ background: modalBackground }}
       >
-        {/* Close button in top right */}
         <button className="mood__modal_close-button" onClick={onClose}>
           ✕
         </button>
@@ -207,7 +201,6 @@ export default function MoodModal({ onSubmit, onClose }) {
                   const isActivitySelected =
                     formData.activities.includes(activity);
 
-                  // Determine button background color
                   let buttonBackground;
                   if (isActivitySelected && currentSelectedMood) {
                     buttonBackground = currentSelectedMood.activityColor;
