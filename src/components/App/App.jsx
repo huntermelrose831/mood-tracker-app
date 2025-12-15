@@ -12,10 +12,7 @@ import "./App.css";
 function App() {
   const [activeModal, setActiveModal] = useState(null);
   const [entries, setEntries] = useState([]);
-  const [profile, setProfile] = useState({
-    name: "Profile Name",
-    avatar: "/mood-tracker-app/assets/Avatar.png",
-  });
+  const [profile, setProfile] = useState(dataService.getProfile());
   const [stats, setStats] = useState(null);
   useEffect(() => {
     const loadInitialData = async () => {

@@ -1,6 +1,6 @@
 const MOOD_DATA_STORAGE_KEY = "mood_tracker_entries";
 const PROFILE_DATA_STORAGE_KEY = "mood_tracker_profile";
-
+import Avatar from "../assets/Avatar.jpg";
 export const MOOD_ICONS = {
   excited: "/src/assets/Excited.png",
   happy: "/src/assets/Happy.png",
@@ -111,14 +111,14 @@ export const dataService = {
       return storedProfile
         ? JSON.parse(storedProfile)
         : {
-            name: "Profile Name",
-            avatar: "/mood-tracker-app/assets/Avatar.png",
+            name: "Claire Romas",
+            avatar: Avatar,
           };
     } catch (error) {
       console.error("Failed to parse profile data:", error);
       return {
-        name: "Profile Name",
-        avatar: "/mood-tracker-app/assets/Avatar.png",
+        name: "Claire Romas",
+        avatar: "/mood-tracker-app/assets/Avatar.jpg",
       };
     }
   },
