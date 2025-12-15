@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import "./Stats.css";
 
-export default function Stats({ entries, onClose }) {
+function Stats({ entries, onClose }) {
   // Refs for each chart canvas element
   const weekdayMoodChartRef = useRef(null);
   const moodPieChartRef = useRef(null);
@@ -288,3 +288,5 @@ export default function Stats({ entries, onClose }) {
     </div>
   );
 }
+
+export default Stats;
