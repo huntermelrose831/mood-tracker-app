@@ -96,9 +96,7 @@ export default function Stats({ entries, onClose }) {
       );
     };
 
-    // Helper function to create mood distribution pie chart
     const createMoodDistributionChart = () => {
-      // Count occurrences of each mood
       const moodFrequency = entries.reduce((accumulator, entry) => {
         const moodType = entry.mood_category;
         accumulator[moodType] = (accumulator[moodType] || 0) + 1;
@@ -108,14 +106,12 @@ export default function Stats({ entries, onClose }) {
       const moodLabels = Object.keys(moodFrequency);
       const moodCounts = Object.values(moodFrequency);
 
-      // Colors for each mood type - should match the mood selector colors
       const moodColorMap = {
         excited: "#FFD97B",
         happy: "#CBFF8D",
         neutral: "#EA8CFF",
         sad: "#8CD7FF",
         angry: "#FF8C8C",
-        calm: "#8CD7FF", // Using same color as sad for now
       };
 
       activeCharts.current.moodDistribution = new Chart(
@@ -220,7 +216,6 @@ export default function Stats({ entries, onClose }) {
     }
   }, [entries]);
 
-  // Calculate some quick summary stats
   const totalEntries = entries.length;
 
   const averageMood =
@@ -233,7 +228,6 @@ export default function Stats({ entries, onClose }) {
 
   const mostCommonMood = totalEntries > 0 ? getMostFrequentMood() : "N/A";
 
-  // Helper to find the most common mood
   function getMostFrequentMood() {
     const moodCounts = entries.reduce((acc, entry) => {
       acc[entry.mood_category] = (acc[entry.mood_category] || 0) + 1;
@@ -245,7 +239,6 @@ export default function Stats({ entries, onClose }) {
 
   return (
     <div className="stats">
-      {/* Overlay to close modal when clicking outside */}
       <div className="stats__overlay" onClick={onClose}></div>
 
       <div className="stats__container">
@@ -261,7 +254,6 @@ export default function Stats({ entries, onClose }) {
         </div>
 
         <div className="stats__content">
-          {/* Summary cards at the top */}
           <div className="stats__summary">
             <div className="stats__summary-card">
               <h3>Total Entries</h3>
