@@ -5,6 +5,7 @@ import HappyIcon from "../../assets/Happy.png";
 import OkayIcon from "../../assets/Okay.png";
 import SadIcon from "../../assets/Sad.png";
 import AngryIcon from "../../assets/Angry.png";
+import Snowflake from "../../assets/snowflake.svg";
 
 // Mood config - could probably move this later
 const MOOD_OPTIONS = [
@@ -65,7 +66,7 @@ const AVAILABLE_ACTIVITIES = [
 
 export default function MoodModal({ onSubmit, onClose }) {
   const [formData, setFormData] = useState({
-    date: new Date().toISOString().split("T")[0],
+    date: new Date().toISOString().split("T")[0], // Gets YYYY-MM-DD format
     mood_category: "",
     mood_rating: 0,
     activities: [],
@@ -74,6 +75,7 @@ export default function MoodModal({ onSubmit, onClose }) {
 
   const [currentSelectedMood, setCurrentSelectedMood] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
+  const [buttonClicked, setButtonClicked] = useState(false);
 
   const selectMood = (moodOption) => {
     setFormData((prevData) => ({
@@ -92,7 +94,6 @@ export default function MoodModal({ onSubmit, onClose }) {
     }
   };
 
- 
   const toggleActivity = (activityName) => {
     const currentActivities = formData.activities;
     let updatedActivities;
@@ -129,6 +130,7 @@ export default function MoodModal({ onSubmit, onClose }) {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    setButtonClicked(true);
 
     if (validateForm()) {
       onSubmit(formData);
@@ -159,10 +161,8 @@ export default function MoodModal({ onSubmit, onClose }) {
         <button className="mood__modal_close-button" onClick={onClose}>
           ✕
         </button>
-
         <div className="mood__modal_body">
           <form onSubmit={handleFormSubmit} className="mood__form">
-            {/* Mood selection section */}
             <div className="mood__form_group">
               <h2 className="mood__form_title">How are you feeling today?</h2>
 
@@ -193,8 +193,6 @@ export default function MoodModal({ onSubmit, onClose }) {
                 </span>
               )}
             </div>
-
-            {/* Activity selection section */}
             <div className="mood__form_group">
               <div className="mood__form_activity-selector">
                 {AVAILABLE_ACTIVITIES.map((activity) => {
@@ -208,7 +206,6 @@ export default function MoodModal({ onSubmit, onClose }) {
                     buttonBackground =
                       "linear-gradient(180deg, #fbf4de 0%, #e4dbbf 100%)";
                   }
-
                   return (
                     <button
                       key={activity}
@@ -227,8 +224,6 @@ export default function MoodModal({ onSubmit, onClose }) {
                 })}
               </div>
             </div>
-
-            {/* Notes section */}
             <div className="mood__form_group">
               <textarea
                 className="mood__form_textarea"
@@ -238,10 +233,22 @@ export default function MoodModal({ onSubmit, onClose }) {
                 rows="4"
               />
             </div>
-
-            {/* Submit button */}
             <button type="submit" className="mood__form_submit-button">
+              {buttonClicked && (
+                <img
+                  src={Snowflake}
+                  alt=""
+                  className="mood__form_button-icon"
+                />
+              )}
               Add Mood
+              {buttonClicked && (
+                <img
+                  src={Snowflake}
+                  alt=""
+                  className="mood__form_button-icon"
+                />
+              )}
             </button>
           </form>
         </div>

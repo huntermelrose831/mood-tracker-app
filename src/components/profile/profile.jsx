@@ -1,11 +1,16 @@
+import { useState } from "react";
 import "./profile.css";
 import Avatar from "../../assets/Avatar.jpg";
+import Snowflake from "../../assets/snowflake.svg";
 
 export default function Profile({
   onLogMoodClick,
   onStatsClick,
   onEditProfileClick,
 }) {
+  const [logMoodClicked, setLogMoodClicked] = useState(false);
+  const [statsClicked, setStatsClicked] = useState(false);
+
   const currentUser = {
     name: "Claire Romas",
     profilePicture: Avatar,
@@ -18,12 +23,14 @@ export default function Profile({
   };
 
   const handleLogMoodButtonClick = () => {
+    setLogMoodClicked(true);
     if (onLogMoodClick) {
       onLogMoodClick();
     }
   };
 
   const handleStatsButtonClick = () => {
+    setStatsClicked(true);
     if (onStatsClick) {
       onStatsClick();
     }
@@ -50,11 +57,23 @@ export default function Profile({
       {/* Right side - action buttons */}
       <div className="profile__right">
         <button className="profile__button" onClick={handleLogMoodButtonClick}>
+          {logMoodClicked && (
+            <img src={Snowflake} alt="" className="profile__button-icon" />
+          )}
           + Log Mood
+          {logMoodClicked && (
+            <img src={Snowflake} alt="" className="profile__button-icon" />
+          )}
         </button>
 
         <button className="profile__button" onClick={handleStatsButtonClick}>
+          {statsClicked && (
+            <img src={Snowflake} alt="" className="profile__button-icon" />
+          )}
           Stats
+          {statsClicked && (
+            <img src={Snowflake} alt="" className="profile__button-icon" />
+          )}
         </button>
       </div>
     </div>

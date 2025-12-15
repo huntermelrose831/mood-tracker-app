@@ -6,27 +6,22 @@ import OkayIcon from "../../assets/Okay.png";
 import SadIcon from "../../assets/Sad.png";
 import AngryIcon from "../../assets/Angry.png";
 
-// Mapping mood types to their corresponding icons
 const MOOD_ICONS = {
   excited: ExcitedIcon,
   happy: HappyIcon,
   neutral: OkayIcon,
   sad: SadIcon,
   angry: AngryIcon,
-  calm: SadIcon, // Note: using sad icon for calm too - might want to get a dedicated calm icon later
 };
 
-// Default colors for each mood state
 const MOOD_COLORS = {
   excited: "rgba(214, 172, 66, 1)",
   happy: "rgba(121, 181, 48, 1)",
   neutral: "rgba(177, 71, 201, 1)",
   sad: "rgba(98, 98, 255, 1)",
   angry: "#D85C5C",
-  calm: "rgba(98, 98, 255, 1)", // Same as sad for now
 };
 
-// Brighter colors when cards are flipped - makes it more engaging
 const MOOD_COLORS_EXPANDED = {
   excited: "#FFD97B",
   happy: "#CBFF8D",
@@ -38,22 +33,21 @@ const MOOD_COLORS_EXPANDED = {
 
 export default function MoodDashboard({ entries, onDelete }) {
   const [flippedCards, setFlippedCards] = useState(new Set());
-  const [visibleCount, setVisibleCount] = useState(6); // Show 6 cards initially
+  const [visibleCount, setVisibleCount] = useState(6); // how many cards to show
 
-  // Using ref to keep track of timers so they don't get lost on re-renders
   const timersRef = useRef(new Map());
 
-  // Sort entries by timestamp (newest first), fallback to date if no timestamp
+  // Sort
   const sortedEntries = [...entries].sort((a, b) => {
     const timeA = a.timestamp ? new Date(a.timestamp) : new Date(a.date);
     const timeB = b.timestamp ? new Date(b.timestamp) : new Date(b.date);
     return timeB - timeA;
   });
 
-  // Limit entries to max 3 per day to avoid flooding the grid
-  // This was getting messy with multiple entries per day
+  // limit entries 3 per day
+  // getting messy with too many entrys each day
   const limitedEntries = [];
-  const entriesPerDay = {}; // Keep track of how many entries we have per day
+  const entriesPerDay = {};
 
   for (const entry of sortedEntries) {
     const currentDate = entry.date;
@@ -70,11 +64,11 @@ export default function MoodDashboard({ entries, onDelete }) {
 
   const visibleEntries = limitedEntries.slice(0, visibleCount);
 
-  // Transform entries into the format we need for display
+  // transform entries into the format we need for display
+  // parse the data
   const displayData = visibleEntries.map((entry) => {
-    // Parse the date string to get a proper Date object
     const [year, month, day] = entry.date.split("-");
-    const dateObj = new Date(year, month - 1, day); // month is 0-indexed in JS
+    const dateObj = new Date(year, month - 1, day);
     const shortDateFormat = `${dateObj.getMonth() + 1}/${dateObj.getDate()}`;
 
     return {
@@ -106,25 +100,21 @@ export default function MoodDashboard({ entries, onDelete }) {
       const newFlippedSet = new Set(previousFlipped);
 
       if (newFlippedSet.has(cardIndex)) {
-        // Card is already flipped, so flip it back
         newFlippedSet.delete(cardIndex);
 
-        // Clear any existing timer for this card
         if (timersRef.current.has(cardIndex)) {
           clearTimeout(timersRef.current.get(cardIndex));
           timersRef.current.delete(cardIndex);
         }
       } else {
-        // Card is not flipped, so flip it
         newFlippedSet.add(cardIndex);
 
-        // Clear any existing timer first (just in case)
         if (timersRef.current.has(cardIndex)) {
           clearTimeout(timersRef.current.get(cardIndex));
         }
 
-        // Set timer to auto-flip back after 60 seconds
-        // 60 seconds should be enough time to read the details
+        // timer to auto-flip  cardsafter 60 seconds
+        // 60 seconds should be enough time can change
         const autoFlipTimer = setTimeout(() => {
           setFlippedCards((currentFlipped) => {
             const updated = new Set(currentFlipped);
@@ -141,12 +131,11 @@ export default function MoodDashboard({ entries, onDelete }) {
     });
   };
 
-  // Cleanup timers when component unmounts
+  // cleanup timers
   useEffect(() => {
     const activeTimers = timersRef.current;
 
     return () => {
-      // Clear all active timers
       activeTimers.forEach((timer) => clearTimeout(timer));
       activeTimers.clear();
     };
@@ -161,7 +150,7 @@ export default function MoodDashboard({ entries, onDelete }) {
       <div className="mood__dashboard_grid">
         {displayData.map((dayData, index) => (
           <div
-            key={index} // Could use fullDate as key but index works for now
+            key={index}
             className="mood__dashboard_card"
             onClick={() => handleCardFlip(index)}
           >
@@ -184,7 +173,7 @@ export default function MoodDashboard({ entries, onDelete }) {
               )}
               {dayData.mood ? (
                 flippedCards.has(index) ? (
-                  // Flipped state - show details
+                  // lipped state - show details
                   <div className="mood__dashboard_card-details">
                     {dayData.mood_note && (
                       <p className="mood__dashboard_card-moodnote">
@@ -208,7 +197,7 @@ export default function MoodDashboard({ entries, onDelete }) {
                       )}
                   </div>
                 ) : (
-                  // Normal state - show emoji with weekday and date
+                  // normal state - show emoji with weekday and date
                   <div className="mood__dashboard_emoji-container">
                     <h3 className="mood__dashboard_card-weekday">
                       {dayData.day}
@@ -224,7 +213,7 @@ export default function MoodDashboard({ entries, onDelete }) {
                   </div>
                 )
               ) : (
-                // No mood data - show empty state
+                // no mood data - show empty state
                 <>
                   <p className="mood__dashboard_day-label">{dayData.day}</p>
                   <p className="mood__dashboard_date-label">{dayData.date}</p>
@@ -234,8 +223,6 @@ export default function MoodDashboard({ entries, onDelete }) {
           </div>
         ))}
       </div>
-
-      {/* Show load more button if there are more entries to display */}
       {visibleCount < limitedEntries.length && (
         <div className="mood__dashboard_button-container">
           <button
