@@ -108,7 +108,7 @@
 
 .mood__dashboard_card-details {
   margin: 35px 15px 20px;
-  text-align: left;
+  text-align: center;
   display: flex;
   flex-direction: column;
   gap: 10px;

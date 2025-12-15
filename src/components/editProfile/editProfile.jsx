@@ -39,7 +39,13 @@ export default function EditProfileModal({ onClose, onSave }) {
       <div className="edit__profile_overlay" onClick={onClose}></div>
       <div className="edit__profile_modal">
         <h2 className="edit__profile_title">Edit Profile</h2>
-
+        <button
+          className="edit__profile_close"
+          onClick={onClose}
+          aria-label="Close edit profile modal"
+        >
+          ✕
+        </button>
         <div className="edit__profile_content">
           <div className="edit__profile_avatar-section">
             <div className="edit__profile_avatar-container">
@@ -51,13 +57,13 @@ export default function EditProfileModal({ onClose, onSave }) {
               <input
                 type="file"
                 id="avatar-upload"
-                className="edit__profile_file-input"
+                className=" edit__profile_file-input"
                 accept="image/*"
                 onChange={handleImageUpload}
               />
               <label
                 htmlFor="avatar-upload"
-                className="edit__profile_avatar-overlay"
+                className="edit__profile_avatar-label edit__profile_avatar-overlay"
               >
                 Click to change
               </label>
