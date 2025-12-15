@@ -1,5 +1,4 @@
 import { useState } from "react";
-imp;
 import ModalForm from "../../ModalForm/ModalForm";
 import "../../ModalForm/ModalForm.css";
 import ModalContent from "../../ModalForm/ModalContent";

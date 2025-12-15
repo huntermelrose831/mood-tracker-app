@@ -1,14 +1,28 @@
 .modal {
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideInFromBottom 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  z-index: 1001;
+}
+
+.modal__overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #0000004d;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  visibility: hidden;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
 }
 
 .modal_opened {
@@ -33,17 +47,15 @@
 }
 
 .modal__form {
-  margin: 0;
   display: flex;
   flex-direction: column;
-  padding: 0;
-  justify-content: space-between;
+  gap: 1.5rem;
 }
 
 .modal__input {
   border: 0;
   font-size: 16px;
-  line-height: 20px;
+  line-height: 18px;
 }
 
 .modal__input-box {
@@ -87,4 +99,25 @@
 
 .modal__btn:hover {
   background-color: black;
+}
+
+.modal__textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  font-family: inherit;
+}
+
+.modal__textarea:focus {
+  border-color: #888;
+  outline: none;
+}
+
+.mood__selector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
 }

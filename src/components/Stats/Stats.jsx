@@ -1,66 +1,38 @@
-/**
- * Stats Component
- *
- * Modal overlay displaying mood analytics using Chart.js visualizations.
- *
- * Features:
- * - 3 interactive charts:
- *   1. Average Mood by Weekday (Bar Chart)
- *   2. Mood Distribution (Pie Chart)
- *   3. Top 10 Activities (Horizontal Bar Chart)
- * - 3 summary statistic cards:
- *   - Total Entries count
- *   - Average Mood rating (1-5 scale)
- *   - Most Common Mood category
- * - Scrollable overlay with close button
- * - Automatic chart cleanup on unmount to prevent memory leaks
- *
- * Props:
- * @param {Array} entries - Array of mood entry objects from App.jsx
- * @param {Function} onClose - Callback to close the modal
- */
-
 import { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 import "./Stats.css";
 
 export default function Stats({ entries, onClose }) {
-  // Refs for canvas elements where charts will be rendered
-  const moodByWeekdayRef = useRef(null);
-  const moodDistributionRef = useRef(null);
-  const activitiesByMoodRef = useRef(null);
-  // Ref to store Chart.js instances for cleanup
-  const chartsRef = useRef({});
+  // Refs for each chart canvas element
+  const weekdayMoodChartRef = useRef(null);
+  const moodPieChartRef = useRef(null);
+  const topActivitiesChartRef = useRef(null);
 
-  /**
-   * Cleanup Effect
-   *
-   * Destroys all Chart.js instances when component unmounts.
-   * This prevents memory leaks and canvas rendering errors.
-   */
+  // Keep track of all chart instances for cleanup
+  const activeCharts = useRef({});
+
+  // Cleanup all charts when component unmounts
   useEffect(() => {
-    // Return cleanup function
     return () => {
-      Object.values(chartsRef.current).forEach((chart) => chart?.destroy());
+      // Destroy all charts to prevent memory leaks
+      Object.values(activeCharts.current).forEach((chartInstance) => {
+        if (chartInstance) {
+          chartInstance.destroy();
+        }
+      });
     };
   }, []);
 
-  /**
-   * Chart Rendering Effect
-   *
-   * Creates all three charts when entries data is available.
-   * Destroys and recreates charts if entries change.
-   */
+  // Create charts whenever entries data changes
   useEffect(() => {
-    // Don't render if no data available
+    // Don't create charts if we have no data
     if (!entries || entries.length === 0) return;
 
-    // Destroy any existing charts before creating new ones
-    Object.values(chartsRef.current).forEach((chart) => chart?.destroy());
-    chartsRef.current = {};
+    // Clean up existing charts first
+    Object.values(activeCharts.current).forEach((chart) => chart?.destroy());
+    activeCharts.current = {};
 
-    // Weekday order for consistent x-axis labels
-    const weekdays = [
+    const daysOfWeek = [
       "Sunday",
       "Monday",
       "Tuesday",
@@ -70,98 +42,98 @@ export default function Stats({ entries, onClose }) {
       "Saturday",
     ];
 
-    /**
-     * CHART 1: Average Mood by Weekday (Bar Chart)
-     *
-     * Shows the average mood rating (1-5 scale) for each day of the week.
-     * Helps identify if certain weekdays tend to have better/worse moods.
-     */
-    if (moodByWeekdayRef.current) {
-      // Calculate average mood for each weekday
-      const avgMoodData = weekdays.map((wd) => {
-        const wdEntries = entries.filter((e) => e.weekday === wd);
-        if (wdEntries.length === 0) return 0;
-        return (
-          wdEntries.reduce((sum, e) => sum + e.mood_rating, 0) /
-          wdEntries.length
+    // Helper function to create the weekday mood chart
+    const createWeekdayMoodChart = (weekdays) => {
+      const averageMoodPerDay = weekdays.map((dayName) => {
+        const entriesForThisDay = entries.filter(
+          (entry) => entry.weekday === dayName
         );
+
+        if (entriesForThisDay.length === 0) return 0;
+
+        // Calculate average mood rating for this weekday
+        const totalMoodRating = entriesForThisDay.reduce((sum, entry) => {
+          return sum + entry.mood_rating;
+        }, 0);
+
+        return totalMoodRating / entriesForThisDay.length;
       });
 
-      // Create and store the bar chart
-      chartsRef.current.moodByWeekday = new Chart(moodByWeekdayRef.current, {
-        type: "bar",
-        data: {
-          labels: weekdays,
-          datasets: [
-            {
-              label: "Average Mood (1-5)",
-              data: avgMoodData,
-              backgroundColor: "rgba(54, 162, 235, 0.6)", // Blue bars
-              borderColor: "rgba(54, 162, 235, 1)",
-              borderWidth: 2,
+      activeCharts.current.weekdayMood = new Chart(
+        weekdayMoodChartRef.current,
+        {
+          type: "bar",
+          data: {
+            labels: weekdays,
+            datasets: [
+              {
+                label: "Average Mood (1-5)",
+                data: averageMoodPerDay,
+                backgroundColor: "rgba(54, 162, 235, 0.6)",
+                borderColor: "rgba(54, 162, 235, 1)",
+                borderWidth: 2,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 5, // Mood rating goes from 1-5
+              },
             },
-          ],
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              beginAtZero: true,
-              max: 5, // Mood scale is 1-5
+            plugins: {
+              title: {
+                display: true,
+                text: "Average Mood by Weekday",
+                font: { size: 18 },
+              },
             },
           },
-          plugins: {
-            title: {
-              display: true,
-              text: "Average Mood by Weekday",
-              font: { size: 18 },
-            },
-          },
-        },
-      });
-    }
+        }
+      );
+    };
 
-    /**
-     * CHART 2: Mood Distribution (Pie Chart)
-     *
-     * Shows the percentage breakdown of each mood category.
-     * Visualizes which moods are most/least common overall.
-     */
-    if (moodDistributionRef.current) {
-      // Count occurrences of each mood category
-      const moodCounts = entries.reduce((acc, e) => {
-        const mood = e.mood_category;
-        acc[mood] = (acc[mood] || 0) + 1;
-        return acc;
+    // Helper function to create mood distribution pie chart
+    const createMoodDistributionChart = () => {
+      // Count occurrences of each mood
+      const moodFrequency = entries.reduce((accumulator, entry) => {
+        const moodType = entry.mood_category;
+        accumulator[moodType] = (accumulator[moodType] || 0) + 1;
+        return accumulator;
       }, {});
 
-      const labels = Object.keys(moodCounts);
-      const values = Object.values(moodCounts);
+      const moodLabels = Object.keys(moodFrequency);
+      const moodCounts = Object.values(moodFrequency);
 
-      // Color mapping for each mood category (matches card colors)
-      const colors = {
+      // Colors for each mood type - should match the mood selector colors
+      const moodColorMap = {
         excited: "#FFD97B",
         happy: "#CBFF8D",
         neutral: "#EA8CFF",
         sad: "#8CD7FF",
         angry: "#FF8C8C",
-        calm: "#8CD7FF",
+        calm: "#8CD7FF", // Using same color as sad for now
       };
 
-      // Create and store the pie chart
-      chartsRef.current.moodDistribution = new Chart(
-        moodDistributionRef.current,
+      activeCharts.current.moodDistribution = new Chart(
+        moodPieChartRef.current,
         {
           type: "pie",
           data: {
-            labels: labels.map((l) => l.charAt(0).toUpperCase() + l.slice(1)), // Capitalize labels
+            labels: moodLabels.map(
+              (label) => label.charAt(0).toUpperCase() + label.slice(1) // Capitalize first letter
+            ),
             datasets: [
               {
-                data: values,
-                backgroundColor: labels.map((l) => colors[l] || "#999"), // Map mood to color
+                data: moodCounts,
+                backgroundColor: moodLabels.map(
+                  (mood) => moodColorMap[mood] || "#999"
+                ),
                 borderWidth: 2,
-                borderColor: "#fff", // White borders between slices
+                borderColor: "#fff",
               },
             ],
           },
@@ -175,48 +147,42 @@ export default function Stats({ entries, onClose }) {
                 font: { size: 18 },
               },
               legend: {
-                position: "bottom", // Legend below chart
+                position: "bottom",
               },
             },
           },
         }
       );
-    }
+    };
 
-    /**
-     * CHART 3: Top 10 Activities (Horizontal Bar Chart)
-     *
-     * Shows the most frequently logged activities across all mood entries.
-     * Helps identify which activities are most common in daily life.
-     */
-    if (activitiesByMoodRef.current) {
-      // Count occurrences of each activity
-      const activityCounts = entries.reduce((acc, e) => {
-        if (e.activities && e.activities.length > 0) {
-          e.activities.forEach((activity) => {
-            acc[activity] = (acc[activity] || 0) + 1;
+    // Helper function to create top activities chart
+    const createTopActivitiesChart = () => {
+      // Count all activities across all entries
+      const activityFrequency = entries.reduce((accumulator, entry) => {
+        if (entry.activities && entry.activities.length > 0) {
+          entry.activities.forEach((activityName) => {
+            accumulator[activityName] = (accumulator[activityName] || 0) + 1;
           });
         }
-        return acc;
+        return accumulator;
       }, {});
 
-      // Sort activities by count descending and take top 10
-      const topActivities = Object.entries(activityCounts)
-        .sort(([, a], [, b]) => b - a) // Sort by count (highest first)
-        .slice(0, 10); // Limit to top 10
+      // Get top 10 most frequent activities
+      const sortedActivities = Object.entries(activityFrequency)
+        .sort(([, countA], [, countB]) => countB - countA) // Sort by count descending
+        .slice(0, 10); // Take only top 10
 
-      // Create and store the horizontal bar chart
-      chartsRef.current.activitiesByMood = new Chart(
-        activitiesByMoodRef.current,
+      activeCharts.current.topActivities = new Chart(
+        topActivitiesChartRef.current,
         {
           type: "bar",
           data: {
-            labels: topActivities.map(([activity]) => activity), // Activity names
+            labels: sortedActivities.map(([activityName]) => activityName),
             datasets: [
               {
                 label: "Count",
-                data: topActivities.map(([, count]) => count), // Frequency counts
-                backgroundColor: "rgba(75, 192, 192, 0.6)", // Teal bars
+                data: sortedActivities.map(([, count]) => count),
+                backgroundColor: "rgba(75, 192, 192, 0.6)",
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 2,
               },
@@ -225,7 +191,7 @@ export default function Stats({ entries, onClose }) {
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            indexAxis: "y", // Horizontal bars (y-axis shows labels)
+            indexAxis: "y", // Makes it horizontal
             plugins: {
               title: {
                 display: true,
@@ -236,33 +202,53 @@ export default function Stats({ entries, onClose }) {
           },
         }
       );
-    }
-  }, [entries]); // Re-render charts when entries data changes
+    };
 
-  /**
-   * Component Structure:
-   *
-   * stats (container)
-   * ├── stats__overlay (dark background, closes modal on click)
-   * └── stats__container (white modal box)
-   *     ├── stats__header (title + close button)
-   *     ├── stats__summary (3 statistic cards)
-   *     │   ├── Total Entries
-   *     │   ├── Average Mood
-   *     │   └── Most Common Mood
-   *     └── stats__content (scrollable charts area)
-   *         ├── Chart 1: Avg Mood by Weekday
-   *         ├── Chart 2: Mood Distribution
-   *         └── Chart 3: Top 10 Activities
-   */
+    // Chart 1: Average mood by weekday
+    if (weekdayMoodChartRef.current) {
+      createWeekdayMoodChart(daysOfWeek);
+    }
+
+    // Chart 2: Pie chart showing mood distribution
+    if (moodPieChartRef.current) {
+      createMoodDistributionChart();
+    }
+
+    // Chart 3: Top activities horizontal bar chart
+    if (topActivitiesChartRef.current) {
+      createTopActivitiesChart();
+    }
+  }, [entries]);
+
+  // Calculate some quick summary stats
+  const totalEntries = entries.length;
+
+  const averageMood =
+    totalEntries > 0
+      ? (
+          entries.reduce((sum, entry) => sum + entry.mood_rating, 0) /
+          totalEntries
+        ).toFixed(1)
+      : "N/A";
+
+  const mostCommonMood = totalEntries > 0 ? getMostFrequentMood() : "N/A";
+
+  // Helper to find the most common mood
+  function getMostFrequentMood() {
+    const moodCounts = entries.reduce((acc, entry) => {
+      acc[entry.mood_category] = (acc[entry.mood_category] || 0) + 1;
+      return acc;
+    }, {});
+
+    return Object.entries(moodCounts).sort(([, a], [, b]) => b - a)[0][0]; // Get the mood with highest count
+  }
+
   return (
     <div className="stats">
-      {/* Dark overlay background - click to close modal */}
+      {/* Overlay to close modal when clicking outside */}
       <div className="stats__overlay" onClick={onClose}></div>
 
-      {/* Main modal container */}
       <div className="stats__container">
-        {/* Header with title and close button */}
         <div className="stats__header">
           <h1 className="stats__title">📊 Mood Statistics</h1>
           <button className="stats__close" onClick={onClose}>
@@ -270,58 +256,36 @@ export default function Stats({ entries, onClose }) {
           </button>
         </div>
 
-        {/* Scrollable content area */}
         <div className="stats__content">
-          {/* Summary statistics cards */}
+          {/* Summary cards at the top */}
           <div className="stats__summary">
-            {/* Card 1: Total number of mood entries */}
             <div className="stats__summary-card">
               <h3>Total Entries</h3>
-              <p className="stats__summary-value">{entries.length}</p>
+              <p className="stats__summary-value">{totalEntries}</p>
             </div>
 
-            {/* Card 2: Average mood rating (1-5 scale) */}
             <div className="stats__summary-card">
               <h3>Average Mood</h3>
-              <p className="stats__summary-value">
-                {entries.length > 0
-                  ? (
-                      entries.reduce((sum, e) => sum + e.mood_rating, 0) /
-                      entries.length
-                    ).toFixed(1)
-                  : "N/A"}
-              </p>
+              <p className="stats__summary-value">{averageMood}</p>
             </div>
 
-            {/* Card 3: Most frequently occurring mood category */}
             <div className="stats__summary-card">
               <h3>Most Common Mood</h3>
-              <p className="stats__summary-value">
-                {entries.length > 0
-                  ? Object.entries(
-                      entries.reduce((acc, e) => {
-                        acc[e.mood_category] = (acc[e.mood_category] || 0) + 1;
-                        return acc;
-                      }, {})
-                    ).sort(([, a], [, b]) => b - a)[0][0]
-                  : "N/A"}
-              </p>
+              <p className="stats__summary-value">{mostCommonMood}</p>
             </div>
           </div>
 
-          {/* Chart 1: Average mood by weekday (bar chart) */}
+          {/* Chart containers */}
           <div className="stats__chart-container">
-            <canvas ref={moodByWeekdayRef}></canvas>
+            <canvas ref={weekdayMoodChartRef}></canvas>
           </div>
 
-          {/* Chart 2: Mood distribution (pie chart) */}
           <div className="stats__chart-container">
-            <canvas ref={moodDistributionRef}></canvas>
+            <canvas ref={moodPieChartRef}></canvas>
           </div>
 
-          {/* Chart 3: Top 10 activities (horizontal bar chart) */}
           <div className="stats__chart-container">
-            <canvas ref={activitiesByMoodRef}></canvas>
+            <canvas ref={topActivitiesChartRef}></canvas>
           </div>
         </div>
       </div>

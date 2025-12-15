@@ -21,11 +21,9 @@
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: slideUp 0.3s ease;
+  position: relative;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  animation: slideInFromBottom 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   z-index: 1001;
 }
 
@@ -38,9 +36,11 @@
 }
 
 .mood__modal_title {
-  font-size: 1.5rem;
-  color: #333;
+  color: #000000;
   margin: 0;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 44px;
 }
 
 .mood__modal_close-button {
@@ -48,7 +48,7 @@
   border: none;
   font-size: 2rem;
   cursor: pointer;
-  color: #666;
+  color: #000000;
   width: 40px;
   height: 40px;
   display: flex;
@@ -119,9 +119,9 @@
   flex: 1;
   min-width: 100px;
   padding: 1rem 0.5rem;
-  border: 2px solid #e0e0e0;
+  border: none;
   border-radius: 8px;
-  background: white;
+  background: transparent;
   cursor: pointer;
   transition: all 0.3s;
   display: flex;
@@ -133,11 +133,6 @@
 .mood__form_mood-option:hover {
   border-color: #646cff;
   transform: translateY(-2px);
-}
-
-.mood__form_mood-option--selected {
-  border-color: #646cff;
-  background: #f0f0ff;
 }
 
 .mood__form_mood-emoji {
@@ -160,36 +155,49 @@
 
 .mood__form_activity-chip {
   padding: 0.5rem 1rem;
-  border: 2px solid #e0e0e0;
+  border: none;
   border-radius: 20px;
-  background: white;
+  background: linear-gradient(180deg, #fbf4de 0%, #e4dbbf 100%),
+    linear-gradient(
+      180deg,
+      rgba(210, 197, 156, 0.3) 73.64%,
+      rgba(255, 255, 255, 0.3) 88.18%
+    );
+
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #000000;
   cursor: pointer;
   transition: all 0.3s;
   font-size: 0.9rem;
 }
 
 .mood__form_activity-chip:hover {
-  border-color: #646cff;
+  border: none;
 }
 
 .mood__form_activity-chip--selected {
-  border-color: #646cff;
-  background: #646cff;
-  color: white;
+  color: #000000;
 }
 
 /* Submit Button */
 .mood__form_submit-button {
-  width: 100%;
-  padding: 1rem;
-  background: #646cff;
-  color: white;
+  width: 200px;
+  height: 55px;
   border: none;
   border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 20px;
+  line-height: 44px;
+  align-self: center;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0px -2px 0px 2px rgba(0, 0, 0, 0.5) inset;
+  font-family: "Balsamiq Sans", -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
+  background: linear-gradient(180deg, #50c878 0%, #317949 100%);
 }
 
 .mood__form_submit-button:hover {
@@ -212,13 +220,145 @@
   }
 }
 
-@keyframes slideUp {
+@keyframes slideInFromBottom {
   from {
-    transform: translateY(50px);
+    transform: translateY(100vh);
     opacity: 0;
   }
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+/* Responsive Design: 330px - 1440px */
+@media (max-width: 768px) {
+  .mood__modal {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .mood__modal_header {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .mood__modal_title {
+    font-size: 1.25rem;
+  }
+
+  .mood__modal_body {
+    padding: 1.5rem;
+  }
+
+  .mood__form_mood-option {
+    min-width: 80px;
+    padding: 0.75rem 0.5rem;
+  }
+
+  .mood__form_mood-emoji {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mood__modal {
+    width: 98%;
+    max-height: 98vh;
+  }
+
+  .mood__modal_header {
+    padding: 1rem;
+  }
+
+  .mood__modal_title {
+    font-size: 1.1rem;
+  }
+
+  .mood__modal_close-button {
+    width: 32px;
+    height: 32px;
+    font-size: 1.5rem;
+  }
+
+  .mood__modal_body {
+    padding: 1rem;
+  }
+
+  .mood__form {
+    gap: 1.25rem;
+  }
+
+  .mood__form_label {
+    font-size: 0.9rem;
+  }
+
+  .mood__form_input,
+  .mood__form_textarea {
+    padding: 0.625rem;
+    font-size: 0.9rem;
+  }
+
+  .mood__form_mood-selector {
+    gap: 0.4rem;
+  }
+
+  .mood__form_mood-option {
+    min-width: 70px;
+    padding: 0.6rem 0.4rem;
+  }
+
+  .mood__form_mood-emoji {
+    width: 36px;
+    height: 36px;
+  }
+
+  .mood__form_mood-name {
+    font-size: 0.75rem;
+  }
+
+  .mood__form_activity-chip {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .mood__form_submit-button {
+    padding: 0.875rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .mood__modal_body {
+    padding: 0.875rem;
+  }
+
+  .mood__form_mood-selector {
+    gap: 0.3rem;
+  }
+
+  .mood__form_mood-option {
+    min-width: 60px;
+    padding: 0.5rem 0.3rem;
+  }
+
+  .mood__form_mood-emoji {
+    width: 32px;
+    height: 32px;
+  }
+
+  .mood__form_activity-selector {
+    gap: 0.4rem;
+  }
+
+  .mood__form_activity-chip {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .mood__modal {
+    max-width: 700px;
   }
 }
