@@ -1,5 +1,5 @@
 .profile {
-  background: transparent; /* Blend with gradient background */
+  background: transparent; 
   padding: 0 26px;
   display: flex;
   margin-top: 7px;
@@ -84,7 +84,6 @@
   border-color: #3d6f39;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
   .profile {
     padding: 0 20px;

@@ -17,7 +17,7 @@
   transform: translate(-50%, -50%);
   background-color: rgba(255, 251, 238, 1);
   border-radius: 32px;
-  padding: 0;
+  padding: 24px 32px 48px;
   z-index: 1000;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   min-width: 500px;
@@ -27,7 +27,7 @@
   font-size: 64px;
   font-family: "Balsamiq Sans", cursive;
   font-weight: bold;
-  margin: 71px 0 0 32px;
+  margin: 61px 0 0 32px;
   text-align: left;
   color: #000;
 }
@@ -134,20 +134,16 @@
 }
 
 .edit__profile_save-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  opacity: 0.7;
 }
 
-.edit__profile_save-button:active {
-  transform: translateY(0);
-}
 .edit__profile_close {
   position: absolute;
   top: 16px;
   right: 16px;
   background: transparent;
   border: none;
-  font-size: 27px;
+  font-size: 26px;
   cursor: pointer;
   color: rgba(24, 74, 69, 1);
   width: 40px;
@@ -155,4 +151,80 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+}
+
+.edit__profile_close:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .edit__profile_modal {
+    width: calc(100% - 32px);
+    height: auto;
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .edit__profile_title {
+    font-size: 32px;
+    margin: 12px 0 16px 0;
+    text-align: center;
+  }
+
+  .edit__profile_content {
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .edit__profile_avatar-section {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .edit__profile_avatar {
+    width: 140px;
+    height: 140px;
+    margin-left: 0;
+  }
+
+  .edit__profile_avatar-label {
+    width: 140px;
+    margin-left: 0;
+    border-radius: 0 0 75% 75%;
+    bottom: 50px;
+  }
+
+  .edit__profile_name-input {
+    width: 100%;
+    height: 48px;
+    padding-left: 12px;
+  }
+
+  .edit__profile_save-button {
+    width: 100%;
+    max-width: 420px;
+    position: static;
+    bottom: auto;
+    height: 52px;
+    margin: 8px auto 0 auto;
+  }
+}
+
+@media (max-width: 420px) {
+  .edit__profile_title {
+    font-size: 28px;
+    margin-top: 8px;
+  }
+
+  .edit__profile_avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .edit__profile_avatar-label {
+    width: 120px;
+  }
 }

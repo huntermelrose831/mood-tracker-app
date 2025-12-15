@@ -15,7 +15,6 @@ body {
   padding: 40px;
 }
 
-/* Responsive Design: 330px - 1440px */
 @media (max-width: 768px) {
   .app__main {
     padding: 20px 16px;

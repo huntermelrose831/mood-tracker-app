@@ -112,7 +112,6 @@ export default function MoodModal({ onSubmit, onClose }) {
     }));
   };
 
-  // Basic form validation - just checking required fields for now
   const validateForm = () => {
     const errors = {};
 
@@ -146,7 +145,6 @@ export default function MoodModal({ onSubmit, onClose }) {
     }));
   };
 
-  // Default background when no mood is selected
   const modalBackground = currentSelectedMood
     ? currentSelectedMood.gradient
     : "#FFFBEE";

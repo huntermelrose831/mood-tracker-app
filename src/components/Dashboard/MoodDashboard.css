@@ -192,7 +192,6 @@
   margin-top: auto;
 }
 
-/* Responsive Design: 330px - 1440px */
 @media (max-width: 1024px) {
   .mood__dashboard_grid {
     gap: 30px 25px;

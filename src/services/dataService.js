@@ -1,6 +1,8 @@
-const MOOD_DATA_STORAGE_KEY = "mood_tracker_entries";
-const PROFILE_DATA_STORAGE_KEY = "mood_tracker_profile";
+const MOOD_STORAGE_KEY = "mood_tracker_entries";
+const PROFILE_STORAGE_KEY = "mood_tracker_profile";
 import Avatar from "../assets/Avatar.jpg";
+
+// TODO: maybe we should move these to a config file later?
 export const MOOD_ICONS = {
   excited: "/src/assets/Excited.png",
   happy: "/src/assets/Happy.png",
@@ -17,17 +19,16 @@ export const MOOD_COLORS = {
   angry: "#D85C5C",
 };
 
-// function to format
-// I was getting bitten by timezone conversion before, so doing this manually
-const formatDateForStorage = (dateObject) => {
-  const year = dateObject.getFullYear();
-  const month = String(dateObject.getMonth() + 1).padStart(2, "0");
-  const day = String(dateObject.getDate()).padStart(2, "0");
+// format dates properly
+const formatDateForStorage = (date) => {
+  let year = date.getFullYear();
+  let month = String(date.getMonth() + 1).padStart(2, "0");
+  let day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
 
-const getWeekdayFromDate = (dateObject) => {
-  const weekdayNames = [
+const getWeekdayFromDate = (date) => {
+  const days = [
     "Sunday",
     "Monday",
     "Tuesday",
@@ -36,190 +37,196 @@ const getWeekdayFromDate = (dateObject) => {
     "Friday",
     "Saturday",
   ];
-  return weekdayNames[dateObject.getDay()];
+  return days[date.getDay()];
 };
 
-// The raw JSON data has inconsistent mood naming
-// This function maps moods
-const normalizeMoodData = (subMoodText, primaryMood) => {
-  const submoodLower = (subMoodText || "").toLowerCase().trim();
-  const primaryMoodLower = (primaryMood || "").toLowerCase();
+// The imported JSON data has really inconsistent mood naming conventions
+// This helper tries to normalize everything into our 5 categories
+const normalizeMoodData = (subMood, primaryMood) => {
+  let submoodText = (subMood || "").toLowerCase().trim();
+  let primaryMoodText = (primaryMood || "").toLowerCase();
 
-  if (submoodLower.includes("excited"))
+  if (submoodText.includes("excited")) {
     return { category: "excited", rating: 5 };
-  if (submoodLower.includes("blessed") || submoodLower.includes("happy")) {
+  }
+  if (submoodText.includes("blessed") || submoodText.includes("happy")) {
     return { category: "happy", rating: 4 };
   }
-  if (submoodLower.includes("sad")) return { category: "sad", rating: 2 };
-  if (submoodLower.includes("angry")) return { category: "angry", rating: 1 };
-  if (submoodLower.includes("worried") || submoodLower.includes("anxious")) {
-    return { category: "sad", rating: 2 }; // Treating anxiety as sad for now
+  if (submoodText.includes("sad")) {
+    return { category: "sad", rating: 2 };
   }
-  if (submoodLower.includes("meh") || submoodLower.includes("okay")) {
+  if (submoodText.includes("angry")) {
+    return { category: "angry", rating: 1 };
+  }
+  // I'm treating worried/anxious as sad for now - might want to revisit this
+  if (submoodText.includes("worried") || submoodText.includes("anxious")) {
+    return { category: "sad", rating: 2 };
+  }
+  if (submoodText.includes("meh") || submoodText.includes("okay")) {
     return { category: "neutral", rating: 3 };
   }
 
-  if (primaryMoodLower === "good") return { category: "happy", rating: 4 };
-  if (primaryMoodLower === "normal") return { category: "neutral", rating: 3 };
-  if (primaryMoodLower === "bad") return { category: "angry", rating: 2 };
+  if (primaryMoodText === "good") return { category: "happy", rating: 4 };
+  if (primaryMoodText === "normal") return { category: "neutral", rating: 3 };
+  if (primaryMoodText === "bad") return { category: "angry", rating: 2 };
 
   return { category: "neutral", rating: 3 };
 };
 
 export const dataService = {
-  // Retrieve all mood entries from browser storage
   getEntries: () => {
     try {
-      const storedData = localStorage.getItem(MOOD_DATA_STORAGE_KEY);
-      return storedData ? JSON.parse(storedData) : [];
-    } catch (parseError) {
-      console.error("Failed to parse stored mood entries:", parseError);
+      const data = localStorage.getItem(MOOD_STORAGE_KEY);
+      if (data) {
+        return JSON.parse(data);
+      } else {
+        return [];
+      }
+    } catch (error) {
+      console.error("Error parsing stored mood entries:", error);
       return [];
     }
   },
 
-  saveEntry: (entryData) => {
+  // Save a new mood entry
+  saveEntry: (entry) => {
     try {
-      const currentEntries = dataService.getEntries();
+      let entries = dataService.getEntries();
 
-      // Parse the date to get weekday
-      const [year, month, day] = entryData.date.split("-");
-      const entryDate = new Date(year, month - 1, day);
+      let dateParts = entry.date.split("-");
+      let year = dateParts[0];
+      let month = dateParts[1];
+      let day = dateParts[2];
+      let dateObj = new Date(year, month - 1, day);
 
-      const newMoodEntry = {
-        ...entryData,
-        id: Date.now().toString(), // Simple ID generation
+      let newEntry = {
+        ...entry,
+        id: Date.now().toString(),
         timestamp: new Date().toISOString(),
-        weekday: getWeekdayFromDate(entryDate),
+        weekday: getWeekdayFromDate(dateObj),
       };
 
-      currentEntries.push(newMoodEntry);
-      localStorage.setItem(
-        MOOD_DATA_STORAGE_KEY,
-        JSON.stringify(currentEntries)
-      );
+      entries.push(newEntry);
+      localStorage.setItem(MOOD_STORAGE_KEY, JSON.stringify(entries));
 
-      return newMoodEntry;
-    } catch (storageError) {
-      console.error("Failed to save mood entry:", storageError);
+      return newEntry;
+    } catch (error) {
+      console.error("Error saving mood entry:", error);
       return null;
     }
   },
+
+  // Get user profile data
   getProfile: () => {
     try {
-      const storedProfile = localStorage.getItem(PROFILE_DATA_STORAGE_KEY);
-      return storedProfile
-        ? JSON.parse(storedProfile)
-        : {
-            name: "Claire Romas",
-            avatar: Avatar,
-          };
+      let profileData = localStorage.getItem(PROFILE_STORAGE_KEY);
+      if (profileData) {
+        return JSON.parse(profileData);
+      } else {
+        // default profile data
+        return {
+          name: "Claire Romas",
+          avatar: Avatar,
+        };
+      }
     } catch (error) {
-      console.error("Failed to parse profile data:", error);
+      console.error("Error parsing profile data:", error);
       return {
         name: "Claire Romas",
         avatar: "/mood-tracker-app/assets/Avatar.jpg",
       };
     }
   },
-  saveProfile: (profileData) => {
+
+  // Save user profile
+  saveProfile: (profile) => {
     try {
-      localStorage.setItem(
-        PROFILE_DATA_STORAGE_KEY,
-        JSON.stringify(profileData)
-      );
-      return profileData;
+      localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(profile));
+      return profile;
     } catch (error) {
-      console.error("Failed to save profile:", error);
+      console.error("Error saving profile:", error);
       return null;
     }
   },
-  deleteEntry: (entryId) => {
+
+  deleteEntry: (id) => {
     try {
-      const currentEntries = dataService.getEntries();
-      const filteredEntries = currentEntries.filter(
-        (entry) => entry.id !== entryId
-      );
+      let entries = dataService.getEntries();
+      let filteredEntries = entries.filter((entry) => entry.id !== id);
 
-      localStorage.setItem(
-        MOOD_DATA_STORAGE_KEY,
-        JSON.stringify(filteredEntries)
-      );
-
+      localStorage.setItem(MOOD_STORAGE_KEY, JSON.stringify(filteredEntries));
       return true;
-    } catch (storageError) {
-      console.error("Failed to delete mood entry:", storageError);
+    } catch (error) {
+      console.error("Error deleting entry:", error);
       return false;
     }
   },
 
+  //parsedata from user.json and load into localStorage
   loadSampleData: async () => {
     try {
-      const existingEntries = dataService.getEntries();
+      let existingEntries = dataService.getEntries();
 
-      // Skip loading if we already have data
       if (existingEntries.length > 0) {
         return existingEntries;
       }
 
       console.log("Loading sample data from user.json...");
-      const userDataResponse = await fetch(
-        `${import.meta.env.BASE_URL}data/user.json`
-      );
-      const allUserData = await userDataResponse.json();
+      let response = await fetch(`${import.meta.env.BASE_URL}data/user.json`);
+      let userData = await response.json();
 
-      if (Array.isArray(allUserData) && allUserData.length > 0) {
-        // Filter to only user 30's entries for this demo
-        const targetUserEntries = allUserData.filter(
-          (entry) => entry.user_id === 30
+      if (Array.isArray(userData) && userData.length > 0) {
+        // For demo purposes, just use user 30's data
+        let userEntries = userData.filter((entry) => entry.user_id === 30);
+
+        let sortedEntries = userEntries.sort(
+          (a, b) => new Date(b.datetime) - new Date(a.datetime)
         );
 
-        const sortedByDate = targetUserEntries.sort(
-          (entryA, entryB) =>
-            new Date(entryB.datetime) - new Date(entryA.datetime)
-        );
-        const limitedEntries = sortedByDate.slice(0, 416); // Cap at 416 entries
+        let limitedEntries = sortedEntries.slice(0, 416);
 
-        const processedEntries = limitedEntries.map((rawEntry, index) => {
-          const moodInfo = normalizeMoodData(rawEntry.sub_mood, rawEntry.mood);
-          const entryDate = new Date(rawEntry.datetime);
+        let processedEntries = limitedEntries.map((rawEntry, i) => {
+          let moodData = normalizeMoodData(rawEntry.sub_mood, rawEntry.mood);
+          let date = new Date(rawEntry.datetime);
 
           return {
-            id: `demo-${Date.now()}-${index}`, // Unique ID for demo entries
-            date: formatDateForStorage(entryDate),
-            mood_category: moodInfo.category,
-            mood_rating: moodInfo.rating,
+            id: `demo-${Date.now()}-${i}`,
+            date: formatDateForStorage(date),
+            mood_category: moodData.category,
+            mood_rating: moodData.rating,
             activities: rawEntry.activities ? [rawEntry.activities] : [],
             mood_note: rawEntry.mood_note || "",
-            notes: rawEntry.activities || "", // Using activities as notes for now
-            weekday: getWeekdayFromDate(entryDate),
+            notes: rawEntry.activities || "", // using activities as notes for now
+            weekday: getWeekdayFromDate(date),
             timestamp: rawEntry.datetime,
           };
         });
 
         if (processedEntries.length > 0) {
           localStorage.setItem(
-            MOOD_DATA_STORAGE_KEY,
+            MOOD_STORAGE_KEY,
             JSON.stringify(processedEntries)
           );
-          console.log(`Loaded ${processedEntries.length} sample entries`);
+          console.log(
+            `Successfully loaded ${processedEntries.length} sample entries`
+          );
           return processedEntries;
         }
       }
 
       console.log("No valid sample data found");
       return [];
-    } catch (loadError) {
-      console.error("Error loading sample data:", loadError);
+    } catch (error) {
+      console.error("Error loading sample data:", error);
       return [];
     }
   },
 
-  getStatistics: (entriesData = null) => {
-    const entries = entriesData || dataService.getEntries();
+  getStatistics: (entries = null) => {
+    let data = entries || dataService.getEntries();
 
-    // Handle empty data case
-    if (entries.length === 0) {
+    // Edge case: no data
+    if (data.length === 0) {
       return {
         average_mood: 0,
         most_common_mood: "N/A",
@@ -227,27 +234,35 @@ export const dataService = {
       };
     }
 
-    const totalMoodRating = entries.reduce((sum, entry) => {
-      return sum + entry.mood_rating;
-    }, 0);
-    const averageMood = totalMoodRating / entries.length;
+    let totalRating = 0;
+    for (let i = 0; i < data.length; i++) {
+      totalRating += data[i].mood_rating;
+    }
+    let avgMood = totalRating / data.length;
 
-    const moodFrequencyMap = {};
-    entries.forEach((entry) => {
-      const moodType = entry.mood_category;
-      moodFrequencyMap[moodType] = (moodFrequencyMap[moodType] || 0) + 1;
+    let moodCounts = {};
+    data.forEach((entry) => {
+      let mood = entry.mood_category;
+      if (moodCounts[mood]) {
+        moodCounts[mood]++;
+      } else {
+        moodCounts[mood] = 1;
+      }
     });
 
-    const mostFrequentMood = Object.entries(moodFrequencyMap).reduce(
-      (currentMax, [mood, count]) => {
-        return count > currentMax[1] ? [mood, count] : currentMax;
+    let mostCommonMood = "";
+    let maxCount = 0;
+    for (let mood in moodCounts) {
+      if (moodCounts[mood] > maxCount) {
+        maxCount = moodCounts[mood];
+        mostCommonMood = mood;
       }
-    )[0];
+    }
 
     return {
-      average_mood: averageMood.toFixed(1),
-      most_common_mood: mostFrequentMood,
-      total_entries: entries.length,
+      average_mood: avgMood.toFixed(1),
+      most_common_mood: mostCommonMood,
+      total_entries: data.length,
     };
   },
 };
