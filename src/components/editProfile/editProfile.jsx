@@ -51,13 +51,13 @@ export default function EditProfileModal({ onClose, onSave }) {
               <input
                 type="file"
                 id="avatar-upload"
-                className="edit__profile_file-input"
+                className=" edit__profile_file-input"
                 accept="image/*"
                 onChange={handleImageUpload}
               />
               <label
                 htmlFor="avatar-upload"
-                className="edit__profile_avatar-overlay"
+                className="edit__profile_avatar-label edit__profile_avatar-overlay"
               >
                 Click to change
               </label>

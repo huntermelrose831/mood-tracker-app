@@ -12,8 +12,8 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 789px;
-  height: 436px;
+  width: 807px;
+  height: 463px;
   transform: translate(-50%, -50%);
   background-color: rgba(255, 251, 238, 1);
   border-radius: 32px;
@@ -27,7 +27,7 @@
   font-size: 64px;
   font-family: "Balsamiq Sans", cursive;
   font-weight: bold;
-  margin: 0 0 32px 0;
+  margin: 71px 0 0 32px;
   text-align: left;
   color: #000;
 }
@@ -44,7 +44,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 10px;
+
   gap: 20px;
 }
 
@@ -52,13 +52,14 @@
   position: relative;
 
   border-radius: 50%;
-  overflow: hidden;
+
   cursor: pointer;
 }
 
 .edit__profile_avatar {
   width: 223px;
   height: 223px;
+  margin-left: 16px;
   object-fit: cover;
 }
 
@@ -80,7 +81,11 @@
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
+.edit__profile_avatar-label {
+  width: 223px;
+  border-radius: 0 0 50% 50%;
+  margin-left: 16px;
+}
 .edit__profile_avatar-container:hover .edit__profile_avatar-overlay {
   opacity: 1;
 }
@@ -92,7 +97,7 @@
 .edit__profile_name-input {
   width: 520px;
   height: 51px;
-  padding: 16px 24px;
+  padding-left: 16px;
   font-size: 18px;
   border: none;
   border-radius: 12px;
@@ -108,15 +113,23 @@
 
 .edit__profile_save-button {
   width: 200px;
-  padding: 16px 32px;
+  display: flex;
+  height: 55px;
+  position: relative;
+  bottom: 50px;
+  justify-content: center;
+  align-items: center;
   font-size: 20px;
-  font-weight: bold;
-  background: linear-gradient(180deg, #6db96d 0%, #4a934a 100%);
+  font-weight: 700;
+  line-height: 44px;
+  background: linear-gradient(180deg, #50c878 0%, #317949 100%);
+  font-family: "Balsamiq Sans", -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
   color: #000;
   border: none;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px -2px 0px 2px rgba(0, 0, 0, 0.5) inset;
   transition: transform 0.2s ease;
 }
 
