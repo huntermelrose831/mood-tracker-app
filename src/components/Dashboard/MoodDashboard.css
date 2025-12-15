@@ -1,22 +1,22 @@
-.mood-dashboard {
+.mood__dashboard {
   min-height: 70vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.mood-dashboard__header {
+.mood__dashboard_header {
   text-align: center;
   margin-bottom: 32px;
 }
 
-.mood-dashboard__title {
+.mood__dashboard_title {
   color: #333;
   font-size: 24px;
   font-weight: 600;
 }
 
-.mood-dashboard__grid {
+.mood__dashboard_grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 45px 40px;
@@ -24,17 +24,17 @@
   width: 100%;
 }
 
-.mood-dashboard__card {
+.mood__dashboard_card {
   aspect-ratio: 4/3;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.mood-dashboard__card:hover {
+.mood__dashboard_card:hover {
   transform: translateY(-4px);
   cursor: pointer;
 }
 
-.mood-dashboard__card-content {
+.mood__dashboard_card-content {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,7 +48,7 @@
   position: relative;
 }
 
-.mood-dashboard__delete-button {
+.mood__dashboard_delete-button {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -67,12 +67,12 @@
   z-index: 10;
 }
 
-.mood-dashboard__delete-button:hover {
+.mood__dashboard_delete-button:hover {
   background: rgba(255, 0, 0, 0.7);
   transform: scale(1.1);
 }
 
-.mood-dashboard__emoji-container {
+.mood__dashboard_emoji-container {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -81,25 +81,25 @@
   height: 100%;
 }
 
-.mood-dashboard__emoji {
+.mood__dashboard_emoji {
   width: 60px;
   height: 60px;
   object-fit: contain;
 }
 
-.mood-dashboard__day-label {
+.mood__dashboard_day-label {
   font-size: 19.2px;
   font-weight: 600;
   color: #666;
   margin-bottom: 4px;
 }
 
-.mood-dashboard__date-label {
+.mood__dashboard_date-label {
   font-size: 14.4px;
   color: #888;
 }
 
-.mood-dashboard__card-details {
+.mood__dashboard_card-details {
   padding: 20px 10px;
   text-align: center;
   display: flex;
@@ -110,23 +110,23 @@
   align-items: center;
 }
 
-.mood-dashboard__card-weekday {
+.mood__dashboard_card-weekday {
   font-size: 19.2px;
   font-weight: 700;
-  color: #222;
+  color: #000000;
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.mood-dashboard__card-date {
+.mood__dashboard_card-date {
   font-size: 24px;
   font-weight: 600;
   color: #000000;
   margin: 0;
 }
 
-.mood-dashboard__card-moodnote {
+.mood__dashboard_card-moodnote {
   font-size: 16px;
   font-weight: 400;
   color: #000000;
@@ -134,7 +134,7 @@
   line-height: 22px;
 }
 
-.mood-dashboard__card-activities {
+.mood__dashboard_card-activities {
   font-size: 13.6px;
   font-weight: 600;
   color: #000000;
@@ -143,21 +143,21 @@
   font-style: italic;
 }
 
-.mood-dashboard__card-notes {
+.mood__dashboard_card-notes {
   font-size: 16px;
   color: #000000;
   line-height: 1.5;
   margin: 0;
 }
 
-.mood-dashboard__button-container {
+.mood__dashboard_button-container {
   display: flex;
   justify-content: center;
   margin-top: 32px;
   width: 100%;
 }
 
-.mood-dashboard__load-more {
+.mood__dashboard_load-more {
   width: 200px;
   height: 55px;
   border: none;
@@ -174,78 +174,66 @@
   color: #000000;
 }
 
-.mood-dashboard__load-more:hover {
+.mood__dashboard_load-more:hover {
   opacity: 0.8;
   transform: translateY(-2px);
 }
 
-.mood-dashboard__pagination {
+.mood__dashboard_pagination {
   display: flex;
   gap: 8px;
   margin-top: auto;
 }
 
-.mood-dashboard__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #ccc;
-  transition: background 0.3s;
-}
-
-.mood-dashboard__dot--active {
-  background: #333;
-}
-
 /* Responsive Design: 330px - 1440px */
 @media (max-width: 1024px) {
-  .mood-dashboard__grid {
+  .mood__dashboard_grid {
     gap: 30px 25px;
     max-width: 850px;
   }
 
-  .mood-dashboard__card-content {
+  .mood__dashboard_card-content {
     height: 180px;
     width: 240px;
   }
 }
 
 @media (max-width: 768px) {
-  .mood-dashboard__grid {
+  .mood__dashboard_grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px 20px;
     max-width: 100%;
     padding: 0 16px;
   }
-  .mood-dashboard__card {
+  .mood__dashboard_card {
     aspect-ratio: auto;
     transition: transform 0.3s, box-shadow 0.3s;
   }
 
-  .mood-dashboard__card-content {
+  .mood__dashboard_card-content {
     height: 160px;
     width: 100%;
     max-width: 220px;
   }
 
-  .mood-dashboard__emoji {
+  .mood__dashboard_emoji {
     width: 50px;
     height: 50px;
   }
 
-  .mood-dashboard__card-weekday {
+  .mood__dashboard_card-weekday {
     font-size: 16px;
   }
 
-  .mood-dashboard__card-date {
+  .mood__dashboard_card-date {
     font-size: 19.2px;
   }
 
-  .mood-dashboard__card-notes {
+  .mood__dashboard_card-notes {
     font-size: 14.4px;
   }
 
-  .mood-dashboard__load-more {
+  .mood__dashboard_load-more {
     width: 160px;
     height: 48px;
     font-size: 18px;
@@ -253,36 +241,36 @@
 }
 
 @media (max-width: 600px) {
-  .mood-dashboard__grid {
+  .mood__dashboard_grid {
     gap: 20px 16px;
   }
 
-  .mood-dashboard__card-content {
+  .mood__dashboard_card-content {
     height: 140px;
     width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .mood-dashboard__grid {
+  .mood__dashboard_grid {
     grid-template-columns: 1fr;
     gap: 20px;
     padding: 0 12px;
   }
 
-  .mood-dashboard__card-content {
+  .mood__dashboard_card-content {
     height: 160px;
     width: 100%;
     max-width: 320px;
     margin: 0 auto;
   }
 
-  .mood-dashboard__emoji {
+  .mood__dashboard_emoji {
     width: 55px;
     height: 55px;
   }
 
-  .mood-dashboard__load-more {
+  .mood__dashboard_load-more {
     width: 140px;
     height: 44px;
     font-size: 16px;
@@ -291,35 +279,35 @@
 }
 
 @media (max-width: 360px) {
-  .mood-dashboard__grid {
+  .mood__dashboard_grid {
     padding: 0 8px;
   }
 
-  .mood-dashboard__card-content {
+  .mood__dashboard_card-content {
     height: 140px;
     max-width: 280px;
   }
 
-  .mood-dashboard__card-weekday {
+  .mood__dashboard_card-weekday {
     font-size: 14.4px;
   }
 
-  .mood-dashboard__card-date {
+  .mood__dashboard_card-date {
     font-size: 17.6px;
   }
 
-  .mood-dashboard__card-notes {
+  .mood__dashboard_card-notes {
     font-size: 13.6px;
   }
 
-  .mood-dashboard__load-more {
+  .mood__dashboard_load-more {
     width: 100%;
     max-width: 280px;
   }
 }
 
 @media (min-width: 1440px) {
-  .mood-dashboard__grid {
+  .mood__dashboard_grid {
     max-width: 1200px;
   }
 }

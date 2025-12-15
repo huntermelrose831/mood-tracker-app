@@ -250,7 +250,7 @@ export default function Stats({ entries, onClose }) {
 
       <div className="stats__container">
         <div className="stats__header">
-          <h1 className="stats__title">📊 Mood Statistics</h1>
+          <h1 className="stats__title">Mood Statistics</h1>
           <button className="stats__close" onClick={onClose}>
             ✕
           </button>

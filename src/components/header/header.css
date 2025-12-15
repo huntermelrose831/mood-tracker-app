@@ -19,7 +19,8 @@
 }
 
 .header__date-time {
-  font-family: Balsamiq Sans;
+  font-family: "Balsamiq Sans", -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
   font-weight: 700;
   font-style: Bold;
   font-size: 25px;

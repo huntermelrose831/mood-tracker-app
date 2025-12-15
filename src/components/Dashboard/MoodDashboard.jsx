@@ -157,16 +157,16 @@ export default function MoodDashboard({ entries, onDelete }) {
   };
 
   return (
-    <div className="mood-dashboard">
-      <div className="mood-dashboard__grid">
+    <div className="mood__dashboard">
+      <div className="mood__dashboard_grid">
         {displayData.map((dayData, index) => (
           <div
             key={index} // Could use fullDate as key but index works for now
-            className="mood-dashboard__card"
+            className="mood__dashboard_card"
             onClick={() => handleCardFlip(index)}
           >
             <div
-              className="mood-dashboard__card-content"
+              className="mood__dashboard_card-content"
               style={{
                 backgroundColor: flippedCards.has(index)
                   ? MOOD_COLORS_EXPANDED[dayData.mood]
@@ -175,7 +175,7 @@ export default function MoodDashboard({ entries, onDelete }) {
             >
               {dayData.mood && (
                 <button
-                  className="mood-dashboard__delete-button"
+                  className="mood__dashboard_delete-button"
                   onClick={(e) => handleDeleteClick(e, dayData.id)}
                   aria-label="Delete entry"
                 >
@@ -185,16 +185,16 @@ export default function MoodDashboard({ entries, onDelete }) {
               {dayData.mood ? (
                 flippedCards.has(index) ? (
                   // Flipped state - show details
-                  <div className="mood-dashboard__card-details">
+                  <div className="mood__dashboard_card-details">
                     {dayData.mood_note && (
-                      <p className="mood-dashboard__card-moodnote">
+                      <p className="mood__dashboard_card-moodnote">
                         {dayData.mood_note}
                       </p>
                     )}
 
                     {dayData.notes &&
                       dayData.notes !== "No notes for this day" && (
-                        <p className="mood-dashboard__card-moodnote">
+                        <p className="mood__dashboard_card-moodnote">
                           {dayData.notes}
                         </p>
                       )}
@@ -202,23 +202,23 @@ export default function MoodDashboard({ entries, onDelete }) {
                     {dayData.activities &&
                       dayData.activities.length > 0 &&
                       dayData.notes !== dayData.activities[0] && (
-                        <p className="mood-dashboard__card-moodnote">
+                        <p className="mood__dashboard_card-moodnote">
                           {dayData.activities.join(", ")}
                         </p>
                       )}
                   </div>
                 ) : (
                   // Normal state - show emoji with weekday and date
-                  <div className="mood-dashboard__emoji-container">
-                    <h3 className="mood-dashboard__card-weekday">
+                  <div className="mood__dashboard_emoji-container">
+                    <h3 className="mood__dashboard_card-weekday">
                       {dayData.day}
                     </h3>
                     <img
                       src={dayData.emoji}
                       alt={dayData.mood}
-                      className="mood-dashboard__emoji"
+                      className="mood__dashboard_emoji"
                     />
-                    <h3 className="mood-dashboard__card-date">
+                    <h3 className="mood__dashboard_card-date">
                       {dayData.date}
                     </h3>
                   </div>
@@ -226,8 +226,8 @@ export default function MoodDashboard({ entries, onDelete }) {
               ) : (
                 // No mood data - show empty state
                 <>
-                  <p className="mood-dashboard__day-label">{dayData.day}</p>
-                  <p className="mood-dashboard__date-label">{dayData.date}</p>
+                  <p className="mood__dashboard_day-label">{dayData.day}</p>
+                  <p className="mood__dashboard_date-label">{dayData.date}</p>
                 </>
               )}
             </div>
@@ -237,9 +237,9 @@ export default function MoodDashboard({ entries, onDelete }) {
 
       {/* Show load more button if there are more entries to display */}
       {visibleCount < limitedEntries.length && (
-        <div className="mood-dashboard__button-container">
+        <div className="mood__dashboard_button-container">
           <button
-            className="mood-dashboard__load-more"
+            className="mood__dashboard_load-more"
             onClick={loadMoreEntries}
           >
             Show More

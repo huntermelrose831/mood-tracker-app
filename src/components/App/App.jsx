@@ -5,7 +5,7 @@ import Footer from "../footer/footer.jsx";
 import MoodModal from "../MoodModal/MoodModal.jsx";
 import MoodDashboard from "../Dashboard/MoodDashboard.jsx";
 import Stats from "../Stats/Stats.jsx";
-import EditProfileModal from "../editProfile/editProfileModal.jsx";
+import EditProfileModal from "../editProfile/editProfile.jsx";
 import { dataService } from "../../services/dataService.js";
 import "./App.css";
 
