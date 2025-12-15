@@ -1,5 +1,4 @@
 import React from "react";
-import MoodDropdown from "../../MoodDropdown/MoodDropdown";
 import "./editProfile.css";
 import { useState } from "react";
 

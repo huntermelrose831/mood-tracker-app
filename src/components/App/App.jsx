@@ -2,21 +2,17 @@ import { useState, useEffect } from "react";
 import Header from "../header/header.jsx";
 import Profile from "../profile/profile.jsx";
 import Footer from "../footer/footer.jsx";
-import MoodModal from "../MoodLogger/MoodModal.jsx";
+import MoodModal from "../MoodModal/MoodModal.jsx";
 import MoodDashboard from "../Dashboard/MoodDashboard.jsx";
 import Stats from "../Stats/Stats.jsx";
+import EditProfileModal from "../editProfile/editProfileModal.jsx";
 import { dataService } from "../../services/dataService.js";
 import "./App.css";
 
 function App() {
-  // State management - keeping track of UI states and data
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isStatsOpen, setIsStatsOpen] = useState(false);
+  const [activeModal, setActiveModal] = useState(null);
   const [entries, setEntries] = useState([]);
   const [stats, setStats] = useState(null);
-
-  // Load initial data when component mounts
-  // TODO: maybe add error handling here later
   useEffect(() => {
     const loadInitialData = async () => {
       try {
@@ -35,7 +31,6 @@ function App() {
     loadInitialData();
   }, []);
 
-  // Handle new mood entry submission
   const handleMoodSubmit = async (formData) => {
     try {
       dataService.saveEntry(formData);
@@ -47,31 +42,22 @@ function App() {
 
       setEntries(updatedEntries);
       setStats(updatedStats);
-      setIsModalOpen(false); // Close the modal
+      setActiveModal(null);
     } catch (error) {
       console.error("Error saving mood entry:", error);
     }
   };
 
-  const openStatsModal = () => {
-    setIsStatsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const closeStatsModal = () => {
-    setIsStatsOpen(false);
-  };
-
+  const openModal = (type) => setActiveModal(type);
+  const closeModal = () => setActiveModal(null);
   return (
     <div className="app">
       <Header />
 
       <Profile
-        onLogMoodClick={() => setIsModalOpen(true)}
-        onStatsClick={openStatsModal}
+        onLogMoodClick={() => openModal("mood")}
+        onStatsClick={() => openModal("stats")}
+        onEditProfileClick={() => openModal("editProfile")}
       />
 
       <main className="app__main">
@@ -80,12 +66,18 @@ function App() {
 
       <Footer />
 
-      {/* Conditionally render modals */}
-      {isModalOpen && (
+      {/* Render modals directly - ModalForm was removed */}
+      {activeModal === "mood" && (
         <MoodModal onSubmit={handleMoodSubmit} onClose={closeModal} />
       )}
 
-      {isStatsOpen && <Stats entries={entries} onClose={closeStatsModal} />}
+      {activeModal === "editProfile" && (
+        <EditProfileModal onClose={closeModal} />
+      )}
+
+      {activeModal === "stats" && (
+        <Stats entries={entries} onClose={closeModal} />
+      )}
     </div>
   );
 }
