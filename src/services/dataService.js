@@ -145,7 +145,9 @@ export const dataService = {
       }
 
       console.log("Loading sample data from user.json...");
-      const userDataResponse = await fetch("/data/user.json");
+      const userDataResponse = await fetch(
+        `${import.meta.env.BASE_URL}data/user.json`
+      );
       const allUserData = await userDataResponse.json();
 
       if (Array.isArray(allUserData) && allUserData.length > 0) {
