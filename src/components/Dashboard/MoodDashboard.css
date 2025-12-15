@@ -203,6 +203,10 @@
     height: 180px;
     width: 240px;
   }
+  .mood__dashboard_card-moodnote {
+    font-size: 14px;
+    line-height: 17px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -236,8 +240,9 @@
     font-size: 19.2px;
   }
 
-  .mood__dashboard_card-notes {
-    font-size: 14.4px;
+  .mood__dashboard_card-moodnote {
+    font-size: 12px;
+    line-height: 17px;
   }
 
   .mood__dashboard_load-more {
@@ -253,7 +258,7 @@
   }
 
   .mood__dashboard_card-content {
-    height: 140px;
+    height: 160px;
     width: 100%;
   }
 }
@@ -266,12 +271,15 @@
   }
 
   .mood__dashboard_card-content {
-    height: 160px;
+    height: 190px;
     width: 100%;
     max-width: 320px;
     margin: 0 auto;
   }
-
+  .mood__dashboard_card-moodnote {
+    font-size: 18px;
+    line-height: 17px;
+  }
   .mood__dashboard_emoji {
     width: 55px;
     height: 55px;
@@ -285,26 +293,24 @@
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 350px) {
   .mood__dashboard_grid {
     padding: 0 8px;
   }
 
   .mood__dashboard_card-content {
-    height: 140px;
+    height: 180px;
     max-width: 280px;
   }
-
+  .mood__dashboard_card-moodnote {
+    font-size: 14px;
+  }
   .mood__dashboard_card-weekday {
     font-size: 14.4px;
   }
 
   .mood__dashboard_card-date {
     font-size: 17.6px;
-  }
-
-  .mood__dashboard_card-notes {
-    font-size: 13.6px;
   }
 
   .mood__dashboard_load-more {
