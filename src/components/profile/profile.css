@@ -90,7 +90,6 @@
 }
 
 .profile__button:active .profile__button-icon {
-  /* Show briefly on click for touch devices */
   display: inline-block;
   opacity: 1;
   transform: translateY(0);

@@ -94,7 +94,6 @@ export default function MoodDashboard({ entries, onDelete }) {
   };
 
   const handleCardFlip = (cardIndex) => {
-    // Only allow flipping if the card has mood data
     if (!displayData[cardIndex].mood) return;
 
     setFlippedCards((previousFlipped) => {
