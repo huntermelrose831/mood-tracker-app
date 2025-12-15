@@ -183,6 +183,10 @@
     max-width: 100%;
     padding: 0 16px;
   }
+.mood-dashboard__card {
+  aspect-ratio: auto;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
 
   .mood-dashboard__card-content {
     height: 160px;
