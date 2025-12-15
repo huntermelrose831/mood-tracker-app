@@ -8,7 +8,6 @@ import Stats from "../Stats/Stats.jsx";
 import EditProfileModal from "../editProfile/editProfileModal.jsx";
 import { dataService } from "../../services/dataService.js";
 import "./App.css";
-import ModalForm from "../../ModalForm/ModalForm.jsx";
 
 function App() {
   const [activeModal, setActiveModal] = useState(null);
@@ -67,14 +66,14 @@ function App() {
 
       <Footer />
 
-      <ModalForm isOpen={activeModal !== null} onClose={closeModal}>
-        {activeModal === "mood" && (
-          <MoodModal onSubmit={handleMoodSubmit} onClose={closeModal} />
-        )}
-        {activeModal === "editProfile" && (
-          <EditProfileModal onClose={closeModal} />
-        )}
-      </ModalForm>
+      {/* Render modals directly - ModalForm was removed */}
+      {activeModal === "mood" && (
+        <MoodModal onSubmit={handleMoodSubmit} onClose={closeModal} />
+      )}
+
+      {activeModal === "editProfile" && (
+        <EditProfileModal onClose={closeModal} />
+      )}
 
       {activeModal === "stats" && (
         <Stats entries={entries} onClose={closeModal} />
