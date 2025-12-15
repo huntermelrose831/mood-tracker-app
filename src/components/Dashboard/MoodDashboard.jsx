@@ -5,6 +5,7 @@ import HappyIcon from "../../assets/Happy.png";
 import OkayIcon from "../../assets/Okay.png";
 import SadIcon from "../../assets/Sad.png";
 import AngryIcon from "../../assets/Angry.png";
+import TrashIcon from "../../assets/trash-icon.png";
 
 const MOOD_ICONS = {
   excited: ExcitedIcon,
@@ -168,7 +169,7 @@ export default function MoodDashboard({ entries, onDelete }) {
                   onClick={(e) => handleDeleteClick(e, dayData.id)}
                   aria-label="Delete entry"
                 >
-                  ✕
+                  <img src={TrashIcon} alt="Delete" className="delete-icon" />
                 </button>
               )}
               {dayData.mood ? (

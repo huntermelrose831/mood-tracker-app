@@ -52,21 +52,28 @@
   position: absolute;
   top: 8px;
   right: 8px;
-  background: rgba(0, 0, 0, 0.3);
+  background: none;
   border: none;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 10;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
   cursor: pointer;
   color: white;
   font-size: 16px;
-  transition: all 0.3s;
   z-index: 10;
 }
 
+.mood__dashboard_delete-button:hover {
+  opacity: 1;
+}
+
+.delete-icon {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
 .mood__dashboard_delete-button:hover {
   background: rgba(255, 0, 0, 0.7);
   transform: scale(1.1);
