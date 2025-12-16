@@ -29,7 +29,7 @@
 }
 .header__container {
   display: flex;
-  gap: 87px;
+  gap: 64px;
 }
 /* Responsive Design */
 @media (max-width: 778px) {
@@ -94,9 +94,4 @@
   }
 }
 
-@media (min-width: 1440px) {
-  .header {
-    max-width: 1440px;
-    margin: 0 auto;
-  }
-}
+
