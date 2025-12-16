@@ -199,7 +199,8 @@
   }
 
   .stats__header {
-    padding: 16px;
+    padding: 20px 16px 16px;
+    top:30px;
   }
 
   .stats__title {
