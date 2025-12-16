@@ -266,8 +266,8 @@
   }
 
   .mood__dashboard_card-content {
-    height: 225px;
-    width: 301px;
+    height: 190px;
+    width: 100%;
     max-width: 320px;
     margin: 0 auto;
   }
@@ -294,8 +294,8 @@
   }
 
   .mood__dashboard_card-content {
-    height: 225px;
-    width: 301px;
+    height: 180px;
+    max-width: 280px;
   }
   .mood__dashboard_card-moodnote {
     font-size: 14px;
@@ -311,5 +311,11 @@
   .mood__dashboard_load-more {
     width: 100%;
     max-width: 280px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .mood__dashboard_grid {
+    max-width: 1600px;
   }
 }

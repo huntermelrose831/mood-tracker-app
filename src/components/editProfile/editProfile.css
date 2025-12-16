@@ -170,8 +170,7 @@
     margin: 12px 0 16px 0;
     text-align: center;
   }
-
-  .edit__profile_content {
+  auto .edit__profile_content {
     align-items: stretch;
     gap: 16px;
   }
@@ -234,8 +233,9 @@
     width: 120px;
   }
 }
-@media (max-width: 350px) {
-.edit__profile_modal {
+@media (max-width: 391px) {
+  .edit__profile_modal {
     max-width: 290px;
     height: 733px;
-  }}
+  }
+}
