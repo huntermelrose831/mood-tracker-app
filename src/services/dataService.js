@@ -171,19 +171,28 @@ export const dataService = {
         return existingEntries;
       }
 
-      let response = await fetch(`${import.meta.env.BASE_URL}data/user.json`);
+      console.info(
+        "No mood entries found in localStorage. Loading sample data..."
+      );
+      const url = `${import.meta.env.BASE_URL}data/user.json`;
+      console.info(`Fetching sample data from ${url}`);
+      let response = await fetch(url);
       let userData = await response.json();
 
       if (Array.isArray(userData) && userData.length > 0) {
-        // For demo purposes, just use user 30's data
+        console.info(`Fetched ${userData.length} entries from user.json`);
         let userEntries = userData.filter((entry) => entry.user_id === 30);
 
+        console.info(
+          `Filtered to ${userEntries.length} entries for user (user_id=30)`
+        );
         let sortedEntries = userEntries.sort(
           (a, b) => new Date(b.datetime) - new Date(a.datetime)
         );
 
         let limitedEntries = sortedEntries.slice(0, 416);
 
+        console.info(`Processing ${limitedEntries.length}  entries`);
         let processedEntries = limitedEntries.map((rawEntry, i) => {
           let moodData = normalizeMoodData(rawEntry.sub_mood, rawEntry.mood);
           let date = new Date(rawEntry.datetime);
@@ -205,6 +214,9 @@ export const dataService = {
           localStorage.setItem(
             MOOD_STORAGE_KEY,
             JSON.stringify(processedEntries)
+          );
+          console.info(
+            `Saved ${processedEntries.length}entries to localStorage`
           );
           return processedEntries;
         }
