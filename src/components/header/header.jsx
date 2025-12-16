@@ -1,5 +1,5 @@
 import "./header.css";
-import Title from "../../assets/Logo2.png";
+import Title from "../../assets/Logo.png";
 import { useState, useEffect } from "react";
 
 export default function Header() {
@@ -20,13 +20,9 @@ export default function Header() {
       <img src={Title} className="header__title" />
       <div className="header__container">
         <p className="header__date-time">
-          {currentTime
-            .toLocaleTimeString("en-US", {
-              hour: "numeric",
-              minute: "2-digit",
-              hour12: true,
-            })
-            .toLowerCase()}
+          {currentTime.toLocaleDateString("en-US", {
+            month: "long",
+          })}
         </p>
         <p className="header__date-time">{currentTime.getFullYear()}</p>
       </div>

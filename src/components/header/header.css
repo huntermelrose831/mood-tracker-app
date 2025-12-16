@@ -29,7 +29,7 @@
 }
 .header__container {
   display: flex;
-  gap: 87px;
+  gap: 64px;
 }
 /* Responsive Design */
 @media (max-width: 778px) {
