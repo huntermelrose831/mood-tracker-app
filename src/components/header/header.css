@@ -1,13 +1,13 @@
 .header {
-  width: 100%;
-  max-width: 1600px;
+  width: 100vw; /* full viewport width so children can sit at the edges */
+  max-width: none;
   box-sizing: border-box;
   background: transparent;
-  margin: 0 auto;
-  padding: 0;
+  margin: 0; /* remove auto-centering */
+  padding: 0 24px; /* small horizontal padding so content doesn't touch the edge */
   position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* logo left, date/time right */
   align-items: center;
 }
 
@@ -25,6 +25,7 @@
   font-weight: 700;
   font-style: Bold;
   font-size: 25px;
+  margin: 0;
   line-height: 48px;
   letter-spacing: 0px;
 }
