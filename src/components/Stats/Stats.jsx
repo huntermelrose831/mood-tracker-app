@@ -3,12 +3,10 @@ import Chart from "chart.js/auto";
 import "./Stats.css";
 
 function Stats({ entries, onClose }) {
-  // Refs for each chart canvas element
   const weekdayMoodChartRef = useRef(null);
   const moodPieChartRef = useRef(null);
   const topActivitiesChartRef = useRef(null);
 
-  // Keep track of all chart instances for cleanup
   const activeCharts = useRef({});
 
   // Cleanup all charts when component unmounts
@@ -23,12 +21,9 @@ function Stats({ entries, onClose }) {
     };
   }, []);
 
-  // Create charts whenever entries data changes
   useEffect(() => {
-    // Don't create charts if we have no data
     if (!entries || entries.length === 0) return;
 
-    // Clean up existing charts first
     Object.values(activeCharts.current).forEach((chart) => chart?.destroy());
     activeCharts.current = {};
 
@@ -42,7 +37,6 @@ function Stats({ entries, onClose }) {
       "Saturday",
     ];
 
-    // Helper function to create the weekday mood chart
     const createWeekdayMoodChart = (weekdays) => {
       const averageMoodPerDay = weekdays.map((dayName) => {
         const entriesForThisDay = entries.filter(
