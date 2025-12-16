@@ -75,7 +75,6 @@ export default function MoodModal({ onSubmit, onClose }) {
 
   const [currentSelectedMood, setCurrentSelectedMood] = useState(null);
   const [validationErrors, setValidationErrors] = useState({});
-  const [buttonClicked, setButtonClicked] = useState(false);
 
   const selectMood = (moodOption) => {
     setFormData((prevData) => ({
@@ -129,7 +128,7 @@ export default function MoodModal({ onSubmit, onClose }) {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    setButtonClicked(true);
+    // show hover effect only; do not persist snowflakes on click
 
     if (validateForm()) {
       onSubmit(formData);
@@ -236,21 +235,9 @@ export default function MoodModal({ onSubmit, onClose }) {
               />
             </div>
             <button type="submit" className="mood__form_submit-button">
-              {buttonClicked && (
-                <img
-                  src={Snowflake}
-                  alt=""
-                  className="mood__form_button-icon"
-                />
-              )}
+              <img src={Snowflake} alt="" className="mood__form_button-icon" />
               Add Mood
-              {buttonClicked && (
-                <img
-                  src={Snowflake}
-                  alt=""
-                  className="mood__form_button-icon"
-                />
-              )}
+              <img src={Snowflake} alt="" className="mood__form_button-icon" />
             </button>
           </form>
         </div>

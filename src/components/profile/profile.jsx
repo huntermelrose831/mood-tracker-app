@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./profile.css";
 import Snowflake from "../../assets/snowflake.svg";
 
@@ -8,20 +7,17 @@ export default function Profile({
   onStatsClick,
   onEditProfileClick,
 }) {
-  const [logMoodClicked, setLogMoodClicked] = useState(false);
-  const [statsClicked, setStatsClicked] = useState(false);
+  // snowflake icons are hover-only; no click state required
 
   const openEditProfileModal = () => {
     if (onEditProfileClick) onEditProfileClick();
   };
 
   const handleLogMoodButtonClick = () => {
-    setLogMoodClicked(true);
     if (onLogMoodClick) onLogMoodClick();
   };
 
   const handleStatsButtonClick = () => {
-    setStatsClicked(true);
     if (onStatsClick) onStatsClick();
   };
 
@@ -42,26 +38,17 @@ export default function Profile({
         ></button>
       </div>
 
-      {/* Right side - action buttons */}
       <div className="profile__right">
         <button className="profile__button" onClick={handleLogMoodButtonClick}>
-          {logMoodClicked && (
-            <img src={Snowflake} alt="" className="profile__button-icon" />
-          )}
+          <img src={Snowflake} alt="" className="profile__button-icon" />
           Add Mood
-          {logMoodClicked && (
-            <img src={Snowflake} alt="" className="profile__button-icon" />
-          )}
+          <img src={Snowflake} alt="" className="profile__button-icon" />
         </button>
 
         <button className="profile__button" onClick={handleStatsButtonClick}>
-          {statsClicked && (
-            <img src={Snowflake} alt="" className="profile__button-icon" />
-          )}
+          <img src={Snowflake} alt="" className="profile__button-icon" />
           Stats
-          {statsClicked && (
-            <img src={Snowflake} alt="" className="profile__button-icon" />
-          )}
+          <img src={Snowflake} alt="" className="profile__button-icon" />
         </button>
       </div>
     </div>

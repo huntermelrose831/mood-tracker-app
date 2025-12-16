@@ -96,7 +96,6 @@ function App() {
 
       <Footer />
 
-      {/* Render modals directly - ModalForm was removed */}
       {activeModal === "mood" && (
         <MoodModal onSubmit={handleMoodSubmit} onClose={closeModal} />
       )}

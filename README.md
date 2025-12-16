@@ -1,8 +1,12 @@
-# 🌈 Holiday Mood Tracker
+#  Holiday Mood Tracker
 
 A React-based web application for tracking daily mood and wellbeing during the holiday season. Users can log their daily emotions, activities, and notes, then view insights through a comprehensive dashboard.
 
-## 📋 Project Overview
+##  Live Demo
+
+The project is deployed to GitHub Pages: https://huntermelrose831.github.io/mood-tracker-app/
+
+##  Project Overview
 
 This is a collaborative project between Software Engineering, Data Science, and UX/UI teams:
 
@@ -10,7 +14,7 @@ This is a collaborative project between Software Engineering, Data Science, and 
 - **Data Science**: Provide visualizations and statistical analysis of mood data
 - **UX/UI**: Design intuitive interfaces for rapid data input and clear dashboard displays
 
-## ✨ Features
+##  Features
 
 ### Core Features
 
@@ -28,7 +32,7 @@ This is a collaborative project between Software Engineering, Data Science, and 
 - User authentication
 - Advanced analytics and predictive models
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -71,10 +75,21 @@ This is a collaborative project between Software Engineering, Data Science, and 
 
 ```
 mood-tracker-app/
+├── .github/
+│   └── workflows/                # CI and deployment workflows (ci.yml, deploy.yml)
+├── ds/
+│   ├── dataset.csv               # Raw mood dataset
+│   ├── final_mood_dataset.json   # Processed dataset
+│   └── notebook.ipynb            # Data analysis notebook
 ├── public/
-│   └── data/
-│       └── sample-data.json      # Sample mood data
+│   ├── data/
+│   │   └── user.json             # Sample user mood data used for demo
+│   ├── fonts/
+│   └── .nojekyll
 ├── src/
+│   ├── API/
+│   │   └── API.js                # API utilities
+│   ├── assets/                    # Images and static files
 │   ├── components/
 │   │   ├── App/
 │   │   │   ├── App.jsx           # Main app component
@@ -85,35 +100,34 @@ mood-tracker-app/
 │   │   ├── footer/
 │   │   │   ├── footer.jsx        # Footer component
 │   │   │   └── footer.css        # Footer styles
-│   │   ├── MoodLogger/
-│   │   │   ├── MoodForm.jsx      # Mood logging form
-│   │   │   └── MoodForm.css      # Form styles
 │   │   ├── Dashboard/
 │   │   │   ├── MoodDashboard.jsx # Statistics dashboard
 │   │   │   └── MoodDashboard.css # Dashboard styles
-│   │   ├── addMood/              # Additional mood components
-│   │   ├── cards/                # Card components
-│   │   ├── editMood/             # Edit mood components
-│   │   ├── editProfile/          # Profile edit components
-│   │   └── profile/              # Profile components
-│   ├── services/
-│   │   └── dataService.js        # localStorage operations (TODO)
-│   ├── API/
-│   │   └── API.js                # API utilities
+│   │   ├── MoodModal/
+│   │   │   ├── MoodModal.jsx
+│   │   │   └── MoodModal.css
+│   │   ├── editProfile/
+│   │   │   ├── editProfile.jsx
+│   │   │   └── editProfile.css
+│   │   ├── profile/
+│   │   │   ├── profile.jsx
+│   │   │   └── profile.css
+│   │   └── Stats/
+│   │       ├── Stats.jsx
+│   │       └── Stats.css
 │   ├── hooks/                    # Custom React hooks
+│   ├── services/
+│   │   └── dataService.js        # localStorage operations and sample-data loader
 │   ├── utils/                    # Helper functions
-│   ├── assets/                   # Images and static files
 │   ├── index.css                 # Global styles
 │   └── main.jsx                  # App entry point
-├── ds/
-│   ├── dataset.csv               # Raw mood dataset
-│   ├── final_mood_dataset.json   # Processed dataset
-│   └── notebook.ipynb            # Data analysis notebook
+├── index.html
 ├── package.json
+├── vite.config.js
 └── README.md
 ```
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Frontend**: React 19.2
 - **Build Tool**: Vite 7.2
@@ -121,8 +135,14 @@ mood-tracker-app/
 - **State Management**: React useState/useEffect
 - **Data Storage**: Browser localStorage
 - **Linting**: ESLint
+- **Charts**: Chart.js
+- **CI / Deployment**: GitHub Actions (deploys to GitHub Pages)
 
-## 📊 Data Format
+##  Design / Figma
+
+- https://www.figma.com/design/2r57PNBR6YFdSWgFModC4t/Holly-Mood_Elf-gineers--Team-2-?node-id=352-2308&t=NZANPb1cUji1wVjS-0
+
+##  Data Format
 
 Mood entries follow this structure:
 
@@ -137,30 +157,21 @@ Mood entries follow this structure:
 }
 ```
 
-## 👥 Team Workflow
+## 👥Team Workflow
 
 ### For Software Engineers
 
 - Implement components marked with `// TODO` comments
-- Follow the existing folder structure
-- Test with sample data from `public/data/sample-data.json`
+- Follow the existing folder structure above
+- Test with sample data from `public/data/user.json` (used by the demo loader)
 - Ensure all changes are committed to git with meaningful messages
 
-## 🚀 Deployment
+### Documentation (5 points)
 
-The app can be deployed to:
-
-- GitHub Pages
-- Netlify
-- Vercel
-
-Build for production:
-
-```sh
-npm run build
-```
-
-The `dist/` folder will contain the production-ready files.
+- Repository link: https://github.com/roxannecodes/mood-tracker-app (this repository) — the codebase is organized with `src/`, `public/` and `ds/` folders and includes instructions and examples.
+- Live (deployed) project: https://huntermelrose831.github.io/mood-tracker-app/ — visit the demo to see the app running in production.
+- Running locally: see the **Getting Started** section above for step-by-step instructions to clone, install dependencies, and run the dev server (`npm run dev`).
+- Short technology summary: the app uses **React** for UI, **Vite** for fast development and builds, **Chart.js** for visualizations, and **GitHub Actions** + **GitHub Pages** for CI and deployment (see **Tech Stack** section for details).
 
 ## 📝 Contributing
 

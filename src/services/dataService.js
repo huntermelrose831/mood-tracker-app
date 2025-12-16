@@ -171,7 +171,6 @@ export const dataService = {
         return existingEntries;
       }
 
-      console.log("Loading sample data from user.json...");
       let response = await fetch(`${import.meta.env.BASE_URL}data/user.json`);
       let userData = await response.json();
 
@@ -207,14 +206,10 @@ export const dataService = {
             MOOD_STORAGE_KEY,
             JSON.stringify(processedEntries)
           );
-          console.log(
-            `Successfully loaded ${processedEntries.length} sample entries`
-          );
           return processedEntries;
         }
       }
-
-      console.log("No valid sample data found");
+      // No valid sample data found - returning empty array
       return [];
     } catch (error) {
       console.error("Error loading sample data:", error);

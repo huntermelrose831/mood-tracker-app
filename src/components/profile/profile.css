@@ -1,5 +1,5 @@
 .profile {
-  background: transparent; 
+  background: transparent;
   padding: 0 26px;
   display: flex;
   margin-top: 7px;
@@ -72,11 +72,27 @@
   width: 20px;
   height: 20px;
   object-fit: contain;
+  display: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.12s ease, transform 0.12s ease;
 }
 
 .profile__button:hover {
   opacity: 0.8;
   transform: translateY(-2px);
+}
+
+.profile__button:hover .profile__button-icon {
+  display: inline-block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.profile__button:active .profile__button-icon {
+  display: inline-block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .profile__button--primary:hover {
